@@ -1,0 +1,117 @@
+﻿* {
+    font-family: Poppins;
+}
+
+[data-bs-theme="dark"] .ft {
+    color: white;
+}
+
+/* [data-bs-theme="dark"] .tr-info th {
+            color: white;
+            background-color: #3a3b3c;
+        } */
+.para {
+    font-size: 250%;
+    text-align: center;
+}
+[data-bs-theme="dark"] .darkModeShadow {
+    box-shadow: 0px 3px 10px #000000 !important;
+}
+* {
+    font-family: "Inter" !important;
+}
+
+#opt1 {
+    font-weight: bold;
+    border-width: 3px;
+    border-color: #4367d3;
+    background-color: #e8eaf1;
+    color: #4367d3;
+}
+
+
+    #opt1:hover {
+        font-weight: bold;
+        border-width: 3px;
+        background-color: #4367d3;
+        color: white;
+    }
+
+#opt2 {
+    font-weight: bold;
+    border-width: 3px;
+    border-color: #00adef;
+    background-color: #e5f3f8;
+    color: #00adef;
+}
+
+    #opt2:hover {
+        font-weight: bold;
+        border-width: 3px;
+        background-color: #00adef;
+        color: white;
+    }
+
+#opt3 {
+    font-weight: bold;
+    border-width: 3px;
+    border-color: #228b22;
+    background-color: #e8f0e8;
+    color: #228b22;
+}
+
+    #opt3:hover {
+        font-weight: bold;
+        border-width: 3px;
+        background-color: #228b22;
+        color: white;
+    }
+
+#opt4 {
+    font-weight: bold;
+    border-width: 3px;
+    border-color: #d90f81;
+    background-color: #f6e6ef;
+    color: #d90f81;
+}
+
+    #opt4:hover {
+        font-weight: bold;
+        border-width: 3px;
+        background-color: #d90f81;
+        color: white;
+    }
+
+.foot {
+    position: absolute;
+    bottom: 15px;
+}
+
+[data-bs-theme = 'light'] ft {
+    color: black;
+    text-decoration: none;
+}
+
+[data-bs-theme ='dark'] ft {
+    color: white;
+    text-decoration: none;
+}
+
+
+span {
+    font-size: 25px;
+}
+
+#back-btn:hover {
+    color: white;
+}
+
+footer a {
+    color: black;
+    text-decoration: none;
+}
+
+    footer a:hover {
+        color: black;
+        text-decoration: none;
+    }

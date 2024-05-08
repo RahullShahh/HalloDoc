@@ -1,0 +1,27 @@
+﻿.shadow-lg {
+    margin:10% 20% 10% 20%;
+    padding: 1vw 2vw 2vw 2vw;
+}
+[data-bs-theme="dark"] .nav-link {
+    color: white;
+}
+[data-bs-theme="light"] .nav-link {
+    color: black;
+}
+.nav-tabs .active {
+    border: none;
+    color: #10bce9 !important;
+    border-bottom: 5px solid #10bce9 !important;
+}
+.buttons{
+    margin: 0%  10%;
+}
+.btn-outline-info:hover {
+    color: white;
+}
+[data-bs-theme="dark"] .darkModeShadow {
+    box-shadow: 0px 3px 10px #000000 !important;
+}
+* {
+    font-family: "Inter"!important;
+}

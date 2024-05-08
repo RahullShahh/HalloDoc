@@ -1,0 +1,58 @@
+﻿.shadow-lg {
+    margin-top: 2vh;
+    padding: 1vw 2vw 2vw 2vw;
+    
+            
+}
+
+* {
+    font-family: "Inter"!important;
+}
+.documents {
+    margin-top: 5vh;
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+.btn-outline-info:hover {
+    color: white!important;
+}
+.btn-info{
+    color:white!important;
+}
+[data-bs-theme="light"] .nav-link {
+    color: black;
+}
+.nav-tabs .active {
+    border: none;
+    color: #10bce9 !important;
+    border-bottom: 5px solid #10bce9 !important;
+}
+
+[data-bs-theme="dark"] .nav-link {
+    color: white;
+}
+#darkmode:hover svg {
+    fill: white;
+}
+
+[data-bs-theme="dark"] .darkModeShadow {
+    box-shadow: 0px 3px 10px #000000 !important;
+}
+
+.iti {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+}
+
+.iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
+    padding-right: 6px;
+    padding-left: 52px;
+    margin-left: 0;
+    height: 59px;
+}
+
+.iti__country-list {
+    z-index: 5;
+}

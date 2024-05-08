@@ -1,0 +1,398 @@
+﻿@model AdminDashboardViewModel
+<div class=" table-responsive rounded mt-3">
+    <table class="table admin-dashboard-tables darkModeShadow d-md-table d-none shadow-lg">
+        <colgroup>
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 10%;">
+            <col span="1" style="width: 10%;">
+            <col span="1" style="width: 10%;">
+            <col span="1" style="width: 8%;">
+            <col span="1" style="width: 12%;">
+            <col span="1" style="width: 19%;">
+            <col span="1" style="width: 8%;">
+            <col span="1" style="width: 6%;">
+        </colgroup>
+        <thead class="table-head align-middle">
+            <tr>
+                <th>Name</th>
+                <th>Date Of Birth</th>
+                <th>Requestor</th>
+                <th>Physician name</th>
+                <th>Date Of Service</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+            @for (var i = 0; i < Model.adminRequests.Count; i++)
+            {
+                string n = null;
+                string PhoneType = null;
+                @switch (Model.adminRequests[i].requestType)
+                {
+                    case 1:
+                        n = "business-request-row";
+                        PhoneType = "Business";
+                        break;
+                    case 2:
+                        n = "patient-request-row";
+                        PhoneType = "Patient";
+                        break;
+                    case 3:
+                        n = "family-friend-request-row";
+                        PhoneType = "Family / Friend";
+                        break;
+                    case 4:
+                        n = "concierge-request-row";
+                        PhoneType = "Concierge";
+                        break;
+                    default:
+                        n = "bg-dark";
+                        break;
+                }
+                <tr class=@n>
+                    <td>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span>
+                                @Model.adminRequests[i].Name
+                            </span>
+                            <a href="mailto:@Model.adminRequests[i].email">
+                                <div class="white-border-btn p-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24"
+                                         width="20px" fill="#FFFFFF">
+                                        <path d="M0 0h24v24H0V0z" fill="none" />
+                                        <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z" />
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        @Model.adminRequests[i].DateOfBirth
+                    </td>
+                    <td>
+                        Business @Model.adminRequests[i].Requestor
+                    </td>
+                    <td>
+                        @Model.adminRequests[i].physicianName
+                    </td>
+                    <td>@Model.adminRequests[i].servicedate</td>
+                    <td>
+                        <a href="tel:@Model.adminRequests[i].PhoneNo" class="CallPhoneNumber">
+                            <div class="white-border-btn px-2 py-1 align-items-center d-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="15px"
+                                     fill="white">
+                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                    <path d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79h1.51m9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75l1.2-1.19M7.5 3H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1-1.24 0-2.45-.2-3.57-.57-.1-.04-.21-.05-.31-.05-.26 0-.51.1-.71.29l-2.2 2.2c-2.83-1.45-5.15-3.76-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1z" />
+                                </svg>
+                                <span class="ms-1">@Model.adminRequests[i].PhoneNo</span>
+                            </div>
+                        </a>
+                        <small>(Patient)</small>
+                        @if (@Model.adminRequests[i].OtherPhoneNo != null)
+                        {
+                            <a href="tel:@Model.adminRequests[i].OtherPhoneNo" class="CallPhoneNumber">
+                                <div class="white-border-btn px-2 py-1 align-items-center d-flex">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="15px"
+                                         fill="white">
+                                        <path d="M0 0h24v24H0V0z" fill="none" />
+                                        <path d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79h1.51m9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75l1.2-1.19M7.5 3H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1-1.24 0-2.45-.2-3.57-.57-.1-.04-.21-.05-.31-.05-.26 0-.51.1-.71.29l-2.2 2.2c-2.83-1.45-5.15-3.76-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1z" />
+                                    </svg>
+                                    <span class="ms-1">@Model.adminRequests[i].OtherPhoneNo</span>
+                                </div>
+                            </a>
+                            <small>(@PhoneType)</small>
+                        }
+                    </td>
+                    <td>@Model.adminRequests[i].Address</td>
+                    <td>@Model.adminRequests[i].Notes</td>
+
+                    <td>
+                        <div>
+                            <div class="dropdown">
+                                <a class="text-light btn btn-sm" style="border:1px solid white " href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li>
+                                        <a class="dropdown-item" asp-action="ViewCase" asp-route-requestid="@Model.adminRequests[i].requestid" asp-controller="Admin">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                            </svg>
+                                            View Case
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Admin" asp-action="ViewUploads" asp-route-requestid="@Model.adminRequests[i].requestid">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+                                                <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z" />
+                                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                                            </svg>
+                                            View Uploads
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                            </svg>
+                                            View Notes
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Admin" asp-action="SendOrders" data-requestid="@Model.adminRequests[i].requestid">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
+                                                <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0" />
+                                            </svg>
+                                            Orders
+                                        </a>
+                                    </li>
+                                    <li>
+                                        @if (Model.adminRequests[i].isFinalize)
+                                        {
+                                            <button class="dropdown-item" id="FinalizePDF" onclick="OpenModal()" data-requestid="@Model.adminRequests[i].requestid">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
+                                                    <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0" />
+                                                </svg>
+                                                Encounter Form
+                                            </button>
+                                        }
+                                        @if (!Model.adminRequests[i].isFinalize)
+                                        {
+                                            <a class="dropdown-item" asp-action="EncounterForm" asp-controller="Admin" asp-route-requestid="@Model.adminRequests[i].requestid">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
+                                                    <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0" />
+                                                </svg>
+                                                Encounter Form
+                                            </a>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+            @* ---------------------------------------------------------------------------- *@
+
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (Model.currentPage == 1)
+            {
+                <li class="page-item"><button type="button" disabled onclick="loadPreviousPage(@Model.currentPage)" class="text-muted page-link" href="#">Previous</button></li>
+            }
+            @if (Model.currentPage > 1)
+            {
+                <li class="page-item"><button type="button" onclick="loadPreviousPage(@Model.currentPage)" class="page-link" href="#">Previous</button></li>
+
+            }
+            <li class="page-item"><span class="page-link" href="#">@Model.currentPage</span></li>
+            @if (Model.currentPage != (int)Math.Ceiling((double)Model.pending / 5))
+            {
+                <li class="page-item"><button type="button" onclick="loadNextPage(@Model.currentPage)" class="page-link" id="">Next</button></li>
+            }
+        </ul>
+    </nav>
+    @* ---------------------------------------------------------------------------- *@
+    @* accordion *@
+    <div class="shadow-lg d-md-none  d-block">
+        @for (int i = 0; i < Model.adminRequests.Count; i++)
+        {
+            <div class="accordion-item dashboardAccordiansGradient bg-info bg-opacity-10">
+                <button class=" accordion-header btn w-100 px-4 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@i" aria-expanded="false" aria-controls="collapseTwo">
+                    <div class="row w-100 pb-1">
+                        <div class="col-8 text-start my-1">
+                            <h5>@Model.adminRequests[i].Name</h5>
+
+                            <p class="mt-4">@Model.adminRequests[i].Address</p>
+                        </div>
+                        <div class="col-4 py-3 text-end">
+                            @if (Model.adminRequests[i].requestType == 1)
+                            {
+                                <h6 class="mb-3">
+                                    Patient
+                                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <circle fill="#5fbc61" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                                    </svg>
+                                </h6>
+                            }
+                            @if (Model.adminRequests[i].requestType == 2)
+                            {
+                                <h6 class="mb-3">
+                                    Family/Friend
+
+                                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <circle fill="#ed9124" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                                    </svg>
+                                </h6>
+                            }
+                            @if (Model.adminRequests[i].requestType == 3)
+                            {
+                                <h6 class="mb-3">
+                                    Concierge
+
+                                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <circle fill="#e26277" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                                    </svg>
+                                </h6>
+                            }
+                            @if (Model.adminRequests[i].requestType == 4)
+                            {
+                                <h6 class="mb-3">
+                                    Business
+
+                                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <circle fill="#007fc6" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                                    </svg>
+                                </h6>
+                            }
+                            <a class="btn rounded-pill fw-bold btn-outline-info px-3">Map Location</a>
+                        </div>
+                    </div>
+                    <div class="text-start pb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock text-info" viewBox="0 0 16 16">
+                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0" />
+                        </svg>
+                        <span>
+                            Wait Time :<span class="fw-bold"> @Model.adminRequests[i].Requesteddate.ToString("MMM dd, yyyy  hh:mm tt")  </span>
+                        </span>
+                    </div>
+                </button>
+                <div id="collapse_@i" class="accordion-collapse collapse border-top border-secondary" data-bs-parent="#accordionExample">
+                    <div class="accordion-body position-relative">
+                        <a asp-action="ViewCase" asp-route-requestid="@Model.adminRequests[i].requestid" asp-controller="Admin" asp-route-status="@Model.adminRequests[i].status">
+                            <button class="btn btn-secondary rounded-pill position-absolute rounded-4 border-1 border-dark" style="top: -18px; right: 25px;">
+                                View Case
+                            </button>
+                        </a>
+                        <div class="mx-3">
+                            <h6 class="w-100">
+
+                                <button class="btn border-1 rounded-5 border-info pt-0 ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
+                                        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                    </svg>
+                                </button>
+
+                                Date Of Birth: @Model.adminRequests[i].DateOfBirth
+                            </h6>
+                            <h6 class="w-100">
+                                <button class="btn border-1 rounded-5 border-info pt-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
+                                    </svg>
+                                </button>
+
+                                Email: @Model.adminRequests[i].email
+                            </h6>
+                            <h6 class="w-100">
+                                <button class="btn border-1 rounded-5 border-info pt-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                                        <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
+                                    </svg>
+                                </button>
+
+                                Patient: @Model.adminRequests[i].PhoneNo
+                            </h6>
+                            <h6 class="w-100">
+                                <button class="btn border-1 rounded-5 border-info pt-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+                                    </svg>
+                                </button>
+
+                                Requestor:@Model.adminRequests[i].Requestor
+                            </h6>
+                            <div class="row gy-2  py-3">
+                                <div class="col-6 px-3">
+                                    <a class="border-1 btn-danger px-3 rounded-5 btn w-100"
+                                       asp-controller="Admin" asp-action="ViewUploads" asp-route-requestid="@Model.adminRequests[i].requestid">
+                                        View Uploads
+                                    </a>
+                                </div>
+                                <div class="col-6 px-3">
+                                    @* !!!!!!!!!!!!!!!!!--PENDING--!!!!!!!!!!!!!!!!! *@
+                                    <a asp-action="ViewNotes" asp-route-id="@Model.adminRequests[i].requestid">
+                                        <button class=" border-1 btn-success px-3 rounded-5 btn w-100">
+                                            View Notes
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="col-6 px-3">
+                                    <a class=" border-1 btn-danger px-3 rounded-5 btn w-100"
+                                       asp-controller="Admin" asp-action="SendOrders" asp-route-requestid="@Model.adminRequests[i].requestid">
+                                        Orders
+                                    </a>
+                                </div>
+                                <div class="col-6 px-3">
+                                    <a class=" border-1 btn-danger px-3 rounded-5 btn w-100"
+                                       asp-action="EncounterForm" asp-controller="Admin" asp-route-requestid="@Model.adminRequests[i].requestid">
+                                        Encounter
+                                    </a>
+                                </div>
+                                <div class="col-6 px-3">
+                                    <a href="Mailto:@Model.adminRequests[i].email">
+                                        <button class="border-1 btn-success px-3 rounded-5 btn w-100">
+                                            Email
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="FinalizedFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-light" id="exampleModalLongTitle">Encounter Form -> FINALIZED</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Your Medical Report has been finalized by your Provider.
+                Download the report from below given source.
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-end">
+                    <a class="btn-info text-end text-light btn" id="DownloadFinalizePDF">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var requestid; FinalizePDF
+    //script to open the finalize modal
+    requestid = $("#FinalizePDF").data("requestid");
+    // $('#FinalizePDF').click(function () {
+    //     alert("modal open")
+    //     $('#FinalizedFormModal').modal('show');
+    // });
+    function OpenModal() {
+        $('#FinalizedFormModal').modal('show');
+    }
+    //while using ajax there was an issue that in the finalizedownload method of controller we
+    //were returning a file which was passed into the success method of ajax but
+    //in the ajax success state we were not handling the file and hence the download operation was not working
+
+    //so instead here , on click we have redirected the admin to a url
+    //that calls finalizedownload along with the request id of the
+    //which in return downloads the pdf
+    $("#DownloadFinalizePDF").click(function () {
+        location.href = "https://localhost:7090/Admin/FinalizeDownload?requestid=" + requestid;
+    });
+</script>

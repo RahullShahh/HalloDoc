@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] </title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/SRS Screen Shorts/HalloDoc.Icon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/PatientRequestCSS.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HalloDoc_Project.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="form_pages_css.css" />
+    <link rel="stylesheet" href="~/css/submit_request.css" />
+    <script src="~/js/script.js"></script>
+    <script src="~/js/tel.js"></script>
+    <style>
+        .anchor{
+            text-decoration:none;
+            color:black;
+        }
+        *{
+            font-family:Poppins;
+        }
+    </style>
+</head>
+<body >
+
+    <nav class="navbar navigationbar shadow rounded w-100">
+        <div class="w-100 align-items-center" style="display:contents;">
+            <div>
+                <a href="/" class="navbar-brand">
+                    <img src="/SRS Screen Shorts/HalloDoc LOGO.png" alt="" height="80vh">
+                </a>
+            </div>
+            <div class="justify-content-end me-3">
+                <button class="btn" onclick="darkMode()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#10bce9"
+                        class="bi bi-moon-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("Notyf")
+
+    <div class="justify-content-center bg-dark py-3  ">
+    <footer class="foot justify-content-center container-fluid  align-items-center d-flex">
+        <a asp-action="TermsAndConditions" asp-controller="Guest" class="anchor text-white mt-2">Terms & Conditions </a>
+        <span class="mx-3 mt-1 text-white">|</span>
+        <a asp-action="PrivacyPolicy" asp-controller="Guest" class="anchor text-white mt-2">Privacy Policy</a>
+    </footer>
+</div>
+        
+</body>
+</html>

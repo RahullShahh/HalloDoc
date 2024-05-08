@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "_AdminDashboardLayout";
+}
+<div class="row d-flex justify-content-center">
+    <div class="col-8">
+        <h5 class="my-3">Block History</h5>
+        <div class="shadow-lg p-3">
+            <div class="d-flex">
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="form-floating m-3">
+                        <input type="text" class="form-control" placeholder="First Name"
+                               id="blockHistoryFirstName" required>
+                        <label for="blockHistoryFirstName">First Name</label>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-12 ">
+                    <div class="form-floating m-3">
+                        <input type="text" class="form-control" placeholder="Last Name"
+                               id="blockHistoryLastName" required>
+                        <label for="blockHistoryLastName">Last Name</label>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-12 ">
+                    <div class="form-floating m-3">
+                        <input type="text" class="form-control" placeholder="E-mail"
+                               id="blockHistoryEmail" required>
+                        <label for="blockHistoryEmail">Email</label>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-12 ">
+                    <div class="form-floating m-3">
+                        <input type="text" class="form-control" placeholder="Phone Number"
+                               id="blockHistoryPhoneNumber" required>
+                        <label for="blockHistoryPhoneNumber">PhoneNumber</label>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mx-3 ">
+                <div>
+                    <button class="btn btn-outline-info" type="reset">Clear</button>
+                    <button class="btn btn-info text-light" type="submit" onclick="submitBlockHistoryFilters()">Submit</button>
+                </div>
+            </div>
+            <div id="loadBlockHistory"></div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/Admin/BlockHistoryPartialTable",
+            type: 'POST',
+            data: {},
+            success: function (result) {
+                $('#loadBlockHistory').html(result);
+            },
+            complete: function () {
+
+            },
+            error: function (error) {
+                console.log(error);
+                alert('block history')
+            },
+        });
+    })
+    function submitBlockHistoryFilters() {
+        $.ajax({
+            url: "/Admin/BlockHistoryPartialTable",
+            type: 'POST',
+            data: { FirstName: $("#blockHistoryFirstName").val(), LastName: $("#blockHistoryLastName").val(), Email: $("#blockHistoryEmail").val(), PhoneNo: $("#blockHistoryPhoneNumber").val() },
+            success: function (result) {
+                $('#loadBlockHistory').html(result);
+            },
+            complete: function () {
+
+            },
+            error: function (error) {
+                console.log(error);
+                alert('patient history')
+            },
+        });
+    }
+</script>

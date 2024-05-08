@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "_AdminDashboardLayout";
+    ViewData["Title"] = "Proivders On Call";
+
+}﻿
+<script>
+    // function CalendarView() {
+    //     $('#providers').load('/Admin/SchedulingPartial');
+    // }
+    // function ShiftsForReview() {
+    //     $('#providers').load('/Admin/ShiftsReviewPartial');
+    // }
+    function populateRegionDropdown() {
+        $.ajax({
+            url: '/Admin/RegionResults',
+            type: 'GET',
+            success: function (data) {
+                var dropdownData = data;
+                console.log(dropdownData);
+                var dropdown = $('.regions');
+                dropdown.empty();
+                dropdown.append($('<option>').text('--').val(""));
+                dropdownData.forEach(function (item) {
+                    dropdown.append($('<option>').text(item.name).val(item.regionid));
+
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    //fetches proivders on region change
+    $(document).ready(function () {
+        populateRegionDropdown();
+        function LoadPartial() {
+            var providerregion = $('#providerregion').val();
+            $.ajax({
+                url: '/Admin/ProvidersOnCallPartialTable',
+                type: 'POST',
+                data: { providerregion: providerregion },
+                success: function (response) {
+                    $('#onCallContainer').html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error: ', error);
+                }
+            });
+        }
+        LoadPartial();
+        $('#providerregion').on('change', function () {
+            LoadPartial();
+        });
+    });
+</script>
+<div class="row justify-content-center">
+    <div class="col-10 d-inline-flex justify-content-between">
+        <div class="d-flex">
+            <h4 class="h4 mt-5 mb-3">MD's On Call</h4>
+        </div>
+        <div class="d-flex">
+            <button class="btn btn-outline-info mt-5 mb-3 ms-auto " onclick="history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                     height="16" fill="currentColor" class="bi bi-chevron-left fw-medium mb-1" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                </svg>Back
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row rounded justify-content-center">
+    <div class="col-10">
+        <div class="d-flex justify-content-between">
+            <div class="col-md-4">
+                <div class="form-floating ">
+                    <select class="form-select border text-muted regions my-3" id="providerregion" name="providerregion" aria-label="Default select example">
+                    </select>
+                    <label for="accountTypeUser">Regions</label>
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div>
+                <a class="btn rounded btn-info text-white my-3" id="calendarView" asp-action="ProviderScheduling" asp-controller="Admin">
+                    Calendar View
+                </a>
+                <a class="btn rounded btn-info text-white my-3" id="shiftReview" asp-action="ShiftsReview" asp-controller="Admin">
+                    Shifts for Review
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="onCallContainer"></div>

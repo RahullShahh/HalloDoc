@@ -1,0 +1,55 @@
+﻿@model AccountAccessViewModel
+@{
+    Layout = "_AdminDashboardLayout";
+}
+<div class="d-flex justify-content-center">
+    <div class="col-8">
+        <div class="my-3">
+            <h4>
+                Account Access
+            </h4>
+        </div>
+        <div class="shadow-lg darkModeShadow p-3">
+            <div class="text-end mb-3">
+                <a class="btn btn-outline-info" asp-action="CreateRole" asp-controller="Admin">Create Access</a>
+            </div>
+            <table class="table">
+                <colgroup>
+                    <col span="1" style="width: 33%;">
+                    <col span="1" style="width: 33%;">
+                    <col span="1" style="width: 33%;">
+                </colgroup>
+                <thead class="table-secondary">
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Account Type
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Roles.Count; i++)
+                    {
+                        @if (!Model.Roles[i].Isdeleted)
+                        {
+                            <tr>
+                                <td>@Model.Roles[i].Name</td>
+                                <td>@Model.Roles[i].Accounttype</td>
+                                <td>
+                                    <a asp-action="EditRoleAccountAccess" asp-controller="Admin" asp-route-id="@Model.Roles[i].Roleid" class="btn btn-outline-info" type="button">Edit</a>
+                                    <a asp-action="DeleteAccountAccessRoles" asp-controller="Admin" asp-route-id="@Model.Roles[i].Roleid" class="btn btn-outline-info" type="button">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

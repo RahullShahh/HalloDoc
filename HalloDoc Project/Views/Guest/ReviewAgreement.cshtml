@@ -1,0 +1,110 @@
+﻿@model ReviewAgreementViewModel
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/ReviewAgreementCSS.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+</head>
+<body>
+    <div class="shadow-lg">
+        <p>
+            To provide best medical service, we cannot determine the cost right away. If you agree to our service, so we will provide care and follow-up until all care is completed.So with this points, if you like us to provide care to you click on "Agree" and we'll get started immediately, if you do not agree simply click "Cancel".
+        </p>
+        <div class="d-flex justify-content-between buttons">
+            <input asp-for="reqID" id="id" hidden />
+            <button class="btn btn-success p-2" id="AgreeButton">
+                <span class="text-light">I Agree</span>
+            </button>
+            <button class="btn btn-danger p-2" onclick="CancelOpen()">
+                <span class="text-light">Cancel</span>
+            </button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+    @*Cancel Agreement*@
+    <div class="modal  fade" id="cancelAgreementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <div class="modal-dark modal-title text-white" id="exampleModalLongTitle">
+                        Cancel Confirmation
+                    </div>
+                    <button type="button" class="btn" aria-label="Close" data-bs-dismiss="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                             fill="#FFFFFF">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+                        </svg>
+                    </button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                        <input asp-for="reqID" id="RequestIDReviewAgreement" hidden />
+                        <span class="modal-head">Patient Name : <b class="text-info">@Model.PatientName</b></span>
+                        <div class="modal-flex my-3">
+                            <div class="form-floating mt-3">
+                                <textarea style="height: 100px;" type="text" class="form-control" id="cancelAgreementModalNotes" placeholder="Please provide a brief explanation for your cancellation"></textarea>
+                                <label for="cancelAgreementModalNotes">Please provide a brief explanation for your cancellation</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="ContinueButton" type="button" class="btn btn-info text-white" data-bs-dismiss="modal">Continue</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+
+        $('#AgreeButton').on('click', function () {
+            $.ajax({
+                url: '/Guest/Agree',
+                type: 'POST',
+                data: { Requestid: $('#id').val() },
+                success: function (data) {
+                    window.location.href = "/Guest/login_page";
+                    $("#partial").html(data);
+                },
+                error: function (error) {
+                    alert('unpaid error');
+                }
+            });
+        });
+        $('#ContinueButton').on('click', function () {
+            $.ajax({
+                url: '/Guest/CancelAgreement',
+                type: 'POST',
+                data: { Requestid: $('#RequestIDReviewAgreement').val(), Notes: $('#cancelAgreementModalNotes').val() },
+                success: function (data) {
+                    window.location.href = "/Guest/login_page";
+                    $("#partial").html(data);
+                },
+                error: function (error) {
+                    alert('unpaid error');
+                }
+            });
+        });
+
+        function CancelOpen() {
+            $('#cancelAgreementModal').modal('show')
+        }
+
+    </script>
+
+</body>
+
+</html>

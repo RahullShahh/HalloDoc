@@ -1,0 +1,163 @@
+﻿@model CreateUpdateVendorViewModel
+@{
+    Layout = "_AdminDashboardLayout";
+    ViewData["username"] = Model.UserName;
+    ViewData["Title"] = "Add Vendor";
+
+}
+<div class="container">
+    <div class="row">
+        <div class="col m-4 d-flex justify-content-between pt-4">
+            <h3>Add Bussiness</h3>
+            <div class="d-flex text-info">
+                <button onclick="history.back()" class="btn btn-outline-info back_btn align-items-center d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                        <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
+                    </svg>
+                    Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <partial name="_ValidationScriptsPartial"></partial>
+    <div class="container mb-5 pb-5 request_form darkModeShadow shadow-lg px-4">
+        <div class="row">
+            <h3 class="mt-4">Submit Information</h3>
+        </div>
+        <form method="post">
+            <div class="row">
+                <div class="col-lg-6 col-12 temp mt-4 form-floating ">
+                    <div class="form-floating ">
+                        <input asp-for="BusinessName" type="text" required class="form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels">Business Name</label>
+                    </div>
+                    <span class="validation" asp-validation-for="@Model.BusinessName"></span>
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4 form-floating ">
+                    <div class="form-floating ">
+                        <select asp-for="Type" class="form-select inputs">
+                            <option value="0" selected disabled>Select Profession Type</option>
+                            @for (int i = 0; i < Model.types.Count; i++)
+                            {
+                                <option value="@Model.types[i].Healthprofessionalid">@Model.types[i].Professionname</option>
+                            }
+                        </select>
+                        <label class="input_labels">Professions</label>
+                    </div>
+                    <span class="validation" asp-validation-for="@Model.Type"></span>
+
+                </div>
+
+                <div class="col-lg-6 col-12 temp mt-4 form-floating ">
+                    <div class="form-floating ">
+                        <input asp-for="Fax" type="text" class="form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels">Fax Number</label>
+                    </div>
+                    <span class="validation" asp-validation-for="@Model.Fax"></span>
+
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4 form-floating ">
+                    <div class="form-floating ">
+                        <input asp-for="Code" id="flag" hidden />
+                        <input asp-for="Phone" id="phone" class="py-3 form-control inputs border unique" type="tel" />
+                    </div>
+                    <span class="validation" asp-validation-for="@Model.Phone"></span>
+
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4 form-floating ">
+                    <div class="form-floating ">
+                        <input asp-for="Email" type="email" class="form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels">Email</label>
+                    </div>
+                    <span class="validation" asp-validation-for="@Model.Email"></span>
+
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4 form-floating ">
+                    <div class="form-floating ">
+                        @* @ Business Contact @ *@
+                        <input asp-for="Code1" id="flag1" hidden />
+                        <input asp-for="Phone1" id="phone1" class="py-3 form-control inputs border unique" type="tel" />
+                    </div>
+                    <span class="validation" asp-validation-for="@Model.Phone1"></span>
+
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4 form-floating ">
+                    <div class="form-floating ">
+                        <input asp-for="Street" type="text" class="form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels">Street</label>
+                    </div>
+                    <span class="validation" asp-validation-for="@Model.Street"></span>
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4 form-floating ">
+                    <div class="form-floating ">
+                        <input asp-for="City" type="text" class="form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels">City</label>
+                    </div>
+                    <span class="validation" asp-validation-for="@Model.City"></span>
+
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4 form-floating ">
+                    <div class="form-floating ">
+                        <select asp-for="State" class="form-select inputs">
+                            <option value="0" selected disabled>Select State</option>
+                            @for (int i = 0; i < Model.regions.Count; i++)
+                            {
+                                <option value="@Model.regions[i].Regionid">@Model.regions[i].Name</option>
+                            }
+
+                        </select>
+                        <label class="input_labels">State</label>
+                    </div>
+                    <span class="validation" asp-validation-for="@Model.State"></span>
+
+                </div>
+
+                <div class="col-lg-6 col-12 temp mt-4 form-floating ">
+                    <div class="form-floating ">
+                        <input asp-for="Zip" type="number" class="form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels">Zip/Postal</label>
+                    </div>
+                    <span class="validation" asp-validation-for="@Model.Zip"></span>
+                </div>
+            </div>
+
+            <div class="text-end mt-3">
+                <button type="submit" class="btn btn-info mx-1" onclick="changeCountryCode()">Submit</button>
+                <button type="button" class="btn btn-outline-info mx-1">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+
+    / FOR TELEPHONE INPUT /
+    var phoneInputField = document.querySelector("#phone");
+    var phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        preferredCountries: ["in"],
+        separateDialCode: true,
+        initialCountry: "in"
+    });
+    var phoneInputField1 = document.querySelector("#phone1");
+    var phoneInput1 = window.intlTelInput(phoneInputField1, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        preferredCountries: ["in"],
+        separateDialCode: true,
+        initialCountry: "in"
+    });
+</script>
+<script>
+    function changeCountryCode() {
+        var countryCode = document.getElementById("flag");
+        countryCode.value = phoneInput.getSelectedCountryData().dialCode;
+
+        var countryCode1 = document.getElementById("flag1");
+        countryCode1.value = phoneInput1.getSelectedCountryData().dialCode;
+
+    }
+
+</script>

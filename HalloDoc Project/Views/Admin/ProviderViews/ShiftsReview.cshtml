@@ -1,0 +1,143 @@
+﻿@{
+    Layout = "_AdminDashboardLayout";
+    ViewData["Title"] = "Active Table";
+
+}
+<script>
+    function populateRegionDropdown() {
+        $.ajax({
+            url: '/Admin/RegionResults',
+            type: 'GET',
+            success: function (data) {
+                var dropdownData = data;
+                console.log(dropdownData);
+                var dropdown = $('.regions');
+                dropdown.empty();
+                dropdown.append($('<option>').text('--').val(""));
+                dropdownData.forEach(function (item) {
+                    dropdown.append($('<option>').text(item.name).val(item.regionid));
+
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        populateRegionDropdown();
+        function GetRequestedShifts() {
+            var shiftRegions = $('#shiftRegions').val();
+            $.ajax({
+                url: '/Admin/ShiftsReviewTablePartial',
+                type: 'POST',
+                data: { regionid: shiftRegions },
+                success: function (response) {
+                    console.log(response)
+                    $('#shiftsReviewTable').html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error: ', error);
+                }
+            });
+        }
+        //loads shifts on-change of regions
+        GetRequestedShifts();
+        $('#shiftRegions').on('change', function () {
+            GetRequestedShifts();
+        });
+        $('#approveSelected').on('click', function () {
+            var checkboxes = document.querySelectorAll('.shifts:checked');
+            var selectedShifts = [];
+            if (checkboxes.length != 0) {
+                checkboxes.forEach(function (checkbox) {
+                    var shiftDetailId = checkbox.value;
+                    selectedShifts.push(shiftDetailId);
+                });
+                console.log(typeof selectedShifts);
+                $.ajax({
+                    url: '/Admin/ApproveMultipleShifts',
+                    type: 'POST',
+                    data: { selectedShifts: selectedShifts },
+                    success: function (response) {
+                        GetRequestedShifts();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error: ', error);
+                    }
+                });
+            }
+        });
+        $('#deleteSelected').on('click', function () {
+            var checkboxes = document.querySelectorAll('.shifts:checked');
+            var selectedShifts = [];
+            if (checkboxes.length != 0) {
+                checkboxes.forEach(function (checkbox) {
+                    var shiftDetailId = checkbox.value;
+                    selectedShifts.push(shiftDetailId);
+                });
+                console.log(typeof selectedShifts);
+                $.ajax({
+                    url: '/Admin/DeleteMultipleShifts',
+                    type: 'POST',
+                    data: { selectedShifts: selectedShifts },
+                    success: function (response) {
+                        GetRequestedShifts();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error: ', error);
+                    }
+                });
+            }
+        });
+
+    });
+    
+    
+
+</script>
+<div class="row justify-content-center">
+    <div class="col-10 d-inline-flex justify-content-between">
+        <div class="d-flex">
+            <h4 class="h4 mt-5 mb-3">Requested Shifts</h4>
+        </div>
+        <div class="d-flex">
+            <button class="btn btn-outline-info mt-5 mb-3 ms-auto " onclick="history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                     height="16" fill="currentColor" class="bi bi-chevron-left fw-medium mb-1" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                </svg>Back
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row rounded justify-content-center">
+    <div class="col-10 rounded" style="box-shadow: 2px 2px 20px rgb(179, 177, 177);">
+        <div class="row justify-content-between">
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <select class="form-select border text-muted regions my-3" id="shiftRegions" name="shiftRegions" aria-label="Default select example">
+                    </select>
+                    <label for="accountTypeUser">Regions</label>
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a class="btn rounded btn-success my-3 me-md-2" id="monthShifts" asp-action="ProviderScheduling" asp-controller="Admin">
+                        View Current Month Shifts
+                    </a>
+                    <button class="btn rounded btn-success my-3" id="approveSelected">
+                        Approve Selected
+                    </button>
+                    <button class="btn rounded btn-danger my-3" id="deleteSelected">
+                        Delete Selected
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="shiftsReviewTable"></div>
+    </div>
+</div>

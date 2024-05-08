@@ -1,0 +1,48 @@
+﻿@model UserAccessModel;
+<div class="table-responsive">
+    <table class="table mt-4">
+        <colgroup>
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 10%;">
+        </colgroup>
+        <thead class="table-head align-middle">
+            <tr>
+                <th>Account Type</th>
+                <th>Account POC</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Open Request</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+            @for (int i = 0; i < Model.UserList.Count; i++)
+            {
+                <tr>
+                    <td>@Model.UserList[i].AccountType</td>
+                    <td>@Model.UserList[i].AccountPOC</td>
+                    <td>@Model.UserList[i].Phone</td>
+                    <td>@Model.UserList[i].Status</td>
+                    <td>@Model.UserList[i].OpenRequest</td>
+                    @if (Model.UserList[i].accountType == 1)
+                    {
+                        <td>
+                            <a asp-action="EditAdminAccount" asp-controller="Admin" asp-route-id="@Model.UserList[i].id" class="btn btn-outline-info">Edit</a>
+                        </td>
+                    }
+                    @if (Model.UserList[i].accountType == 2)
+                    {
+                        <td>
+                            <a asp-action="EditPhysicianProfile" asp-controller="Admin" asp-route-PhysicianId="@Model.UserList[i].id" class="btn btn-outline-info">Edit</a>
+                        </td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

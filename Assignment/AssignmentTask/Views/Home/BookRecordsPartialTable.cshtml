@@ -1,0 +1,147 @@
+﻿@model List<AssignmentDataLinkLayer.DataModels.Book>
+<div class="table-responsive">
+    <table class="table my-3">
+        <thead class="blueButtons text-light">
+            <tr>
+                <th scope="col">Book Id</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Author</th>
+                <th scope="col">Borrower Name</th>
+                <th scope="col">Date Of Issue</th>
+                <th scope="col">City</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(int i = 0; i < Model.Count; i++)
+            {
+            <tr>
+                <td>@Model[i].Id</td>
+                <td>@Model[i].BookName</td>
+                <td>@Model[i].Author</td>
+                <td>@Model[i].BorrowerName</td>
+                <td>@Model[i].DateOfIssue</td>
+                <td>@Model[i].City</td>
+                <td>@Model[i].Genre</td>
+                <td>
+                    <button class="btn btn-primary border-0 blueButtons"  data-bookId="@Model[i].Id"  onclick="openEditModal()">Edit</button>
+                    <button class="btn btn-dark " asp-action="DeleteBookRecord" asp-controller="Home">Delete</button>
+                </td>
+            </tr>
+            }            
+        </tbody>
+    </table>
+</div>
+
+@* Edit Modal *@
+<div class="modal" id="EditDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header blueBackground">
+                <h5 class="modal-title text-light">Edit Book Details</h5>
+                <button type="button" class="btn btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editBookDetialsForm">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="editBookName" placeholder="Book Name">
+                        <label for="editBookName">Book Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="editAuthorName" placeholder="Author Name">
+                        <label for="editAuthorName">Author Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="editBorrowerName" placeholder="Borrower Name">
+                        <label for="editBorrowerName">Borrower Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="editIssueDate" max="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.AddYears(-100).ToString()" placeholder="Book Name">
+                        <label for="editIssueDate">Date Of Issue</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                <option selected disabled value="0">Select Genre</option>
+                                <option value="1">Thriller</option>
+                                <option value="2">Romance</option>
+                                <option value="3">Sci-Fi</option>
+                                <option value="4">Fantasy</option>
+                            </select>
+                            <label for="floatingSelect">Genre</label>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="editCity" placeholder="City">
+                        <label for="editCity">City</label>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-dark text-light" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn blueButtons text-light">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@* Add Modal *@
+<div class="modal" id="addDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header blueBackground">
+                <h5 class="modal-title text-light">Add Book Details</h5>
+                <button type="button" class="btn btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addBookDetialsForm">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="addBookName" placeholder="Book Name">
+                        <label for="addBookName">Book Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="addAuthorName" placeholder="Author Name">
+                        <label for="addAuthorName">Author Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="addBorrowerName" placeholder="Borrower Name">
+                        <label for="addBorrowerName">Borrower Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="addIssueDate" max="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.AddYears(-100).ToString()" placeholder="Book Name">
+                        <label for="addIssueDate">Date Of Issue</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <option selected disabled value="0">Select Genre</option>
+                            <option value="1">Thriller</option>
+                            <option value="2">Romance</option>
+                            <option value="3">Sci-Fi</option>
+                            <option value="4">Fantasy</option>
+                        </select>
+                        <label for="floatingSelect">Genre</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="addCity" placeholder="City">
+                        <label for="addCity">City</label>
+                    </div>
+                    <div class="text-end">
+
+                        <button type="button" class="btn btn-dark text-light" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn blueButtons text-light">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function openEditModal() {
+        $('#EditDetailsModal').modal('show')
+    }
+    function openAddModal() {
+        $('#addDetailsModal').modal('show')
+    }
+</script>

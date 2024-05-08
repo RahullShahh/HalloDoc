@@ -1,0 +1,59 @@
+﻿.patient-upload {
+    border-radius: 5px;
+    border: 1px solid #d1d1d1;
+    display: flex;
+}
+
+.file-upload {
+    /* display: block; */
+    margin: 0 auto;
+    /* / color: #fff; / */
+}
+* {
+    font-family: "Inter"!important;
+}
+#fileLoader {
+    position: absolute;
+    left: -9999px;
+}
+
+label[for="fileLoader"] {
+    padding: 0.5em;
+    background: #01bce9;
+    cursor: pointer;
+    /* / float:left; / */
+    color: #ffffff;
+    float: right;
+}
+
+[data-bs-theme="dark"] .darkModeShadow {
+    box-shadow: 0px 3px 10px #000000 !important;
+}
+
+#filename {
+    padding: 0.5em;
+    /* / width:93%; / */
+    /* / white-space: nowrap; / */
+    /* / overflow:hidden; / */
+    /* / background:#739BAE; / */
+    float: left;
+    /* / flex-grow: 1; / */
+}
+
+.t:focus {
+    box-shadow: none;
+    border: 2px solid #10bce9;
+}
+
+.validation{
+    font-size:12px;
+    color:red;
+    font-weight:500;
+}
+
+.t:focus-within + label {
+    color: #10bce9 !important;
+}
+.iti__country-list {
+    z-index: 5;
+}

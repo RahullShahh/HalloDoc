@@ -1,0 +1,73 @@
+﻿@model UserAccessModel;
+@{
+    Layout = "_AdminDashboardLayout";
+    ViewData["username"] = Model.UserName;
+}
+
+<div class="container">
+    <div class="row m-4 pt-4">
+        <h3>Access</h3>
+    </div>
+    <div class="container mb-5 pb-5 request_form shadow-lg darkModeShadow px-4">
+
+        <div class="d-flex justify-content-between pt-4">
+            <div class="d-flex search-input rounded align-items-center ms-2 ps-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 50 50">
+                    <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
+                    </path>
+                </svg>
+                <select id="typeFilter" class="form-select border-0">
+                    <option value="0" selected>All</option>
+                    @foreach (var item in Model.Aspnetroles)
+                    {
+                        <option class="pe-3" value="@item.Id">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <a asp-controller="Admin" asp-action="CreateAdminAccount" type="button" id="adminAccountCreate" class="btn btn-outline-info d-none">Create Admin Account</a>
+            <a asp-action="CreatePhysician" asp-controller="Admin" type="button" id="physicianAccountCreate" class="btn btn-outline-info d-none">Create Physician Account</a>
+        </div>
+
+        <div class="mt-4" id="userList">
+            <partial name="AccessViews/UserAccessPartialView" />
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<script>
+
+    $('#typeFilter').change(function () {
+        var x = $('#typeFilter').val();
+        var a = document.getElementById("adminAccountCreate");
+        var b = document.getElementById("physicianAccountCreate");
+
+        if (x == 0) {
+            a.classList.add("d-none");
+            b.classList.add("d-none");
+        }
+        if (x == 1) {
+            a.classList.remove("d-none");
+            b.classList.add("d-none");
+        }
+        if (x == 2) {
+            a.classList.add("d-none");
+            b.classList.remove("d-none");
+        }
+
+        $.ajax({
+            url: "/Admin/AccountTypeFilter",
+            type: 'POST',
+            data: { accountType: x },
+            success: function (result) {
+                $('#userList').html(result);
+            },
+            error: function (error) {
+                alert('error');
+            }
+        });
+    })
+</script>

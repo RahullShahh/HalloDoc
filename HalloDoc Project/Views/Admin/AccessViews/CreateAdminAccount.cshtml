@@ -1,0 +1,183 @@
+﻿@model CreateAdminViewModel;
+@{
+    ViewData["Title"] = "Create Admin";
+    Layout = "_AdminDashboardLayout";
+}
+
+<div class="row justify-content-center">
+    <div class="col-10 d-inline-flex justify-content-between">
+        <div class="d-flex">
+            <h4 class="h4 mt-5 mb-3">Create Admin Account</h4>
+        </div>
+        <div class="d-flex">
+            <button class="btn btn-outline-info mt-5 mb-3 ms-auto " onclick="history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                     height="16" fill="currentColor" class="bi bi-chevron-left fw-medium mb-1" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                </svg>Back
+            </button>
+        </div>
+    </div>
+</div>
+<partial name="_ValidationScriptsPartial"></partial>
+<div class="row justify-content-center pb-4 ">
+    <div class="col-10 rounded pb-3 white-bag" style="box-shadow: 2px 2px 20px rgb(179, 177, 177);">
+        <form asp-action="CreateAdminAccount" enctype="multipart/form-data" class="pb-2">
+            <div class="row">
+                <h6 class="my-3">Account Information</h6>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-12">
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="usernameProvider" asp-for="UserName"
+                                   placeholder="Username">
+                            <label class="text-muted floating-label">Username</label>
+                        </div>
+                        <span asp-validation-for="UserName" class="validation"></span>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-12">
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="passwordProvider" asp-for="Password"
+                                   placeholder="Password">
+                            <label class="text-muted floating-label">Password</label>
+                        </div>
+                        <span asp-validation-for="Password" class="validation"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-12">
+                    <div class="form-floating">
+                        <select class="form-control d-flex align-items-center py-2" asp-for="Role">
+                            <option>Select Roles</option>
+                            <option>Admin</option>
+                        </select>
+                    </div>
+                    <span asp-validation-for="Role" class="validation"></span>
+                </div>
+            </div>
+            <div class="row">
+                <h6 class="my-3">Administrator Information</h6>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="firstnameProvider" asp-for="FirstName"
+                               placeholder="Firstname">
+                        <label class="text-muted floating-label">Firstname</label>
+                    </div>
+                    <span asp-validation-for="FirstName" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="lastnameProvider" asp-for="LastName"
+                               placeholder="Lastname">
+                        <label class="text-muted floating-label">Lastname</label>
+                    </div>
+                    <span asp-validation-for="LastName" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="emailProvider" asp-for="Email"
+                               placeholder="Email">
+                        <label class="text-muted floating-label">Email</label>
+                    </div>
+                    <span asp-validation-for="Email" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="email" class="form-control" id="emailProvider" asp-for="ConfirmEmail"
+                               placeholder="Email">
+                        <label class="text-muted floating-label">Confirm Email</label>
+                    </div>
+                    <span asp-validation-for="ConfirmEmail" class="validation"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="tel"
+                               asp-for="PhoneNumAspNetUsers"
+                               class="form-control"
+                               id="floatingInput"
+                               placeholder="name@example.com" />
+                        <label class="text-muted floating-label ms-2" for="floatingInput">Mobile No</label>
+                    </div>
+                    <span class="validation" asp-validation-for="PhoneNumAspNetUsers"></span>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-check-inline ">
+                        @foreach (var region in Model.Regions)
+                        {
+                            <div class="form-check form-check-inline">
+                                <input required class="form-check-input changable"
+                                       type="checkbox"
+                                       id="region-@region.Regionid"
+                                       name="regions"
+                                       value="@region.Regionid" />
+                                <label class="form-check-label" for="region-@region.Regionid">@region.Name</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h6 class="my-3">Mailing & Billing Information</h6>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="address1Provider" asp-for="Address1"
+                               placeholder="Address1">
+                        <label class="text-muted floating-label">Address1</label>
+                    </div>
+                    <span asp-validation-for="Address1" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="address2Provider" asp-for="Address2"
+                               placeholder="Address2">
+                        <label class="text-muted floating-label">Address2</label>
+                    </div>
+                    <span asp-validation-for="Address2" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="cityProvider" asp-for="City"
+                               placeholder="City">
+                        <label class="text-muted floating-label">City</label>
+                    </div>
+                    <span asp-validation-for="City" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <select class="form-control d-flex align-items-center py-2" asp-for="state">
+                            <option selected disabled>Select State</option>
+                            @foreach (var state in Model.Regions)
+                            {
+                                <option value="@state.Regionid">@state.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <span asp-validation-for="state" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input type=""
+                               asp-for="zip"
+                               class="form-control"
+                               id="floatingInput"
+                               placeholder="name@example.com" />
+                        <label class="text-muted floating-label ms-2" for="floatingInput">Zip</label>
+                    </div>
+                    <span asp-validation-for="zip" class="validation"></span>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="d-grid gap-2 my-4 d-md-flex justify-content-md-end">
+                    <button class="btn btn-success me-md-2 text-white fw-medium mb-3" type="submit">Create Account</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

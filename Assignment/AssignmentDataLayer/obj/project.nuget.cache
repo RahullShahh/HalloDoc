@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "G5omVRJ5xr96GqQKi+7ORNs2XUeet37q10rwG6Ps1gUI/JD3bw0RiJY+SDdltcv+sq7wcv9K9gTGKKPTXIYCiw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\pca96\\Desktop\\HalloDoctorsss\\AssignmentDataLayer\\AssignmentDataLayer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pca96\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.15\\microsoft.windowsdesktop.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\pca96\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.15\\microsoft.netcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\pca96\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.15\\microsoft.aspnetcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\pca96\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.15\\microsoft.netcore.app.host.win-x64.7.0.15.nupkg.sha512"
+  ],
+  "logs": []
+}

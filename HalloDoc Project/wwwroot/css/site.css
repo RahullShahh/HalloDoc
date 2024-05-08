@@ -1,0 +1,30 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+.iti__country-list {
+    z-index: 5;
+}
+* {
+    font-family: "Inter"!important;
+}/*
+[data-bs-theme="dark"] .admin-dashboard {
+    background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%);
+}*/
+[data-bs-theme="dark"] .darkModeShadow {
+    box-shadow: 0px 3px 10px #000000 !important;
+}

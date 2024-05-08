@@ -1,0 +1,331 @@
+﻿@model EditPhysicianViewModel;
+@{
+    ViewData["Title"] = "AdminDash";
+    Layout = "_AdminDashboardLayout";
+    ViewData["Title"] = "Create Physician";
+
+}
+
+<div class="row justify-content-center">
+    <div class="col-8 d-inline-flex justify-content-between">
+        <div class="d-flex">
+            <h4 class="h4 mt-5 mb-3">Create Provider Account</h4>
+        </div>
+        <div class="d-flex">
+            <button class="btn btn-outline-info mt-5 mb-3 ms-auto " onclick="history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left fw-medium mb-1" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                </svg>Back
+            </button>
+        </div>
+    </div>
+</div>
+<partial name="_ValidationScriptsPartial"></partial>
+<div class="row justify-content-center">
+    <div class="col-8 rounded shadow-lg p-2 mb-3 darkModeShadow">
+        <form asp-action="CreatePhysician" asp-controller="Admin" enctype="multipart/form-data">
+            <div class="row">
+                <h6>Account Information</h6>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 mb-3 col-12">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="usernameProvider" asp-for="@Model.PhysicianUsername" placeholder="Username">
+                        <label class="text-muted floating-label">Username</label>
+                    </div>
+                    <span asp-validation-for="@Model.PhysicianUsername" class="validation"></span>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3 col-12">
+                    <div class="form-floating ">
+                        <input type="password" class="form-control" id="passwordProvider" asp-for="@Model.PhysicianPassword" placeholder="Password">
+                        <label class="text-muted floating-label">Password</label>
+                    </div>
+                    <span asp-validation-for="@Model.PhysicianPassword" class="validation"></span>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3 col-12">
+                    <div class="form-floating">
+                        <select asp-for="PhysicianRole" class="form-control d-flex align-items-center py-2" asp-for="Role">
+                            <option>Select Roles</option>
+                            @for (int i = 0; i < Model.Role.Count; i++)
+                            {
+                                <option value="@Model.Role[i].Roleid">@Model.Role[i].Name</option>
+
+                            }
+                        </select>
+                        <span asp-validation-for="Role" class="validation"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h6>Provider Information</h6>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="firstnameProvider" asp-for="FirstName" placeholder="Firstname">
+                        <label class="text-muted floating-label">Firstname</label>
+                    </div>
+                    <span asp-validation-for="FirstName" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="lastnameProvider" asp-for="LastName" placeholder="Lastname">
+                        <label class="text-muted floating-label">Lastname</label>
+                    </div>
+                    <span asp-validation-for="LastName" class="valiation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="email" class="form-control" id="emailProvider" asp-for="Email" placeholder="Email">
+                        <label class="text-muted floating-label">Email</label>
+                    </div>
+                    <span asp-validation-for="Email" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="tel" asp-for="PhoneNo" class="form-control" id="floatingInput" placeholder="name@example.com" />
+                        <label class="text-muted floating-label ms-2" for="floatingInput">Mobile No</label>
+                    </div>
+                    <span class="validation" asp-validation-for="PhoneNo"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="medLicense" asp-for="MedicalLicense" placeholder="Medical License #">
+                        <label class="text-muted floating-label">Medical License #</label>
+                    </div>
+                    <span asp-validation-for="MedicalLicense" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="npiNum" asp-for="NPINumber" placeholder="NPI Number">
+                        <label class="text-muted floating-label">NPI Number</label>
+                    </div>
+                    <span asp-validation-for="NPINumber" class="validation"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-check form-check-inline ">
+                    @for (int i = 0; i < Model.States.Count; i++)
+                    {
+                        <div class="form-check form-check-inline">
+                            <input required class="form-check-input changable" type="checkbox" id="@Model.States[i].Regionid" name="SelectedRegions" value="@Model.States[i].Regionid" />
+                            <label class="form-check-label" for="@Model.States[i].Regionid">@Model.States[i].Name</label>
+                        </div>
+                    }
+                    
+                </div>
+            </div>
+            <div class="row">
+                <h6>Mailing & Billing Information</h6>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="address1Provider" asp-for="Address1" placeholder="Address1">
+                        <label class="text-muted floating-label">Address1</label>
+                    </div>
+                    <span asp-validation-for="Address1" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="address2Provider" asp-for="Address2" placeholder="Address2">
+                        <label class="text-muted floating-label">Address2</label>
+                    </div>
+                    <span asp-validation-for="Address2" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" id="cityProvider" asp-for="City" placeholder="City">
+                        <label class="text-muted floating-label">City</label>
+                    </div>
+                    <span asp-validation-for="City" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <select asp-for="PhysicianState" class="form-control d-flex align-items-center py-2" asp-for="States">
+                            <option selected disabled>Select State</option>
+                            @for (int i = 0; i < Model.States.Count; i++)
+                            {
+                                <option value="@Model.States[i].Regionid">@Model.States[i].Name</option>
+                            }
+                        </select>
+                    </div>
+                    <span asp-validation-for="PhysicianState" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="zipProvider" asp-for="ZipCode" placeholder="Zip">
+                        <label class="text-muted floating-label">Zip</label>
+                    </div>
+                    <span asp-validation-for="ZipCode" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input type="tel" asp-for="BillingPhoneNo" class="form-control" id="floatingInput" placeholder="name@example.com" />
+                        <label class="text-muted floating-label ms-2" for="floatingInput">BillingPhone</label>
+                    </div>
+                    <span asp-validation-for="BillingPhoneNo" class="validation"></span>
+                </div>
+            </div>
+            <div class="row">
+                <h6>Provider Profile</h6>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="bussinessName" asp-for="BusinessName" placeholder="Business Name">
+                        <label class="text-muted floating-label">Business Name</label>
+                    </div>
+                    <span asp-validation-for="BusinessName" class="validation"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="bussinessWebsite" asp-for="BusinessWebsite" placeholder="Business Website">
+                        <label class="text-muted floating-label">Business Website</label>
+                    </div>
+                    <span asp-validation-for="BusinessWebsite" class="validation"></span>
+                </div>
+                <div class="d-flex col-md-6">
+                    <label for="photoProvider" class="col d-flex" style="height:3rem">
+                        <div class="col p-1 ps-3 text-muted border"><span id="infoArea">Select Photo</span></div>
+                        <div id="btn" class=" pt-2 btn btn-info">
+
+                            
+                            <span style="color:white;" class="">Upload</span>
+
+                        </div>
+                        <input type="file" class="form-control-file" id="photoProvider" accept=".jpg, .png, .jpeg" hidden asp-for="SelectPhoto">
+                    </label>
+                    <span asp-validation-for="SelectPhoto" class="validation"></span>
+                </div>
+                <div class="col-12">
+                    <div class="form-floating mb-3 mt-3">
+                        <textarea class="form-control" placeholder="Admin Notes" id="adminNotes" asp-for="AdminNotes" style="height: 15vh;"></textarea>
+                        <label class="text-muted floating-label ms-2">
+                            Admin Notes
+                        </label>
+                    </div>
+                    <span asp-validation-for="AdminNotes" class="validation"></span>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <h6>Onboarding</h6>
+                <div class="col-8 d-flex justify-content-between mb-3">
+                    @* <div>
+                    <input type="checkbox" id="checkIca" />
+                    </div> *@
+                    <div class="col-6">
+                        <span>Independent Contractor Agreement</span>
+                    </div>
+                    <div class="col-6">
+                        <input type="file" class="form-control" id="ica" accept=".pdf" asp-for="IndependentContractAgreement" hidden />
+                        <label for="ica" class="input-group-text btn btn-info text-white"><span></span> Upload</label>
+                    </div>
+                    <span asp-validation-for="IndependentContractAgreement" class="validation"></span>
+                </div>
+                <div class="col-8 d-flex justify-content-between mb-3">
+                    @* <div>
+                    <input type="checkbox" id="checkBackground" />
+                    </div> *@
+                    <div class="col-6">
+                        <span>Background Check</span>
+                    </div>
+                    <div class="col-6">
+                        <input type="file" class="form-control" id="backgroundCheck" accept=".pdf" hidden asp-for="BackgroundCheck" />
+                        <label for="backgroundCheck" class="input-group-text btn btn-info text-white"><span></span> Upload</label>
+                    </div>
+                    <span asp-validation-for="BackgroundCheck" class="validation"></span>
+                </div>
+                <div class="col-8 d-flex justify-content-between mb-3">
+                    @* <div>
+                    <input type="checkbox" id="checkHipaa" />
+                    </div> *@
+                    <div class="col-6">
+                        <span>HIPAA Compliance</span>
+                    </div>
+                    <div class="col-6">
+                        <input type="file" class="form-control" id="hipaa" accept=".pdf" hidden asp-for="HIPAACompliance" />
+                        <label for="hipaa" class="input-group-text btn btn-info text-white"><span></span> Upload</label>
+                    </div>
+                    <span asp-validation-for="HIPAACompliance" class="validation"></span>
+                </div>
+                <div class="col-8 d-flex justify-content-between mb-3">
+                    @* <div>
+                    <input type="checkbox" id="checkNonDisclosure" />
+                    </div> *@
+                    <div class="col-6">
+                        <span>Non-Disclosure Agreement</span>
+                    </div>
+                    <div class="col-6">
+                        <input type="file" class="form-control" id="nonDisclosure" accept=".pdf" hidden asp-for="NonDisclosureAgreement" />
+                        <label for="nonDisclosure" class="input-group-text btn btn-info text-white"><span></span> Upload</label>
+                    </div>
+                    <span asp-validation-for="NonDisclosureAgreement" class="validation"></span>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="d-grid gap-2 my-4 d-md-flex justify-content-md-end">
+                    <button class="btn btn-success me-md-2 text-white fw-medium mb-5" type="submit">Create Account</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+
+    $('#photoProvider').on('change', function () {
+        showFileName();
+    });
+
+    $('#ica').on('change', function () {
+        if (this.files && this.files.length > 0) {
+            console.log(this.files.length);
+            $('#checkIca').prop('checked', true);
+            console.log(this.files[0].name);
+        }
+        else {
+            $('#checkIca').prop('checked', false);
+        }
+    });
+
+    $('#backgroundCheck').on('change', function () {
+        if (this.files && this.files.length > 0) {
+            console.log(this.files.length);
+            $('#checkBackground').prop('checked', true);
+        }
+        else {
+            $('#checkBackground').prop('checked', false);
+        }
+    });
+
+    $('#hipaa').on('change', function () {
+        if (this.files && this.files.length > 0) {
+            console.log(this.files.length);
+            $('#checkHipaa').prop('checked', true);
+        }
+        else {
+            $('#checkHipaa').prop('checked', false);
+        }
+    });
+
+    $('#nonDisclosure').on('change', function () {
+        if (this.files && this.files.length > 0) {
+            console.log(this.files.length);
+            $('#checkNonDisclosure').prop('checked', true);
+        }
+        else {
+            $('#checkNonDisclosure').prop('checked', false);
+        }
+    });
+
+    $('#License').on('change', function () {
+        if (this.files && this.files.length > 0) {
+            console.log(this.files.length);
+            $('#checkLicense').prop('checked', true);
+        }
+        else {
+            $('#checkLicense').prop('checked', false);
+        }
+    });
+
+</script>

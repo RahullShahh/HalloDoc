@@ -1,0 +1,137 @@
+﻿@model SendOrderViewModel
+@{
+    Layout = "_ProviderDashboardLayout";
+    ViewData["Title"] = "Send Orders";
+
+}
+<div class="container">
+    <div class="row">
+        <div class="col my-4 d-flex justify-content-between ">
+            <h2>Send Order</h2>
+            <button type="button" class="btn btn-outline-info" onclick="history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                    <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
+                </svg>
+                Back
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container mb-5 pb-5 request_form shadow-lg px-4">
+    <form method="post">
+        <div class="row pt-3">
+            <div class="col-md-6 col-12 temp form-floating mt-3">
+                <select class="form-select" asp-for="profession" id="SelectProfession">
+                    <option value="0" selected disabled>Select Profession</option>
+                    @for (int i = 0; i < Model.healthprofessionaltype.Count; i++)
+                    {
+                        <option value="@Model.healthprofessionaltype[i].Healthprofessionalid">@Model.healthprofessionaltype[i].Professionname</option>
+                    }
+                </select>
+                <label for="floatingSelectGrid" class="input_labels ms-2">Select Profession</label>
+            </div>
+            <div class="col-md-6 col-12 form-floating temp mt-3">
+                <select class="form-select" asp-for="business" id="SelectBusiness">
+                    <option value="0" selected disabled>Select Business</option>
+
+                </select>
+                <label for="floatingSelectGrid" class="input_labels ms-2">Select Business</label>
+            </div>
+            <div class="col-md-6 col-12 form-floating temp mt-3">
+                <input type="text" asp-for="BusContact" id="Vencontact" class="form-control inputs border" placeholder="BusinessContact">
+                <label for="floatingInput" class="input_labels ms-2">Business Contact</label>
+            </div>
+            <div class="col-md-6 col-12 form-floating temp mt-3 ">
+                <input type="email" asp-for="BusEmail" id="Venemail" class="form-control inputs border" placeholder="Email">
+                <label for="floatingInput" class="input_labels ms-2">Email</label>
+            </div>
+            <div class="col-md-6 col-12 form-floating temp mt-3 ">
+                <input type="text" asp-for="FaxNo" id="VenFax" class="form-control inputs border" placeholder="Fax Number">
+                <label for="floatingInput" class="input_labels ms-2">Fax Number</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-3 form-floating temp">
+                <textarea type="text-area" asp-for="prescription" class="form-control inputs" style="height: 125px;" placeholder="name@example.com"></textarea>
+                <label for="floatingInput" class="ms-2 input_labels text-wrap">
+                    Prescription for Order details
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-12 temp form-floating mt-3">
+                <select asp-for="RefillCount" class="form-select" id="floatingSelectGrid">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <label for="floatingSelectGrid" class="ms-2 input_labels">Number of Refill</label>
+            </div>
+        </div>
+
+
+
+        <div class="mt-4 text-end ">
+            <button class="btn btn-info last_buttons_1 mx-2" type="submit">Submit</button>
+            <button class="btn btn-outline-info mx-2" type="reset">Cancel</button>
+        </div>
+    </form>
+</div>
+<script>
+    function filterVendorsByProfession(ProfessionId) {
+        if (ProfessionId != "0") {
+            $.ajax({
+                type: "GET",
+                url: "/Provider/filterVenByPro",
+                data: { ProfessionId: ProfessionId },
+
+                success: function (data) {
+                    $("#Vencontact").val('');
+                    $("#Venemail").val('');
+                    $("#VenFax").val('');
+                    $('#SelectBusiness').empty();
+
+                    $('#SelectBusiness').append($('<option>', {
+                        value: 0,
+                        text: '-Select Business-',
+                        selected: true,
+                        disabled: true
+                    }));
+
+                    $.each(data, function (index, item) {
+                        $('#SelectBusiness').append($('<option>').text(item.vendorname).attr('value', item.vendorid));
+                    });
+                    $('#SelectBusiness option:first').prop('selected', true);
+                }
+            });
+        }
+    }
+    $("#SelectProfession").on("change", function () {
+        var ProfessionId = $("#SelectProfession").val();
+        filterVendorsByProfession(ProfessionId);
+    });
+</script>
+<script>
+    function getBusinessData(BusinessId) {
+        debugger;
+        if (BusinessId != "0") {
+            $.ajax({
+                type: "GET",
+                url: "/Provider/BusinessData",
+                data: { BusinessId: BusinessId },
+
+                success: function (response) {
+                    $("#Vencontact").val(response.businesscontact);
+                    $("#Venemail").val(response.email);
+                    $("#VenFax").val(response.faxnumber);
+                }
+            });
+        }
+    }
+    $("#SelectBusiness").on("change", function () {
+        var BusinessId = $("#SelectBusiness").val();
+        getBusinessData(BusinessId);
+    });
+</script>

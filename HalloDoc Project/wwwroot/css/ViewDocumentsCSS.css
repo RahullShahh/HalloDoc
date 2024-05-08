@@ -1,0 +1,69 @@
+﻿* {
+    font-family: 'poppins';
+}
+
+#darkmode:hover svg {
+    fill: white;
+}
+
+.nav-tabs .active {
+    border: none;
+    color: #10bce9 !important;
+    border-bottom: 5px solid #10bce9 !important;
+}
+
+[data-bs-theme="dark"] .nav-link {
+    color: white;
+}
+
+[data-bs-theme="dark"] .darkModeShadow {
+    box-shadow: 0px 3px 10px #000000 !important;
+}
+
+[data-bs-theme="dark"] .tr-info th {
+    color: white;
+    background-color: #3a3b3c;
+}
+
+[data-bs-theme="light"] .nav-link {
+    color: black;
+}
+
+.tr-info th {
+    background-color: #f0f0f0;
+    font-weight: 500;
+    color: black;
+}
+
+tr {
+    height: 50px
+}
+
+.createNewRequest:hover {
+    color: white;
+}
+
+.btn-outline-info:hover {
+    color: white;
+}
+
+.patientName {
+    color: #10bce9;
+}
+
+.documents {
+}
+
+.shadow-lg {
+    margin-top: 2vh;
+    padding: 1vw 2vw 2vw 2vw;
+}
+
+#myTabContent {
+    margin-top: 5vh;
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+* {
+    font-family: "Inter" !important;
+}

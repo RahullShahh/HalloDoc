@@ -1,0 +1,72 @@
+﻿@model ProviderMenuViewModel
+<table class="table providertable">
+    <colgroup>
+        <col span="1" style="width: 12%;">
+        <col span="1" style="width: 23%;">
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 20%;">
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 15%;">
+    </colgroup>
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                Stop Notification
+            </th>
+            <th>Provider Name</th>
+            <th>Role</th>
+            <th>
+                On Call Status
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.providers.Count; i++)
+        {
+            <tr>
+                <td>
+                    @if (Model.providers[i].Notification)
+                    {
+                        <div class="d-flex inputcheckbox justify-content-center form-check">
+                            <input class="form-check-input border" onchange="UpdateNotificationStatus(this)" data-physicianid="@Model.providers[i].PhysicianId" checked type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault"></label>
+                        </div>
+                    }
+                    @if (!Model.providers[i].Notification)
+                    {
+                        <div class="d-flex inputcheckbox justify-content-center form-check">
+                            <input class="form-check-input border" onchange="UpdateNotificationStatus(this)" data-physicianid="@Model.providers[i].PhysicianId" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault"></label>
+                        </div>
+                    }
+                </td>
+                <td>
+                    @Model.providers[i].Name
+                </td>
+                <td>
+                    @* @Model.providers[i].Role *@
+                    Static Role
+                </td>
+                <td>
+                    Static OnCallStatus
+                    @* @Model.providers[i].OnCallStatus *@
+                </td>
+                <td>
+                    Static ProviderStatus
+                    @* @Model.providers[i].ProviderStatus *@
+                </td>
+                <td>
+                    <button class="btn btn-outline-info" id="ProviderContactButton" onclick="OpenContactModal(this)" data-physicianid="@Model.providers[i].PhysicianId">Contact</button>
+                    <a class="btn btn-outline-info" asp-action="EditPhysicianProfile" asp-route-physicianid="@Model.providers[i].PhysicianId" asp-controller="Admin">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+           

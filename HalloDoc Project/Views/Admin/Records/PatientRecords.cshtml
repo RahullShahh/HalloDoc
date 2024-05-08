@@ -1,0 +1,70 @@
+﻿@model List<PatientRecordsViewModel>
+@{
+    Layout = "_AdminDashboardLayout";
+}
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div class="d-flex justify-content-between">
+            <h5 class="my-3">Patient Records</h5>
+            <button class="btn btn-outline-info backbtn mt-3" onclick="window.history.back(-1)" style="width:auto">
+                <div>
+                    <img src="/SRS Screen Shorts/go-back-2.svg" alt="" width="25px">Back
+                </div>
+            </button>
+        </div>
+        <div class="shadow-lg p-4">
+            <table class="table">
+                <colgroup>
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Client/Member</th>
+                        <th>Created Date</th>
+                        <th>Confirmation</th>
+                        <th>Provider Name</th>
+                        <th>Concluded Date</th>
+                        <th>Status</th>
+                        <th>Final Report</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(int i=0;i<Model.Count;i++)
+                    {
+                        <tr>
+                            <td>@Model[i].ClientName</td>
+                            <td>@Model[i].CreatedDate</td>
+                            <td>@Model[i].ConfirmationNo</td>
+                            <td>@Model[i].ProviderName</td>
+                            <td>@Model[i].ConcludedDate</td>
+                            <td>@Model[i].Status</td>
+                            <td>
+                                <a class="btn btn-outline-info" asp-action="FinalizeDownload" asp-controller="Admin" asp-route-requestid="@Model[i].Requestid">View</a>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="btn btn-outline-info " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Actions
+                                    </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestid="@Model[i].Requestid">View Case</a></li>
+                                        <li><a class="dropdown-item" asp-action="ViewUploads" asp-controller="Admin" asp-route-requestid="@Model[i].Requestid">View Uploads</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

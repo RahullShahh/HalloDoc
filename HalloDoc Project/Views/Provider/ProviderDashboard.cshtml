@@ -1,0 +1,814 @@
+﻿@model AdminDashboardViewModel
+@{
+    Layout = "_ProviderDashboardLayout";
+    ViewData["Title"] = "Provider Dashboard";
+
+}
+<div class="px-4">
+
+    <div class="row mt-3">
+
+        <div class="col-lg-3 col-sm-4 col-6 d-flex flex-column status-tab active align-items-center" id="status-new-tab">
+
+            <div class="py-2 ps-2 mt-3 shadow w-100 status-new">
+                <div class="d-flex">
+                    <svg height="20px" width="20px" class="" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         viewBox="0 0 512 512" xml:space="preserve">
+                    <style type="text/css">
+                        .st0 {
+                            fill: currentColor;
+                        }
+</style>
+                    <g>
+                    <path class="st0" d="M13.175,203.061c0,0-0.004-0.013-0.007-0.026l-0.672-1.763L13.175,203.061z" />
+                    <path class="st0" d="M17.239,163.415l11.178-7.3c0.006,0,0.012-0.007,0.019-0.014L17.239,163.415z" />
+                    <path class="st0" d="M480.364,260.466c-0.549-1.436-0.823-2.951-0.823-4.466c0-1.521,0.274-3.042,0.826-4.492l16.869-44.275
+		                        l1.586-4.172c1.74-4.564,2.582-9.324,2.582-14.006c0.006-12.986-6.458-25.516-17.835-32.953l-5.599-3.656l-37.84-24.708
+		                        c-2.569-1.684-4.447-4.276-5.25-7.247l-13.548-50.047c-4.675-17.23-20.28-29.075-37.978-29.075c-0.669,0-1.335,0.013-2.004,0.052
+		                        L329.766,44v-0.006l-0.774,0.02c-2.896,0-5.687-0.98-7.933-2.788l-37.766-30.42l-2.598-2.089
+		                        C273.507,2.912,264.725-0.006,256.002,0c-8.72-0.013-17.504,2.912-24.697,8.717l0.01-0.007L195.11,37.87l-4.159,3.35
+		                        c-2.256,1.815-5.057,2.795-7.94,2.795L182.338,44l-51.555-2.572l-0.033-0.007c-0.8-0.046-1.502-0.052-2.102-0.052
+		                        c-17.701,0-33.303,11.844-37.978,29.075l-13.549,50.047c-0.806,2.983-2.693,5.582-5.278,7.273l-3.732,2.436l-39.694,25.915
+		                        c-11.371,7.444-17.828,19.966-17.822,32.946c0,4.675,0.839,9.415,2.573,13.973l18.465,48.473l0.003,0.006
+		                        c0.548,1.437,0.826,2.965,0.826,4.486c0,1.522-0.274,3.043-0.826,4.48l-18.461,48.46l0.003-0.006
+		                        c-1.74,4.564-2.583,9.318-2.583,13.999c-0.006,12.987,6.451,25.523,17.838,32.966l32.218,21.038l11.201,7.313
+		                        c2.583,1.684,4.463,4.27,5.269,7.26l13.549,50.041c4.671,17.23,20.28,29.075,37.978,29.081c0.6-0.006,1.254-0.013,1.952-0.052
+		                        l-1.482,0.078l53.439-2.67h-0.026l0.5-0.007c2.866,0,5.658,0.98,7.91,2.795l40.371,32.522h0.003
+		                        c7.185,5.792,15.964,8.71,24.687,8.704c8.72,0.007,17.502-2.912,24.691-8.71l43.841-35.318l-3.467,2.795
+		                        c2.253-1.815,5.038-2.788,7.907-2.788l0.6,0.013l52.189,2.605l-0.262-0.012c0.568,0.026,1.186,0.039,1.855,0.045
+		                        c17.691-0.006,33.306-11.844,37.978-29.081l13.548-50.041c0.806-2.99,2.684-5.569,5.262-7.254l43.45-28.37
+		                        c11.364-7.444,17.818-19.966,17.812-32.947c0-4.682-0.842-9.442-2.586-14.012L480.364,260.466z M455.38,241.988
+		                        c-1.72,4.512-2.582,9.265-2.582,14.012c0,4.754,0.862,9.507,2.582,14.019l18.449,48.44l0.003,0.007
+		                        c0.565,1.482,0.829,2.984,0.829,4.473c-0.007,4.166-2.063,8.188-5.716,10.571l-43.41,28.344h0.003
+		                        c-8.086,5.275-13.95,13.346-16.474,22.67l-13.548,50.04c-1.485,5.524-6.513,9.324-12.16,9.317l-0.751-0.02l-0.189-0.006
+		                        l-51.474-2.566h0.036c-0.634-0.039-1.303-0.052-2.004-0.059c-8.968,0-17.685,3.069-24.694,8.717l-3.47,2.801l-36.897,29.721
+		                        c-2.324,1.874-5.086,2.788-7.91,2.788c-2.82,0-5.586-0.914-7.913-2.788l-40.368-32.522c-7.006-5.641-15.719-8.71-24.69-8.71
+		                        c-0.601,0-1.303,0.007-2.106,0.052v0.007l-51.64,2.579l0.016-0.006l-0.652,0.013c-5.642,0.006-10.676-3.794-12.161-9.317
+		                        l-13.548-50.04c-2.524-9.324-8.387-17.394-16.474-22.67l-32.212-21.031l-11.194-7.313c-3.65-2.377-5.713-6.405-5.72-10.578
+		                        c0.003-1.496,0.265-2.997,0.826-4.466l18.461-48.454l-0.003,0.007c1.72-4.518,2.582-9.265,2.582-14.019
+		                        c0-4.753-0.858-9.506-2.582-14.018L38.848,195.33l-0.679-1.776c-0.565-1.489-0.826-2.997-0.83-4.492
+		                        c0.007-4.172,2.067-8.188,5.716-10.564l43.414-28.343l0.007-0.007c8.082-5.288,13.94-13.352,16.464-22.67l13.548-50.047
+		                        c1.482-5.517,6.523-9.324,12.161-9.317l0.503,0.006l51.91,2.592l0.056,0.007c0.63,0.026,1.264,0.04,1.894,0.046
+		                        c8.968,0,17.688-3.063,24.701-8.704l40.386-32.529c2.321-1.874,5.08-2.782,7.904-2.788c2.821,0,5.583,0.914,7.907,2.788
+		                        l-2.602-2.096l42.979,34.618c7.022,5.654,15.752,8.704,24.707,8.704c0.666,0,1.263-0.02,1.792-0.033h-0.14l52.075-2.599h0.035
+		                        l0.601-0.013c5.641-0.007,10.678,3.8,12.16,9.317l13.548,50.047c2.524,9.317,8.38,17.381,16.464,22.67l49.018,32.006l-5.602-3.656
+		                        c3.653,2.377,5.71,6.392,5.716,10.558c0,1.496-0.264,2.998-0.832,4.492l-20.832,54.683L455.38,241.988z" />
+                    <path class="st0" d="M196.151,226.298l-13.784,2.709c-0.725,0.15-1.123,0.725-0.979,1.463l10.254,52.175l-0.597,0.124
+		                        l-39.528-46.423c-0.653-0.757-1.45-0.986-2.305-0.816l-14.636,2.88c-0.725,0.144-1.123,0.718-0.966,1.455l15.817,80.448
+		                        c0.14,0.738,0.725,1.136,1.45,0.992l13.783-2.71c0.725-0.15,1.123-0.731,0.983-1.469l-10.242-52.051l0.61-0.118l39.613,46.28
+		                        c0.653,0.757,1.338,0.999,2.318,0.816l14.509-2.86c0.724-0.144,1.122-0.725,0.966-1.463l-15.814-80.454
+		                        C197.46,226.54,196.876,226.155,196.151,226.298z" />
+                    <path class="st0" d="M280.868,279.649l-35.731,7.026c-0.483,0.105-0.78-0.091-0.865-0.581l-3.385-17.192
+		                        c-0.102-0.483,0.098-0.77,0.581-0.874l29.757-5.85c0.725-0.144,1.123-0.719,0.983-1.449l-2.546-12.922
+		                        c-0.144-0.724-0.728-1.123-1.453-0.986l-29.754,5.857c-0.484,0.091-0.784-0.111-0.881-0.594l-3.232-16.454
+		                        c-0.098-0.49,0.101-0.784,0.584-0.875l35.731-7.026c0.725-0.144,1.123-0.725,0.966-1.456l-2.56-13.038
+		                        c-0.144-0.738-0.725-1.13-1.453-0.986l-53.152,10.454c-0.741,0.144-1.126,0.725-0.982,1.462l15.817,80.454
+		                        c0.156,0.732,0.724,1.123,1.465,0.98l53.152-10.454c0.728-0.144,1.126-0.725,0.97-1.456l-2.563-13.046
+		                        C282.178,279.91,281.593,279.506,280.868,279.649z" />
+                    <path class="st0" d="M377.221,190.694l-15.605,3.068c-0.852,0.164-1.266,0.634-1.224,1.515l-1.221,54.291l-0.258,0.046
+		                        l-24.847-49.16c-0.398-0.699-0.983-1.084-1.708-0.94l-10.61,2.083c-0.839,0.17-1.237,0.744-1.338,1.541l-3.911,54.82l-0.242,0.052
+		                        l-22.19-49.701c-0.255-0.718-0.839-1.096-1.691-0.927l-15.732,3.082c-0.852,0.17-0.996,0.706-0.725,1.417l37.266,76.23
+		                        c0.398,0.685,0.98,1.084,1.708,0.94l12.19-2.403c0.852-0.163,1.25-0.751,1.348-1.528l4.368-54.415l0.242-0.045l24.521,48.728
+		                        c0.385,0.685,0.97,1.084,1.822,0.914l12.19-2.403c0.852-0.157,1.365-0.77,1.352-1.535l5.504-84.645
+		                        C378.4,190.955,378.073,190.524,377.221,190.694z" />
+                        </g>
+                        </svg>
+                    <span class="ms-2 fw-bold">NEW</span>
+                </div>
+                <span class="fw-bold">
+                    @Model.New
+                </span>
+            </div>
+            <svg class="mt-1" fill="#203f9a" height="10px" width="20px" viewBox="0 0 200 100">
+                <polygon points="0,0 100,100 200,0 " />
+            </svg>
+        </div>
+
+        <div class="col-lg-3 col-sm-4 col-6 d-flex flex-column status-tab align-items-center" id="status-pending-tab">
+            <div class="py-2 ps-2 mt-3 shadow w-100 status-pending">
+                <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-exclamation" viewBox="0 0 16 16">
+                        <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
+                        <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1.5a.5.5 0 0 0 1 0V11a.5.5 0 0 0-.5-.5m0 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
+                    </svg>
+                    <span class="ms-2  fw-bold">PENDING</span>
+                </div>
+                <span class="fw-bold">@Model.pending</span>
+            </div>
+
+            <svg class="mt-1" fill="#00adef" height="10px" width="20px" viewBox="0 0 200 100">
+                <polygon points="0,0 100,100 200,0 " />
+            </svg>
+
+        </div>
+
+        <div class="col-lg-3 col-sm-4 col-6 d-flex flex-column status-tab align-items-center" id="status-active-tab">
+            <div class="py-2 ps-2 mt-3 shadow w-100 status-active">
+                <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                        <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
+                        <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                    </svg>
+                    <span class="ms-2 fw-bold">ACTIVE</span>
+                </div>
+                <span class="fw-bold">@Model.active</span>
+            </div>
+
+            <svg class="mt-1" fill="#228c20" height="10px" width="20px" viewBox="0 0 200 100">
+                <polygon points="0,0 100,100 200,0 " />
+            </svg>
+
+        </div>
+
+        <div class="col-lg-3 col-sm-4 col-6 d-flex flex-column status-tab align-items-center" id="status-conclude-tab">
+            <div class="py-2 ps-2 mt-3 shadow w-100 status-conclude">
+                <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+                        <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022zm2.004.45a7 7 0 0 0-.985-.299l.219-.976q.576.129 1.126.342zm1.37.71a7 7 0 0 0-.439-.27l.493-.87a8 8 0 0 1 .979.654l-.615.789a7 7 0 0 0-.418-.302zm1.834 1.79a7 7 0 0 0-.653-.796l.724-.69q.406.429.747.91zm.744 1.352a7 7 0 0 0-.214-.468l.893-.45a8 8 0 0 1 .45 1.088l-.95.313a7 7 0 0 0-.179-.483m.53 2.507a7 7 0 0 0-.1-1.025l.985-.17q.1.58.116 1.17zm-.131 1.538q.05-.254.081-.51l.993.123a8 8 0 0 1-.23 1.155l-.964-.267q.069-.247.12-.501m-.952 2.379q.276-.436.486-.908l.914.405q-.24.54-.555 1.038zm-.964 1.205q.183-.183.35-.378l.758.653a8 8 0 0 1-.401.432z" />
+                        <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z" />
+                        <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5" />
+                    </svg>
+                    <span class="ms-2  fw-bold">CONCLUDE</span>
+                </div>
+                <span class="fw-bold">@Model.conclude</span>
+            </div>
+
+            <svg class="mt-1" fill="#da0f82" height="10px" width="20px" viewBox="0 0 200 100">
+                <polygon points="0,0 100,100 200,0 " />
+            </svg>
+
+        </div>
+
+
+
+    </div>
+    <div class="d-flex mt-3 align-items-center justify-content-between ">
+
+        <div class="d-flex align-items-center">
+            <h4>Patients</h4>
+            <h5 class="ms-1 fw-bold " id="status-text" style=" margin-top:10px color: #404a66; font-size: 12px;"></h5>
+        </div>
+
+        <div class="d-flex">
+
+            <button onclick="SendLinkModal(this)" type="submit" id="SendLinkButton" class="mx-1 px-2 py-1 btn btn-primary shadow" style="background-color:#10bce9">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-send-check" viewBox="0 0 16 16">
+                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855a.75.75 0 0 0-.124 1.329l4.995 3.178 1.531 2.406a.5.5 0 0 0 .844-.536L6.637 10.07l7.494-7.494-1.895 4.738a.5.5 0 1 0 .928.372zm-2.54 1.183L5.93 9.363 1.591 6.602z" />
+                    <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686" />
+                </svg>
+                <span class="ms-1 d-md-block d-none text-white">Send Link</span>
+            </button>
+
+            <a asp-action="CreateRequestProviderDashboard" asp-controller="Provider" class="mx-1 px-2 py-1 btn btn-primary shadow" style="background-color:#10bce9">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                </svg>
+                <span class="ms-1 d-md-block d-none text-white">Create Request</span>
+            </a>
+        </div>
+    </div>
+    <div class="py-3 mt-2 shadow rounded">
+        <div class=" d-xl-flex ps-3 pe-3 align-items-center justify-content-xl-between ">
+            <div class="d-flex justify-content-center justify-content-xl-start">
+                <div class="d-flex normal-input rounded align-items-center ps-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
+                        <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
+                        </path>
+                    </svg>
+                    <input id="searchBtn" type="text" class="form-control border-0" placeholder="Search Patients">
+                </div>
+            </div>
+
+
+            <div class="d-flex justify-content-center  justify-content-xl-end m-xl-0 mt-3">
+                <div class="d-flex align-items-center justify-content-center flex-wrap ">
+
+                    <button id="NoFilter" class="active-filter filter-options d-flex align-items-center m-1 px-2 py-1 rounded">
+                        <span>All</span>
+                    </button>
+                    <button id="PatientFilter" class="filter-options  px-2 py-1 rounded m-1 d-flex align-items-center ms-2">
+                        <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle fill="#5fbc61" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                        </svg>
+                        <span class="ms-2">Patient</span>
+                    </button>
+
+                    <button id="FamilyFriendFilter" class="filter-options px-2 py-1 m-1 rounded d-flex align-items-center ms-2">
+                        <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle fill="#ed9124" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                        </svg>
+                        <span class="ms-2">Family/Friend</span>
+                    </button>
+                    <button id="BusinessFilter" class="filter-options px-2 py-1 m-1 rounded d-flex align-items-center ms-2">
+                        <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle fill="#e26277" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                        </svg>
+                        <span class="ms-2">Business</span>
+                    </button>
+                    <button id="ConciergeFilter" class="filter-options px-2 py-1 m-1 rounded d-flex align-items-center ms-2">
+                        <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle fill="#007fc6" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                        </svg>
+                        <span class="ms-2">Concierge</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="partial"></div>
+</div>
+
+@* Transfer Case *@
+<div class="modal fade" id="TransferCaseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-light" id="TransferCaseHeader">Transfer Request</h5>
+                <button type="button" class="btn-close btn-close-white aria-label="Close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="TransferCaseForm">
+                <input hidden id="RequestId" name="RequestId" />
+                <div class="modal-body">
+                    <small class="text-muted">Transfer this request to new tab.</small>
+
+                    <div class="form-floating my-2">
+                        <textarea required class="form-control" name="TransferDescription" placeholder="Description" id="transferdescription" style="height: 100px"></textarea>
+                        <label for="description">Description</label>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info text-light" data-bs-dismiss="modal">Submit</button>
+                    <button type="reset" class="btn btn-outline-info">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@* Send Agreement *@
+<div id="SendAgreementModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">Send Agreement</h5>
+                <a data-bs-dismiss="modal">
+                    <svg height="20px" id="Layer_1" style="enable-background:new 0 0 512 512;" fill="white" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M443.6,387.1L312.4,255.4l131.5-130c5.4-5.4,5.4-14.2,0-19.6l-37.4-37.6c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4  L256,197.8L124.9,68.3c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4L68,105.9c-5.4,5.4-5.4,14.2,0,19.6l131.5,130L68.4,387.1  c-2.6,2.6-4.1,6.1-4.1,9.8c0,3.7,1.4,7.2,4.1,9.8l37.4,37.6c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1L256,313.1l130.7,131.1  c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1l37.4-37.6c2.6-2.6,4.1-6.1,4.1-9.8C447.7,393.2,446.2,389.7,443.6,387.1z" /></svg>
+                </a>
+            </div>
+            <form id="SendAgreementForm" method="post" class="px-3">
+                <input id="SendAgreementRequestId" hidden />
+                <div class="align-items-center d-flex mb-3">
+                    <div class="me-2" style="height:15px; width:15px; border-radius:50%"></div>
+                    <span style="font-size:20px"></span>
+                </div>
+                <small>To send agreement please make sure you are updating the correct contact information below for the responsible party.</small>
+                <div class="modal-flex justify-content-center my-3">
+                    <div class="form-floating mt-3 temp">
+                        <input required type="tel" class="form-control inputs border" id="temp" placeholder="Phone Number">
+                        <label for="floatingInput" class="input_labels">Phone Number</label>
+                    </div>
+                    <div class="form-floating mt-3 temp">
+                        <input required type="email" class="form-control inputs border" id="Email" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels">Your Email</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info text-white" data-bs-dismiss="modal">Send</button>
+                    <button type="reset" class="btn btn-outline-info cancel-btn" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@* Send Link Modal *@
+<div class="modal fade" id="SendLinkModal" tabindex="-1" aria-labelledby="sendLinkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h2 class="modal-title fs-5" id="sendLinkModalLabel">Send Link to Patient</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="SendLinkForm">
+                <div class="modal-body">
+                    <div class="form-floating my-2">
+                        <input required type="text" class="form-control border" id="SendLinkFirstName" placeholder="Firstname">
+                        <label class="text-muted floating-label">Firstname</label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input required type="text" class="form-control border" id="SendLinkLastName" placeholder="Lastname">
+                        <label class="text-muted floating-label">Lastname</label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input required type="email" class="form-control border" id="SendLinkEmail" placeholder="Email">
+                        <label class="text-muted floating-label">Email</label>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="submit" class="btn btn-info text-white">Submit</button>
+                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Before Encounter Modal  *@
+<div class="modal fade" id="beforeEncounterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <div class="modal-dark modal-title text-white" id="exampleModalLongTitle">Select Type Of Care</div>
+                <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+            </div>
+            <form>
+                <input hidden id="encounter-modal-request-id" />
+                <div class="modal-body">
+                    <div class="modal-flex d-flex justify-content-center my-3">
+                        <div class="btn encounter-type-btn border border-1 border-info" data-id="1"> House Call </div>
+                        <div class="btn ms-2 border border-1 encounter-type-btn border-info" data-id="2"> Consult </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-info text-white" data-bs-dismiss="modal" onclick="submitEncounterModal()">Save</a>
+                    <button type="button" class="btn cancel-btn" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Finalize Modal *@
+<div class="modal fade" id="FinalizedFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-light" id="exampleModalLongTitle">Encounter Form -> FINALIZED</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Your Medical Report has been finalized by your Provider.
+                Download the report from below given source.
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-end">
+                    <a class="btn-info text-end text-light btn" id="DownloadFinalizePDF">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    var isMeRequest;
+    function toggle(element) {
+        if (element.classList.contains("typeOfCareBtn")) {
+            isMeRequest = false;
+        }
+        else {
+            isMeRequest = true;
+        }
+        if (!element.classList.contains("typeOfCareActive")) {
+            $("typeOfCareBtn").removeClass("typeOfCareActive");
+            element.classList.add("typeOfCareBtn");
+        }
+    }
+    function redirect() {
+        if (isMeRequest) {
+            document.getElementById("houseCallBtn").click();
+        }
+        else {
+            document.getElementById("consultBtn").click();
+        }
+    }
+</script>
+<script>
+    // Select all elements with the class 'encounter-type-btn'
+    const encounterTypeBtns = document.querySelectorAll('.encounter-type-btn');
+
+    // Add a click event listener to each of the selected elements
+    encounterTypeBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            // Remove the 'btn-info' class from all elements with the class 'encounter-type-btn'
+            encounterTypeBtns.forEach((otherBtn) => {
+                otherBtn.classList.remove('btn-info');
+                otherBtn.classList.remove('text-light');
+            });
+
+            // Add the 'btn-info' class to the clicked element
+            btn.classList.add('btn-info');
+            btn.classList.add('text-light');
+        });
+    });
+</script>
+<script>
+    // House Call = 1; Consult = 2;
+    let encounter_type = 0;
+
+    $('.encounter-type-btn').click(function () {
+        $('.encounter-type-btn').removeClass('encounter-active');
+        $(this).addClass('encounter-active');
+
+        encounter_type = $(this).data("id");
+
+    });
+
+    function submitEncounterModal() {
+
+        if (encounter_type == 1) {
+            $.ajax({
+                url: "/Provider/EncounterHouseCallBegin",
+                data: { requestId: $('#encounter-modal-request-id').val() },
+                type: 'POST',
+                success: function (result) {
+
+                },
+                error: function (error) {
+                    console.log('Error Updating Location')
+                    console.log(error);
+                },
+            });
+        }
+        else if (encounter_type == 2) {
+            $.ajax({
+                url: "/Provider/EncounterConsult",
+                data: { requestId: $('#encounter-modal-request-id').val() },
+                type: 'POST',
+                success: function (result) {
+
+                },
+                error: function (error) {
+                    console.log('Error Updating Location')
+                    console.log(error);
+                },
+            });
+        }
+        else {
+            console.log("error");
+        }
+    }
+</script>
+
+@* the below written script is for calling all the methods in the admin dashboard *@
+<script type="text/javascript">
+    $('#selectregion').change(function () {
+        var regionid = $(this).val();
+        if (regionid != 0) {
+            $.ajax({
+                type: "GET",
+                url: "/Provider/GetPhysicianForTransfer",
+                data: { regionid: regionid },
+                success: function (response) {
+                    $('#selectphysician').empty();
+                    console.log(response.FirstName)
+                    $.each(response, function (index, item) {
+                        $('#selectphysician').append($('<option>').text(item.firstname).attr('value', item.physicianid));
+                    });
+                }
+            });
+        }
+    });
+
+    $('#SendLinkForm').submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: '/Provider/SendLink',
+            type: 'POST',
+            data: { FirstName: $('#SendLinkFirstName').val(), LastName: $('#SendLinkLastName').val(), Email: $('#SendLinkEmail').val() },
+            success: function (response) {
+                $('#SendLinkModal').modal('hide');
+                window.location.href = "/Provider/ProviderDashboard";
+            },
+            error: function (xhr, status, error) {
+                console.error('Error submitting form:', error);
+            }
+        });
+    })
+    $('#SendAgreementForm').submit(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '/Provider/SendAgreement',
+            type: 'POST',
+            data: { RequestId: $('#SendAgreementRequestId').val(), PhoneNo: $('#temp').val(), email: $('#Email').val() },
+
+            success: function (response) {
+                $('#SendAgreementModal').modal('hide');
+                window.location.href = "/Provider/ProviderDashboard";
+            },
+            error: function (xhr, status, error) {
+                console.error('Error submitting form:', error);
+            }
+        });
+    });
+    // $('#ConfirmCancellationForm').submit(function (event) {
+    //     event.preventDefault();
+
+    //     var formdata = $(this).serialize();
+    //     console.log(formdata);
+
+    //     $.ajax({
+    //         url: '/Admin/CancelCase',
+    //         type: 'POST',
+    //         data: { requestid: $('#requestid').val(), Reason: $('#cancelreason').val(), Description: $('#canceldescription').val() },
+
+    //         success: function (response) {
+    //             $('#ConfirmCancellationModal').modal('hide');
+    //             window.location.href = "/Admin/AdminDashboard";
+    //         },
+    //         error: function (xhr, status, error) {
+    //             console.error('Error submitting form:', error);
+    //         }
+    //     });
+    // });
+    // $('#BlockCaseForm').submit(function (event) {
+    //     event.preventDefault();
+
+    //     var formdata = $(this).serialize();
+    //     console.log(formdata);
+
+    //     $.ajax({
+    //         url: '/Admin/BlockCase',
+    //         type: 'POST',
+    //         data: { requestid: $('#RequestID').val(), blocknotes: $('#blockrequest').val() },
+
+    //         success: function (response) {
+    //             $('#BlockCaseModal').modal('hide');
+    //             window.location.href = "/Admin/AdminDashboard";
+    //         },
+    //         error: function (xhr, status, error) {
+    //             console.error('Error submitting form:', error);
+    //         }
+    //     });
+    // });
+    $('#TransferCaseForm').submit(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '/Provider/TransferCase',
+            type: 'POST',
+            data: { RequestId: $('#RequestId').val(), TransferPhysician: $('#selectphysiciantransfer').val(), TransferDescription: $('#transferdescription').val() },
+
+            success: function (response) {
+                $('#TransferCaseModal').modal('hide');
+                window.location.href = "/Provider/ProviderDashboard";
+            },
+            error: function (xhr, status, error) {
+                console.error('Error submitting form:', error);
+            }
+        });
+    });
+
+    // $('#clear-modal-submit-btn').on('click', function (e) {
+    //     e.preventDefault();
+    //     console.log('cancel cancel cancel');
+    //     $.ajax({
+    //         url: "/Admin/ClearCaseModal",
+    //         data: { requestid: $('#clearCaseId').val() },
+    //         type: 'POST',
+    //         success: function (result) {
+    //             location.reload();
+    //         },
+    //         error: function (error) {
+    //             console.log(error);
+    //             alert('Error Cancelling Request')
+    //         },
+    //     });
+    // });
+
+</script>
+<script>
+    var pageNo = 1;
+    var dashboardStatus = 0;
+    var type_filter = 0;
+    var region_filter = 0;
+    var search_filter = "";
+    var searchTimer;
+
+    //Pagination And Backend Filters
+    function loadNextPage(currentpage) {
+        LoadPartialTables(currentpage + 1);
+    }
+
+    function loadPreviousPage(currentpage) {
+        LoadPartialTables(currentpage - 1);
+    }
+
+    $("#searchBtn").on("keydown", function (e) {
+        if (e.code === "Enter")    //checks whether the pressed key is "Enter"
+        {
+            var searchValue = $(this).val().toLowerCase();
+            search_filter = searchValue;
+            LoadPartialTables(pageNo);
+        }
+    });
+
+    $("#RegionFilters").change(function () {
+        region_filter = $('option:selected', this).val();
+        LoadPartialTables(pageNo);
+    });
+
+    $(".status-tab").click(function () {
+
+        $(this).addClass("active");
+        $(this).children("svg").attr('display', 'block');
+
+        $('.status-tab').not(this).children("svg").attr('display', 'none');
+        $('.status-tab').not(this).removeClass("active");
+
+        var id = $(this).attr('id');
+
+        if (id == 'status-new-tab') {
+            dashboardStatus = 1;
+            status = 1;
+            $('#status-text').text('(New)');
+            $("#status-text").css("color", "#203f9a");
+        }
+        else if (id == 'status-pending-tab') {
+            dashboardStatus = 2;
+            $('#status-text').text('(Pending)');
+            $("#status-text").css("color", "#00adef");
+        }
+        else if (id == 'status-active-tab') {
+            dashboardStatus = 3;
+            $('#status-text').text('(Active)');
+            $("#status-text").css("color", "#228c20");
+        }
+        else if (id == 'status-conclude-tab') {
+            dashboardStatus = 4;
+            $('#status-text').text('(Conclude)');
+            $("#status-text").css("color", "#da0f82");
+        }
+        else if (id == 'status-toclose-tab') {
+            dashboardStatus = 5;
+            $('#status-text').text('(To Close)');
+            $("#status-text").css("color", "#0370d7");
+        }
+        else if (id == 'status-unpaid-tab') {
+            dashboardStatus = 6;
+            $('#status-text').text('(Unpaid)');
+            $("#status-text").css("color", "#9966cd");
+        }
+        LoadPartialTables(pageNo);
+        console.log(dashboardStatus);
+    });
+
+    $('.filter-options').click(function () {
+
+        $(this).addClass("active-filter");
+        $('.filter-options').not(this).removeClass("active-filter");
+
+        var id = $(this).attr('id');
+
+        if (id == 'NoFilter') {
+            type_filter = 0;
+        }
+        else if (id == 'PatientFilter') {
+            type_filter = 2;
+        }
+        else if (id == 'FamilyFriendFilter') {
+            type_filter = 3;
+        }
+        else if (id == 'BusinessFilter') {
+            type_filter = 1;
+        }
+        else if (id == 'ConciergeFilter') {
+            type_filter = 4;
+        }
+        else if (id == 'VipFilter') {
+            type_filter = 5;
+        }
+        console.log(type_filter);
+        LoadPartialTables(pageNo);
+    });
+
+    function LoadPartialTables(pageNo) {
+
+        if (dashboardStatus == 1) {
+            $.ajax({
+                url: '/Provider/GetNewTable',
+                type: 'POST',
+                data: { page: pageNo, region: region_filter, search: search_filter, type: type_filter },
+                success: function (data) {
+                    $("#partial").html(data);
+                },
+                error: function (error) {
+                    alert('new error');
+                }
+            });
+        }
+        else if (dashboardStatus == 2) {
+            $.ajax({
+                url: '/Provider/GetPendingTable',
+                type: 'POST',
+                data: { page: pageNo, region: region_filter, search: search_filter, type: type_filter },
+                success: function (data) {
+                    $("#partial").html(data);
+                },
+                error: function (error) {
+                    alert('active error');
+                }
+            });
+        }
+        else if (dashboardStatus == 3) {
+            $.ajax({
+                url: '/Provider/GetActiveTable',
+                type: 'POST',
+                data: { page: pageNo, region: region_filter, search: search_filter, type: type_filter },
+                success: function (data) {
+                    $("#partial").html(data);
+                },
+                error: function (error) {
+                    alert('pending error');
+                }
+            });
+        }
+        else if (dashboardStatus == 4) {
+            $.ajax({
+                url: '/Provider/GetConcludeTable',
+                type: 'POST',
+                data: { page: pageNo, region: region_filter, search: search_filter, type: type_filter },
+                success: function (data) {
+                    $("#partial").html(data);
+                },
+                error: function (error) {
+                    alert('pending error');
+                }
+            });
+        }
+    }
+    $(document).ready(function () {
+        $("#status-new-tab").click();
+        $("#dashboard-tab").click();
+    });
+    function acceptCase(link) {
+        var request_id = link.getAttribute("data-requestid");
+        document.getElementById('RequestId').value = request_id;
+    }
+    function sendAgreement(link) {
+        console.log('console hit')
+        var phoneno = link.getAttribute("data-phoneno");
+        document.getElementById('temp').value = phoneno
+
+        var email = link.getAttribute("data-email");
+        document.getElementById('Email').value = email
+
+        var requestid = link.getAttribute("data-requestid");
+        document.getElementById('SendAgreementRequestId').value = requestid
+
+        $('#SendAgreementModal').modal('show');
+    }
+    function cancelCase(link) {
+
+        var request_id = link.getAttribute("data-Requestid");
+        document.getElementById('requestid').value = request_id;
+
+        var name = link.getAttribute("data-Name");
+        document.getElementById('clientname').textContent = name;
+
+        $('#ConfirmCancellationModal').modal('show');
+    }
+    function clearCase(link) {
+        var request_id = link.getAttribute("data-requestid");
+        document.getElementById('clearCaseId').value = request_id;
+
+        $('#ClearCaseModal').modal('show');
+    }
+    function blockCase(link) {
+        var request_id = link.getAttribute("data-requestiD");
+        document.getElementById('RequestID').value = request_id;
+
+        var name = link.getAttribute("data-namE");
+        document.getElementById('displayname').textContent = name;
+        $('#BlockCaseModal').modal('show');
+    }
+    // Request Support opening code
+    function RequestSupport(link) {
+        $('#RequestSupportModal').modal('show');
+    }
+    function transferCase(link) {
+        var request_id = link.getAttribute("data-requestid");
+        document.getElementById('RequestId').value = request_id;
+
+        $('#TransferCaseModal').modal('show');
+    }
+    function SendLinkModal(link) {
+
+        $('#SendLinkModal').modal('show');
+    }
+
+    $(".status-tab").click(function () {
+        $(this).addClass("active");
+        $(this).children("svg").attr('display', 'block');
+
+        $('.status-tab').not(this).children("svg").attr('display', 'none');
+        $('.status-tab').not(this).removeClass("active");
+    });
+
+</script>
+<script>
+    $('.admin-tab').removeClass('active-tab');
+    $('#dashboard-tab').addClass('active-tab');
+</script>

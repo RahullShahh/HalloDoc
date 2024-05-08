@@ -1,0 +1,227 @@
+﻿@model ProviderMenuViewModel
+@{
+    Layout = "_AdminDashboardLayout";
+    ViewData["Title"] = "Proivder Menu";
+
+}
+<div class="row">
+    <div class="d-flex justify-content-center">
+        <div class="col-10 mt-4">
+            <h3>
+                Provider Information
+            </h3>
+            <div class="shadow-lg p-3 my-3">
+                <div class="row">
+                    <div class="pb-3 d-flex justify-content-between">
+                        <div class="col-4">
+                            <select onchange="physicianRegionFilter()" id="filterPhysiciansByRegion" class="form-select col-4" aria-label="Default select example">
+                                <option value=0 selected>Filter By Regions</option>
+                                @for (int i = 0; i < Model.Region.Count; i++)
+                                {
+                                    <option value=@Model.Region[i].Regionid>@Model.Region[i].Name (@Model.Region[i].Abbreviation)</option>
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            <a asp-action="CreatePhysician" asp-controller="Admin" class="btn-info text-light btn">
+                                Create Provider Account
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="partialTable">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* <table class="table providertable">
+                    <colgroup>
+                        <col span="1" style="width: 12%;">
+                        <col span="1" style="width: 23%;">
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 15%;">
+                    </colgroup>
+                    <thead>
+                        <tr class="table-secondary">
+                            <th>
+                                Stop Notification
+                            </th>
+                            <th>Provider Name</th>
+                            <th>Role</th>
+                            <th>
+                                On Call Status
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.providers.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @if (Model.providers[i].Notification)
+                                    {
+                                        <div class="d-flex inputcheckbox justify-content-center form-check">
+                                            <input class="form-check-input border" onchange="UpdateNotificationStatus(this)" data-physicianid="@Model.providers[i].PhysicianId" checked type="checkbox" value="" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault"></label>
+                                        </div>
+                                    }
+                                    @if (!Model.providers[i].Notification)
+                                    {
+                                        <div class="d-flex inputcheckbox justify-content-center form-check">
+                                            <input class="form-check-input border" onchange="UpdateNotificationStatus(this)" data-physicianid="@Model.providers[i].PhysicianId" type="checkbox" value="" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault"></label>
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    @Model.providers[i].Name
+                                </td>
+                                <td>
+                                    @* @Model.providers[i].Role
+                                    Static Role
+                                </td>
+                                <td>
+                                    Static OnCallStatus
+                                    @* @Model.providers[i].OnCallStatus
+                                </td>
+                                <td>
+                                    Static ProviderStatus
+                                    @* @Model.providers[i].ProviderStatus
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-info" id="ProviderContactButton" onclick="OpenContactModal(this)" data-physicianid="@Model.providers[i].PhysicianId">Contact</button>
+                                    <a class="btn btn-outline-info" asp-action="EditPhysicianProfile" asp-route-physicianid="@Model.providers[i].PhysicianId" asp-controller="Admin" >Edit</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> *@
+@* contact modal *@
+<div class="modal fade" id="ContactProviderModal" tabindex="-1" aria-labelledby="sendLinkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h2 class="modal-title fs-5" id="sendLinkModalLabel">Contact Your Provider</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="ContactProvider" method="post">
+                <input hidden id="InputForPhysicianId" />
+                <div class="modal-body mx-3">
+                    <div class="form-check my-3">
+                        <input class="form-check-input radios border border-secondary" type="radio" data-id="1" name="RadioOptions" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            SMS
+                        </label>
+                    </div>
+                    <div class="form-check my-3">
+                        <input class="form-check-input radios border border-secondary" type="radio" data-id="2" name="RadioOptions" id="flexRadioDefault2">
+                        <label class="form-check-label " for="flexRadioDefault2">
+                            Email
+                        </label>
+                    </div>
+                    <div class="form-check my-3">
+                        <input class="form-check-input radios border border-secondary" type="radio" data-id="3" name="RadioOptions" id="flexRadioDefault3">
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            Both
+                        </label>
+                    </div>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Message" id="MessageProvider" style="height: 100px"></textarea>
+                        <label for="MessageProvider">Message</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info text-white" onclick="ContactProviderFormSubmit(this)">Submit</button>
+                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    var physicianid;
+
+    function physicianRegionFilter() {
+        var regionId = $('#filterPhysiciansByRegion').val();
+        $.ajax({
+            url: '/Admin/ProviderMenuPartial',
+            type: 'POST',
+            data: { regionid: regionId },
+            success: function (data) {
+                $("#partialTable").html(data);
+            },
+            error: function (error) {
+                alert('physician filtering error');
+            }
+        });
+    }
+    $(document).ready(function () {
+        $.ajax({
+            url: '/Admin/ProviderMenuPartial',
+            type: 'POST',
+            data: { regionid: 0 },
+            success: function (data) {
+                $("#partialTable").html(data);
+            },
+            error: function (error) {
+                alert('physician filtering error');
+            }
+        });
+    });
+
+
+    function UpdateNotificationStatus(link) {
+        physicianid = link.getAttribute("data-physicianid");
+        console.log(physicianid);
+        $.ajax({
+            url: '/Admin/UpdateNotifications',
+            type: 'POST',
+            data: { PhysicianId: physicianid },
+            success: function (data) {
+                console.log("NotificationUpdatedSuccessfully");
+            },
+            error: function (error) {
+                alert('NotificationNotUpdated');
+            }
+        });
+    }
+    function OpenContactModal(link) {
+        $("#ContactProviderModal").modal("show");
+        var ContactProviderId = link.getAttribute("data-physicianid");
+        $("#InputForPhysicianId").val(ContactProviderId);
+    }
+
+
+    function ContactProviderFormSubmit(link) {
+        var RadioValue = $("input[type='radio'][name='RadioOptions']:checked").data("id");
+        var ContactProviderId = $("#InputForPhysicianId").val();
+
+        var message = $("#MessageProvider").val();
+        console.log(ContactProviderId);
+        $.ajax({
+            url: '/Admin/SendEmailToProvider',
+            type: 'POST',
+            data: { RadioButtonValue: RadioValue, EmailMessage: message, PhysicianId: ContactProviderId },
+            success: function (data) {
+                console.log("Email Sent To Provider");
+            },
+            error: function (error) {
+                alert('NotificationNotUpdated');
+            }
+        });
+    }
+</script>

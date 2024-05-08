@@ -1,0 +1,205 @@
+﻿@model Scheduling
+
+<div class="modal fade" id="createShiftModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add New Shift </h5>
+                <button type="button" class="close btn " data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg text-white"></i></span>
+                </button>
+            </div>
+            <form asp-action="CreateShift" class="row p-3">
+
+
+                <div class="form-floating my-3">
+                    <select asp-for="Regionid" class="p-2 px-3 form-control w-100 regionDropdown" onchange="getPhysicianByregion(this.value)">
+                        <option value="" selected disabled>Regions</option>
+                        @foreach (var region in ViewBag.regions)
+                        {
+                            <option value="@region.Regionid">@region.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select class="form-select pt-1 physicianDropdown" asp-for="Physicianid" id="physicianSelect" aria-label="Default select example">
+                        <option value="" selected disabled>Physician</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12 form-floating mb-3">
+                    <input id="StartDate" asp-for="Startdate" class="form-control rounded vcs" name="Startdate" type="date" placeholder=Suchtext autocomplete=off>
+                    <label for="floatingInput">Starting Date</label>
+                </div>
+                <div class="col-md-6 form-floating mb-3">
+                    <input id="StartTime" asp-for="Starttime" class="form-control rounded vcs" name="Starttime" type="time" placeholder=Suchtext autocomplete=off>
+                    <label for="floatingInput">Start</label>
+                </div>
+                <div class="col-md-6 form-floating mb-3">
+                    <input id="EndTime" asp-for="Endtime" class="form-control rounded vcs" name="Endtime" type="time" placeholder=Suchtext autocomplete=off>
+                    <label for="floatingInput">End</label>
+                </div>
+                <div class="col-md-6 d-flex align-items-center justify-content-start mb-3">
+                    <label for="floatingInput ">Repeat</label>
+                    <label class="switch">
+                        <input type="checkbox" asp-for="Isrepeat" id="Isrepeat" class="switch-input mx-2" onchange="toggleCheckboxes()">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <label class="my-2" for="Sunday">Repeat Days</label>
+                <input type="hidden" asp-for="checkWeekday" id="checkWeekday" />
+
+                <div class="col-md-12 row form-floating">
+
+                    <div class="col-md-4">
+                        <div class="form-check mx-2 d-flex align-items-center">
+                            <input onchange="menubox()" class="form-check-input Every mx-2 " disabled type="checkbox" name="Sunday" value="0">
+                            <label class="form-check-label" for="Sunday">Every Sunday</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 ">
+                        <div class="form-check mx-2 d-flex align-items-center">
+                            <input onchange="menubox()" class="form-check-input Every mx-2" disabled type="checkbox" name="Monday" value="1">
+                            <label class="form-check-label" for="Monday">Every Monday</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="form-check mx-2 d-flex align-items-center">
+                            <input onchange="menubox()" class="form-check-input Every mx-2" disabled type="checkbox" name="Tuesday" value="2">
+                            <label class="form-check-label" for="Tuesday">Every Tuesday</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check mx-2">
+                            <input onchange="menubox()" class="form-check-input Every mx-2" disabled type="checkbox" name="Wednesday" value="3">
+                            <label class="form-check-label" for="Wednesday">Every Wednesday</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check mx-2 d-flex align-items-center">
+                            <input onchange="menubox()" class="form-check-input Every mx-2" disabled type="checkbox" name="Thursday" value="4">
+                            <label class="form-check-label" for="Thursday">Every Thursday</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check mx-2 d-flex align-items-center">
+                            <input onchange="menubox()" class="form-check-input Every mx-2" disabled type="checkbox" name="Friday" value="5">
+                            <label class="form-check-label" for="Friday">Every Friday</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 ">
+                        <div class="form-check mx-2 d-flex align-items-center">
+                            <input onchange="menubox()" class="form-check-input Every mx-2" disabled type="checkbox" name="Saturday" value="6">
+                            <label class="form-check-label" for="Saturday">Every Saturday</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12 form-floating  my-2">
+                    <select asp-for="Repeatupto" class="form-select form-select-sm mt-3 p-2" id="Refile" disabled data-allow-clear="true" tabindex="-1" data-control="select2" data-placeholder=" ">
+                        <option selected hidden>Repeat End</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+                <hr class="form-button-divider"/>
+                <input type="hidden" id="checkWeekday" />
+
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <input type="submit" value="Save" class="btn btn-info text-white mx-2" />
+                        <button type="button" class="btn btn-outline-info hover_white" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    var today = new Date();
+    var formattedDate = today.toISOString().split('T')[0];
+
+    document.getElementById('StartDate').min = formattedDate;
+    document.getElementById('StartTime').addEventListener('change', function () {
+        var startTime = this.value;
+
+        document.getElementById('EndTime').min = startTime;
+
+        if (document.getElementById('EndTime').value < startTime) {
+            document.getElementById('EndTime').value = startTime;
+        }
+    });
+
+    var startTimeInput = document.getElementById('StartTime');
+    var endTimeInput = document.getElementById('EndTime');
+
+    startTimeInput.addEventListener('input', function () {
+        var startTimeValue = startTimeInput.value;
+        endTimeInput.min = startTimeValue;
+
+        // If the current end time is before the start time, reset the end time value
+        if (endTimeInput.value < startTimeValue) {
+            endTimeInput.value = startTimeValue;
+        }
+    });
+
+
+    window.onload = toggleCheckboxes;
+    function toggleCheckboxes() {
+        var repeatCheckbox = document.getElementById('Isrepeat');
+        var refile = document.getElementById('Refile');
+        var checkboxes = document.querySelectorAll('.Every');
+
+        if (!repeatCheckbox.checked) {
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = false;
+                checkbox.disabled = true;
+                refile.disabled = true;
+            });
+        } else {
+            checkboxes.forEach(function (checkbox) {
+                checkbox.disabled = false;
+                refile.disabled = false;
+            });
+        }
+    }
+
+    function menubox() {
+        event.preventDefault();
+        let checkboxes = document.querySelectorAll('.Every:checked');
+        let repeatDays = [];
+        checkboxes.forEach((checkbox) => {
+            repeatDays.push(checkbox.value);
+        });
+        document.querySelector('#checkWeekday').value = repeatDays.join(',');
+        console.log(document.querySelector('#checkWeekday').value);
+    };
+
+    function getPhysicianByregion(regionid) {
+
+        if (regionid != 0) {
+            $.ajax({
+                type: "GET",
+                url: "/Admin/GetPhysicianForTransfer",
+                data: { regionid: regionid },
+                success: function (response) {
+
+                    $('#physicianSelect').empty();
+                    $.each(response, function (index, item) {
+                        $('#physicianSelect').append($('<option>').text(item.firstName).attr('value', item.physicianId));
+                    });
+
+                }
+            });
+        }
+    }
+
+</script>

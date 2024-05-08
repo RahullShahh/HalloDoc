@@ -1,0 +1,45 @@
+﻿@model List<RequestedShiftsViewModel>
+<script>
+    $(document).ready(function () {
+        //for synchronized action on checkboxes
+        document.querySelectorAll('.shifts').forEach(function (checkbox) {
+            console.log("shifts uncheck");
+            checkbox.addEventListener('change', function () {
+                let checkboxes = document.querySelectorAll(".shifts");
+                let selectAllCheckbox = document.getElementById('checkAll');
+                selectAllCheckbox.checked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            });
+        });
+    });
+</script>
+<div class="table-responsive">
+    <table class="table">
+        <colgroup>
+            <col span="1" style="width: 8%;">
+            <col span="1" style="width: 23%;">
+            <col span="1" style="width: 23%;">
+            <col span="1" style="width: 23%;">
+            <col span="1" style="width: 23%;">
+        </colgroup>
+        <tbody>
+            <tr >
+                <th><input type="checkbox" class="" id="checkAll" onclick="Selectall()" /></th>
+                <th scope="col">Staff</th>
+                <th scope="col">Day</th>
+                <th scope="col">Time</th>
+                <th scope="col">Region</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><input type="checkbox" class="shifts" value="@item.ShiftDetailId" /></td>
+                    <td>@item.Staff</td>
+                    <td>@item.Day</td>
+                    <td>@item.Time</td>
+                    <td>@item.Region</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,198 @@
+﻿@model ViewDocumentsViewModel
+@{
+    Layout = "PatientDashboardLayout";
+    ViewData["username"] = Model.Username;
+    ViewData["Title"] = "View Documents";
+
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/ViewDocumentsCSS.css" />
+
+</head>
+<body>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade pt-2 active show justify-content-center" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+            <div class="d-flex m-auto justify-content-between documents" style=" ">
+                <h2 class=" ">Documents</h2>
+                <button class="btn btn-outline-info " onclick="history.back(-1)">
+                    <img src="~/SRS Screen Shorts/go-back-2.svg" width="20px" />  Back
+                </button>
+            </div>
+            <div class="  shadow-lg" style=" ">
+                <div class="">
+                    <small>
+                        Patient Name
+                    </small>
+                    <h6 class="patientName">
+                        @Model.Username (@Model.ConfirmationNo)
+                    </h6>
+                    <small>
+                        Check here for any file that you or the doctors of your subsequent requestors have attached for you to review.
+                    </small>
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <input asp-for="RequestID" hidden />
+                        <input asp-for="File" class="form-control" accept=".pdf" type="file" id="file_input_id" style="opacity:0;height:0;">
+                        <div class="input-group mb-3">
+                            <input type="text" id='text_input_id' class="form-control" placeholder="Select File"
+                                   style="caret-color: transparent" autocomplete="off">
+                            <div>
+                                <button for="text_input_id" type="submit" class="ms-1 btn-info btn text-white">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="downloads d-flex justify-content-between ">
+                    <h4>Downloads</h4>
+                    <div>
+                        <button class="btn btn-outline-info" id="download-selected-btn" asp-controller="Home" asp-action="SelectedDownload" asp-route-requestId="@Model.RequestID">Download Selected</button>
+                        <a class="btn btn-outline-info" asp-route-requestId="@Model.RequestID" asp-controller="Home" asp-action="DownloadAllFiles">Download All</a>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="mt-3 table">
+                        <colgroup>
+                            <col span="1" style="width: 12%;">
+                            <col span="1" style="width: 22%;">
+                            <col span="1" style="width: 22%;">
+                            <col span="1" style="width: 22%;">
+                            <col span="1" style="width: 22%;">
+                        </colgroup>
+                        <tbody class="">
+                            <tr class="tr-info">
+                                <th scope="col">
+                                    <input type="checkbox" id="SelectAll" />
+                                </th>
+                                <th scope="col"></th>
+                                <th scope="col">Uploader</th>
+                                <th scope="col">Upload Date</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            @for (int i = 0; i < Model.Requestwisefiles.Count; i++)
+                            {
+                                <tr class="tr-info">
+                                    <td>
+                                        <input type="checkbox" class="checkbox check" />
+                                    </td>
+                                    <td>
+                                        <svg height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             viewBox="0 0 309.267 309.267" xml:space="preserve"><g>
+                                        <path style="fill:#E2574C;" d="M38.658,0h164.23l87.049,86.711v203.227c0,10.679-8.659,19.329-19.329,19.329H38.658 c-10.67,0-19.329-8.65-19.329-19.329V19.329C19.329,8.65,27.989,0,38.658,0z" />
+                                        <path style="fill:#B53629;" d="M289.658,86.981h-67.372c-10.67,0-19.329-8.659-19.329-19.329V0.193L289.658,86.981z" />
+                                        <path style="fill:#FFFFFF;" d="M217.434,146.544c3.238,0,4.823-2.822,4.823-5.557c0-2.832-1.653-5.567-4.823-5.567h-18.44 c-3.605,0-5.615,2.986-5.615,6.282v45.317c0,4.04,2.3,6.282,5.412,6.282c3.093,0,5.403-2.242,5.403-6.282v-12.438h11.153 c3.46,0,5.19-2.832,5.19-5.644c0-2.754-1.73-5.49-5.19-5.49h-11.153v-16.903C204.194,146.544,217.434,146.544,217.434,146.544z M155.107,135.42h-13.492c-3.663,0-6.263,2.513-6.263,6.243v45.395c0,4.629,3.74,6.079,6.417,6.079h14.159 c16.758,0,27.824-11.027,27.824-28.047C183.743,147.095,173.325,135.42,155.107,135.42z M155.755,181.946h-8.225v-35.334h7.413 c11.221,0,16.101,7.529,16.101,17.918C171.044,174.253,166.25,181.946,155.755,181.946z M106.33,135.42H92.964 c-3.779,0-5.886,2.493-5.886,6.282v45.317c0,4.04,2.416,6.282,5.663,6.282s5.663-2.242,5.663-6.282v-13.231h8.379 c10.341,0,18.875-7.326,18.875-19.107C125.659,143.152,117.425,135.42,106.33,135.42z M106.108,163.158h-7.703v-17.097h7.703 c4.755,0,7.78,3.711,7.78,8.553C113.878,159.447,110.863,163.158,106.108,163.158z" /></g></svg>
+                                        @Model.Requestwisefiles[i].Filename
+                                    </td>
+                                    <td>@Model.Username</td>
+                                    <td>
+                                        @Model.Requestwisefiles[i].Createddate.ToString("MMM dd,yyyy")
+                                    </td>
+                                    <td>
+                                        <a href="/Content/@Model.Requestwisefiles[i].Filename" id="@i" download>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#10bce9" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                                                <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var profile = document.getElementById("profile-tab");
+        var dashboard = document.getElementById("dashboard-tab");
+
+        dashboard.classList.add("active");
+        profile.classList.remove("active");
+    </script>
+
+    <script>
+        // bind file-input-form click action to text-input-span
+        $('#text_input_span_id').click(function () {
+            $("#file_input_id").trigger('click');
+        })
+
+        // bind file-input-form click action to text-input-form
+        $('#text_input_id').click(function () {
+            $("#file_input_id").trigger('click');
+        })
+
+        // display file name in text-input-form
+        $("#file_input_id").change(function () {
+            $('#text_input_id').val(this.value.replace(/C:\\fakepath\\/i, ''))
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#SelectAll').on('click', function () {
+                if (this.checked) {
+                    $('.checkbox').each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    $('.checkbox').each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+
+            $('.checkbox').on('click', function () {
+                if ($('.checkbox:checked').length == $('.checkbox').length) {
+                    $('#select_all').prop('checked', true);
+                }
+                else {
+                    $('#select_all').prop('checked', false);
+                }
+            });
+        });
+
+    </script>
+    <script>
+
+        document.getElementById("download-selected-btn").addEventListener("click", function () {
+
+            let selectedFiles = [];
+            let checkboxes = document.querySelectorAll(".check");
+            let count = 0;
+            console.log("download-selected");
+
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    selectedFiles.push(count);
+                    console.log(count);
+                }
+                count++;
+            });
+
+            selectedFiles.forEach(function (index) {
+                document.getElementById(index).click();
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

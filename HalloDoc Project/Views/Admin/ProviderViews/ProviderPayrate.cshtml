@@ -1,0 +1,61 @@
+﻿@model List<ProviderPayrateViewModel>
+@{
+    Layout = "_AdminDashboardLayout";
+}
+<div class="row justify-content-center">
+
+    <div class="col-8">
+        <div class="d-flex my-4 justify-content-between">
+            <div>
+                <h3>Payrate</h3>
+            </div>
+            <div>
+                <button class="btn btn-outline-info" onclick="history.back(-5)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                    </svg>
+                    Back
+                </button>
+            </div>
+        </div>
+        <div class="p-3 shadow-lg rounded-3">
+            <table class="table">
+                <colgroup>
+                    <col span="1" style="width: 40%;">
+                    <col span="1" style="width: 40%;">
+                    <col span="1" style="width: 20%;">
+
+                </colgroup>
+                <thead class="thead-light table-secondary">
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Payrate</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i=0;i<Model.Count;i++)
+                    {
+                        <form asp-action="SubmitProviderPayrate" asp-controller="Admin">
+                            <tr class="align-middle">
+                                <td>@Model[i].PayrateCategoryName</td>
+                                <td>
+                                    <input type="text" asp-for="@Model[i].PhysicianId" name="physicianId" hidden/>
+                                    <input type="text" asp-for="@Model[i].PayrateId" name="payrateId" hidden/>
+                                    <input type="text" asp-for="@Model[i].PayrateCategoryId" name="payrateCategoryId" hidden/>
+                                    <div class="form-floating">
+                                        <input type="text" asp-for="@Model[i].PayrateValue" name="payrateValue" class="form-control payrateInput" id="PayrateNightShiftWeekend" />
+                                        <label for="PayrateNightShiftWeekend" class="ms-2">Payrate</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-info text-light editButtons" type="submit">Submit</button>
+                                </td>
+                            </tr>
+                        </form>
+                    } 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,126 @@
+﻿@model ViewCaseViewModel
+@{
+    Layout = "_ProviderDashboardLayout";
+    ViewData["Title"] = "View Case";
+
+}
+<div class="container">
+    <div class=" d-flex align-items-center  justify-content-between">
+        <div class="d-flex align-items-center my-3">
+            <h2>View Reservation  </h2>
+            <div class="text-light p-2 px-3 bg-success mb-2 ms-2 " style="border-radius:25px">
+                Patient
+            </div>
+        </div>
+        <div class="">
+            <button class="btn-outline-info btn mb-2">
+                Back
+            </button>
+        </div>
+    </div>
+    <div class="shadow-lg p-3">
+        <h5 class="">Patient Information</h5>
+        <small class="mt-0 text-muted">
+            Confirmation Number
+        </small>
+        <h5 class="text-info">
+            @Model.confirmationNo
+        </h5>
+        <div class="form-group">
+            <textarea class="form-control" asp-for="patientnotes" id="exampleFormControlTextarea1" disabled rows="3"></textarea>
+            <hr class="color-light mb-0" />
+        </div>
+        <form>
+
+            <div class="row">
+                <div class="col-11 mt-4 col-sm-6 form-floating ">
+                    <input type="text" asp-for="patientfirstname" placeholder="First Name" class="t  form-control border" id="fname" disabled>
+                    <label for="fname" class="ms-2">First Name</label>
+
+                </div>
+                <div class="col-11 col-sm-6 mt-4 form-floating  ">
+                    <input type="text" asp-for="patientlastname" placeholder="Last Name" class="t form-control border" id="lname" disabled>
+                    <label for="lname" class="ms-2">Last Name</label>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-11 col-sm-6  mt-4 form-floating">
+                    <input type="date" asp-for="dob" placeholder="Date Of Birth" class="t form-control border" id="DOB" disabled>
+                    <label for="DOB" class="ms-2">Date Of Birth</label>
+                </div>
+                <div class="col-11 col-sm-5 mt-4 form-floating ">
+                    <div class="form-floating border ">
+                        <input id="patient-phone" asp-for="patientphone" class="form-control" type="tel" name="phone1" disabled />
+                    </div>
+                </div>
+                <div class="col-11 col-sm-1 mt-4 form-floating align-items-center d-flex">
+                    <button class="btn btn-outline-info px-3 py-2 border" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+
+                <div class="col-11 col-sm-6  mt-4 form-floating ">
+                    <input type="email" asp-for="patientemail" class="form-control border" id="email" disabled>
+                    <label for="email" class="ms-2">E-mail</label>
+                </div>
+
+            </div>
+
+            <h4 class="mt-4">Location Information</h4>
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6 col-12">
+                    <div class="form-floating mt-3">
+                        <input asp-for="region" class="form-control" placeholder="Leave a comment here" disabled
+                               id="floatingTextarea2"></input>
+                        <label for="floatingTextarea2">Region</label>
+                    </div>
+                </div>
+
+                <div class="col-md-5 col-12">
+                    <div class="form-floating mt-3">
+                        <input asp-for="address" class="form-control" placeholder="Leave a comment here" disabled></input>
+                        <label for="floatingTextarea2">Name/Address</label>
+                    </div>
+                </div>
+
+                <div class="col-1 mt-3">
+
+                    <button class="btn btn-outline-info align-items-center d-flex justify-content-center" type="button" style="color: #10bce9;">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" fill="#10bce9" width="24"><path d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z" /></svg>
+                    </button>
+
+                </div>
+
+                <div class="col-md-6 col-12">
+
+                    <div class="form-floating mt-3">
+
+                        <input asp-for="rooms" class="form-control" placeholder="Leave a comment here" disabled
+                               id="floatingTextarea2">
+                        <label for="floatingTextarea2">Rooms(Optional)</label>
+
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-end mt-3">
+                    <a asp-controller="Provider" asp-action="ProviderViewNotes" class="btn py-2 px-4 ms-3" style="background-color: #10bce9; color: white;">
+                        View Notes
+                    </a>
+                </div>
+        </form>
+    </div>
+    @*-----------------------------------------------------------------------------------------------------------------------------------------------*@
+    <script>
+        var phoneInputField = document.querySelector("#patient-phone");
+        var phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>   

@@ -1,0 +1,136 @@
+﻿@model VendorDetailsViewModel;
+@{
+    Layout = "_AdminDashboardLayout";
+    ViewData["username"] = Model.UserName;
+    ViewData["Title"] = "Vendor Details";
+}
+<div class="row justify-content-center">
+    <div class="col-11">
+        <div class="d-flex justify-content-between">
+            <div class="m-4 pt-4">
+                <h3>Vendors</h3>
+            </div>
+            <div class="m-4 pt-4">
+                <button onclick="history.back()" class="btn btn-outline-info back_btn align-items-center d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                        <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
+                    </svg>
+                    Back
+                </button>
+            </div>
+        </div>
+
+        <div class="mb-5 pb-4 request_form darkModeShadow shadow-lg px-4">
+            <div class="d-flex pt-3 justify-content-between">
+                <div class="d-flex">
+                    <div class="d-flex search-input rounded align-items-center ps-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 50 50">
+                            <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
+                            </path>
+                        </svg>
+                        <input id="vendorsSearchInput" type="text" class="form-control border-0" placeholder="Search Vendors">
+                    </div>
+
+                    <div class="d-flex search-input rounded align-items-center ms-2 ps-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 50 50">
+                            <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
+                            </path>
+                        </svg>
+                        <select id="vendorsProfession" class="form-select border-0" aria-label="Default select example">
+                            <option value="0" selected>All Professions</option>
+                            @for (int i = 0; i < Model.Healthprofessionaltypes.Count; i++)
+                            {
+                                <option class="p-5" value="@Model.Healthprofessionaltypes[i].Healthprofessionalid">@Model.Healthprofessionaltypes[i].Professionname</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <a asp-action="AddBusiness" asp-controller="Admin" class="btn btn-outline-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        </svg>
+                        Add Business
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-5 mb-4" id="vendorTable">
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+
+<script>
+    var dash = document.getElementById("dashboard-tab");
+    var providerLoc = document.getElementById("providerLoc-tab");
+    var profile = document.getElementById("myProfile-tab");
+    var provider = document.getElementById("provider-tab");
+    var partner = document.getElementById("partner-tab");
+    var access = document.getElementById("access-tab");
+    var records = document.getElementById("records-tab");
+
+    dash.classList.remove("active1");
+    providerLoc.classList.remove("active1");
+    profile.classList.remove("active1");
+    provider.classList.remove("active1");
+    partner.classList.add("active1");
+    access.classList.remove("active1");
+    records.classList.remove("active1");
+</script>
+
+
+
+<script>
+
+    var filterProfession = 0;
+    var filterSearch = "";
+
+    $("#vendorsProfession").change(function () {
+        filterProfession = $('option:selected', this).val();
+        vendorsFilter();
+    });
+    $("#vendorsSearchInput").on("blur", function () {
+        var searchValue = $(this).val().toLowerCase();
+        filterSearch = searchValue;
+        vendorsFilter();
+    });
+
+    $("#vendorsSearchInput").on("keydown", function (e) {
+        if (e.code === "Enter") {
+            var searchValue = $(this).val().toLowerCase();
+            filterSearch = searchValue;
+            vendorsFilter();
+        }
+    });
+
+
+    function vendorsFilter() {
+        $.ajax({
+            url: "/Admin/VendorsFilter",
+            type: 'POST',
+            data: { filterSearch: filterSearch, filterProfession: filterProfession },
+            success: function (result) {
+                $('#vendorTable').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        });
+    }
+    vendorsFilter();
+
+
+</script>

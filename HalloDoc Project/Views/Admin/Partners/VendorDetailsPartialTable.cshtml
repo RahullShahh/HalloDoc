@@ -1,0 +1,52 @@
+﻿@model VendorDetailsViewModel;
+
+<div class="mt-3 table-responsive">
+    <table class="table">
+        <colgroup>
+            <col span="1" style="width: 12%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 13%;">
+            <col span="1" style="width: 15%;">
+        </colgroup>
+
+        <thead class="table-head align-middle">
+            <tr>
+                <th>Profession</th>
+                <th>Business Name</th>
+                <th>Email</th>
+                <th>Fax Number</th>
+                <th>Phone Number</th>
+                <th>Business Contact</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+        <tbody class="table-body align-middle">
+            @for (int i = 0; i < Model.VendorsTable.Count; i++)
+            {
+                <tr>
+                    <td>@Model.VendorsTable[i].profession</td>
+                    <td>@Model.VendorsTable[i].businessName</td>
+                    <td>@Model.VendorsTable[i].email</td>
+                    <td>@Model.VendorsTable[i].faxNumber</td>
+                    <td>@Model.VendorsTable[i].phone</td>
+                    <td>@Model.VendorsTable[i].businessContact</td>
+
+                    <td>
+                        <div class="d-flex">
+                            <a asp-action="EditBusiness" asp-controller="Admin" asp-route-id="@Model.VendorsTable[i].vendorId"  class="btn btn-outline-info mx-2">Edit</a>
+                            <a asp-action="DeleteVendor" asp-controller="Admin" asp-route-id="@Model.VendorsTable[i].vendorId"  class="btn btn-outline-info mx-2">Delete</a>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

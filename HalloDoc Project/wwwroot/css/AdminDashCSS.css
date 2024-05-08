@@ -1,0 +1,309 @@
+﻿*{
+    font-family: poppins;
+}
+
+#new {
+    background-color: #e9eaef;
+    color: #203f9a;
+    border: 1px solid #203f9a;
+}
+
+#pending {
+    background-color: #e5f2f8;
+    color: #00adef;
+    border: 1px solid #00adef;
+}
+
+#active {
+    background-color: #e9f0e8;
+    color: #228c20;
+    border: 1px solid #228c20;
+}
+
+#conclude {
+    background-color: #f7e6ee;
+    color: #da0f82;
+    border: 1px solid #da0f82;
+}
+
+#toclose {
+    background-color: #e5eef5;
+    color: #0370d7;
+    border: 1px solid #0370d7;
+}
+
+#unpaid {
+    background-color: #efeef4;
+    color: #9966cd;
+    border: 1px solid #9966cd;
+}
+
+.nav-link {
+    color: black;
+}
+
+.nav-tabs .active {
+    border: none;
+    color: #10bce9 !important;
+    border-bottom: 5px solid #10bce9 !important;
+}
+
+.subhead {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#new.active {
+    background-color: #203f9a !important;
+    color: white;
+}
+
+#pending.active {
+    background-color: #00adef !important;
+    color: white;
+}
+
+#active.active {
+    background-color: #228c20 !important;
+    color: white;
+}
+
+#conclude.active {
+    background-color: #da0f82 !important;
+    color: white;
+}
+
+#toclose.active {
+    background-color: #0370d7 !important;
+    color: white;
+}
+
+#unpaid.active {
+    background-color: #9966cd !important;
+    color: white;
+}
+
+.blocks .row {
+    display: none;
+}
+
+.btn-info {
+    color: white;
+}
+
+    .btn-info:hover {
+        color: white;
+    }
+
+.normal-input {
+    border: 1px solid grey;
+    box-shadow: none;
+}
+
+    .normal-input:focus-within {
+        outline:none;
+        border: 1px solid #10bce9;
+    }
+    /*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/* Admin Dashboard CSS */
+
+.admin-dashboard {
+    background-color: #f9f9f9;
+}
+
+.nav .active {
+    background-color: white !important;
+}
+
+.active .tabHeader {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 500;
+    border-bottom: 2px solid var(--primary);
+}
+
+.tabHeader {
+    color: black;
+}
+
+.table-head {
+    background-color: #f0f0f0;
+}
+
+    .table-head th {
+        font-weight: 500;
+    }
+
+.table .table-body tr {
+    height: 55px;
+}
+
+.table td:first-child, th:first-child {
+    padding-left: 20px;
+}
+
+.dashboard-card {
+    border-radius: 5px;
+}
+
+.admin-dashboard input:focus {
+    box-shadow: none;
+}
+
+.admin-dashboard select:focus {
+    box-shadow: none;
+}
+
+
+.status-tab div {
+    border-radius: 8px;
+}
+
+.status-new {
+    background-color: #e9eaef;
+    color: #203f9a;
+    border: 1px solid #203f9a;
+}
+
+.status-pending {
+    background-color: #e5f2f8;
+    color: #00adef;
+    border: 1px solid #00adef;
+}
+
+.status-active {
+    background-color: #e9f0e8;
+    color: #228c20;
+    border: 1px solid #228c20;
+}
+
+.status-conclude {
+    background-color: #f7e6ee;
+    color: #da0f82;
+    border: 1px solid #da0f82;
+}
+
+.status-to-close {
+    background-color: #e5eef5;
+    color: #0370d7;
+    border: 1px solid #0370d7;
+}
+
+.status-unpaid {
+    background-color: #efeef4;
+    color: #9966cd;
+    border: 1px solid #9966cd;
+}
+
+.active .status-new {
+    background-color: #203f9a;
+    color: white;
+    border: 1px solid #203f9a;
+}
+
+.active .status-pending {
+    background-color: #00adef;
+    color: white;
+    border: 1px solid #00adef;
+}
+
+.active .status-active {
+    background-color: #228c20;
+    color: white;
+    border: 1px solid #228c20;
+}
+
+.active .status-conclude {
+    background-color: #da0f82;
+    color: white;
+    border: 1px solid #da0f82;
+}
+
+.active .status-to-close {
+    background-color: #0370d7;
+    color: white;
+    border: 1px solid #0370d7;
+}
+
+.active .status-unpaid {
+    background-color: #9966cd;
+    color: white;
+    border: 1px solid #9966cd;
+}
+
+.admin-dashboard input {
+    box-shadow: none;
+    border-width: 0px;
+}
+
+    .admin-dashboard input:focus {
+        box-shadow: none;
+    }
+
+.admin-dashboard select:focus {
+    box-shadow: none;
+}
+
+.normal-input {
+    border: 1px solid grey;
+}
+
+    .normal-input:focus-within {
+        border: 1px solid var(--primary);
+    }
+
+.filter-options {
+    height: 30px;
+    border-width: 0px;
+}
+
+    .filter-options:hover {
+        background-color: #e3e3e3;
+    }
+
+.active-filter {
+    border: 1px solid grey;
+}
+
+.admin-dashboard .table-head {
+    background-color: lightgrey;
+}
+
+
+
+.admin-dashboard .patient-request-row {
+    background-color: #5fbc61;
+    color: white;
+}
+
+.admin-dashboard .family-friend-request-row {
+    background-color: #ed9124;
+    color: white;
+}
+
+.admin-dashboard .concierge-request-row {
+    background-color: #007fc6;
+    color: white;
+}
+
+.admin-dashboard .business-request-row {
+    background-color: #e26277;
+    color: white;
+}
+
+.admin-dashboard .vip-request-row {
+    background-color: #9966cd;
+    color: white;
+}
+
+.admin-dashboard .white-border-btn {
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.table {
+    --bs-table-color: none;
+    --bs-table-bg: none;
+    --bs-table-border-color: none;
+}
+

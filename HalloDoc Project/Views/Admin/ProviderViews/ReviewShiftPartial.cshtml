@@ -1,0 +1,85 @@
+﻿@model List<ShiftDetailModel>
+<div class="bg-white border justify-content-center">
+    <table class="table">
+        <thead class="table-secondary text-center">
+            <tr>
+                <th scope="col"><input type="checkbox" value="0" id="main" /></th>
+                <th scope="col">Staff</th>
+                <th scope="col">Day</th>
+                <th scope="col">Time</th>
+                <th scope="col">Region</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><input type="checkbox" value="@item.ShiftDetailId" class="other" /></td>
+                    <td>@item.physicianName</td>
+                    <td>@item.day</td>
+                    <td>@item.starttime - @item.endtime</td>
+                    <td>@item.Regioname</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (@Model.Count() == 0)
+    {
+        <h1 class="text-center">No Data Available</h1>
+    }
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#main').on('click', function () {
+            $('.other').prop("checked", $(this).prop("checked"));
+        });
+
+        // check if all other checkboxes are checked, then check the main checkbox
+        $('.other').on('click', function () {
+            if ($('.other').length === $('.other:checked').length) {
+                $('#main').prop("checked", true);
+            } else {
+                $('#main').prop("checked", false);
+            }
+        });
+    });
+
+
+    function handleSelected(approve) {
+        const checkboxes = document.querySelectorAll('input[type=checkbox]');
+        const checkedValues = [];
+
+        // Iterate over each checkbox
+        checkboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                checkedValues.push(checkbox.value);
+            }
+        });
+
+        $.ajax({
+            url: approve ? '/Admin/ApprovedSelected' : '/Admin/DeleteSelected',
+            method: 'POST',
+            data: { checkedValues: checkedValues },
+            success: function (response) {
+                window.location.reload();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("fail");
+            }
+        });
+    }
+
+    document.getElementById('approved').addEventListener('click', function () {
+        handleSelected(true);
+    });
+
+    document.getElementById('Deleted').addEventListener('click', function () {
+        handleSelected(false);
+    });
+</script>

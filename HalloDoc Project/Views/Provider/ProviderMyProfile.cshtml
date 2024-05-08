@@ -1,0 +1,530 @@
+﻿@model EditPhysicianViewModel
+@{
+    Layout = "_ProviderDashboardLayout";
+    ViewData["Title"] = "Provider Profile";
+
+}
+<div class="container-md co d-flex justify-content-center">
+    <div class="col-sm-10 col-12">
+        <div class="justify-content-between d-flex mt-4">
+            <h4>
+                My Profile
+            </h4>
+            <button class="btn btn-outline-info align-middle" onclick="history.back(-1)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#01bce9" width="15" height="15" viewBox="0 -960 960 960">
+                    <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
+                </svg>
+                <span>Back</span>
+            </button>
+        </div>
+        <div class="shadow-lg p-4 my-3">
+            <h5>
+                Account Information
+            </h5>
+            <div>
+                <form method="post" id="AccountInfoForm" asp-action="SubmitPhysicianAccountInfo" asp-controller="Provider">
+                    <div>
+                        <input hidden asp-for="@Model.PhysicianId" />
+                        <div class="row">
+                            <div class="col-12 mt-4 col-sm-6 form-floating ">
+                                <input disabled asp-for="@Model.PhysicianUsername" type="text" placeholder="User Name" class="form-control" id="Username">
+                                <label for="Username" class="ms-2">User Name</label>
+                                <span class="validation"></span>
+                            </div>
+                            <div class="col-12 col-sm-6 mt-4 form-floating  ">
+                                <input asp-for="@Model.PhysicianPassword" type="text" placeholder="Password" class="form-control" id="Password">
+                                <label for="Password" class="ms-2">Password</label>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-12 mt-4 col-sm-6 form-floating ">
+                                <div class="form-floating">
+                                    <select asp-for="@Model.Status" class="form-select AccountInfoInputs" disabled aria-label="StatusSelectMenu">
+                                        <option selected>Status</option>
+                                        <option value="1">Pending</option>
+                                        <option value="2">Active</option>
+                                        <option value="3">Terminated</option>
+                                    </select>
+                                    <label for="floatingSelect">Status</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 mt-4 form-floating  ">
+                                <div class="form-floating">
+                                    @* <select asp-for="@Model.Role" class="form-select AccountInfoInputs" disabled aria-label="RoleSelectMenu">
+                                    <option selected>Role</option>
+                                    <option value="1">Junior</option>
+                                    <option value="2">Senior</option>
+                                    <option value="3">Master</option>
+                                    </select> *@
+                                    <select class="form-select AccountInfoInputs" disabled aria-label="StatusSelectMenu">
+                                        <option selected>Role</option>
+                                        <option value="1">Junior</option>
+                                        <option value="2">Senior</option>
+                                        <option value="3">Master</option>
+                                    </select>
+                                    <label for="floatingSelect">Role</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn btn-outline-info" id="AccountInfoResetPasswordButton">Reset Password</button>
+                    </div>
+                </form>
+            </div>
+            <hr />
+            <div>
+                <h5>
+                    Physician Information
+                </h5>
+                <form method="post" id="PhysicianInfoForm" asp-action="SubmitPhysicianInfo" asp-controller="Admin">
+                    <div>
+                        <input hidden asp-for="@Model.PhysicianId" />
+                        <div class="row">
+                            <div class="col-12 mt-4 col-sm-6 form-floating ">
+                                <input disabled type="text" asp-for="FirstName" placeholder="First Name" class="form-control PhysicianInfoInputs" id="fname">
+                                <label for="fname" class="ms-2">First Name</label>
+                            </div>
+                            <div class="col-12 col-sm-6 mt-4 form-floating  ">
+                                <input disabled type="text" asp-for="LastName" placeholder="Last Name" class="form-control PhysicianInfoInputs" id="Lastname">
+                                <label for="Lastname" class="ms-2">Last Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 mt-4">
+                                <div class="form-floating">
+                                    <input disabled type="email" asp-for="Email" placeholder="Email" class="form-control PhysicianInfoInputs" id="emailfloat">
+                                    <label for="emailfloat">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 mt-4 ">
+                                <div class="form-floating ">
+                                    <input disabled id="patient-phone" asp-for="PhoneNo" class="form-control PhysicianInfoInputs" type="tel" name="phone1" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 mt-4  form-floating ">
+                                <input disabled type="text" asp-for="@Model.MedicalLicense" placeholder="Medical License" class="form-control PhysicianInfoInputs" id="MedicalLicense">
+                                <label for="MedicalLicense" class="ms-2">Medical License</label>
+
+                            </div>
+                            <div class="col-12 col-sm-6 mt-4 form-floating  ">
+                                <input disabled type="text" asp-for="@Model.NPINumber" placeholder="NPI Number" class="form-control PhysicianInfoInputs" id="NPINumber">
+                                <label for="NPINumber" class="ms-2">NPI Number</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 mt-4 form-floating">
+                                <input disabled type="text" asp-for="@Model.SyncEmail" placeholder="Synchronization Email Address" class="form-control PhysicianInfoInputs" id="SyncEmail">
+                                <label for="SyncEmail" class="ms-2">Synchronization Email Address</label>
+                            </div>
+                            <div class="col-12 align-items-center d-flex col-sm-6 mt-4 form-floating">
+                                <button class="btn col-12 border dropdown-toggle PhysicianInfoInputs" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select States
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="StatesMenu">
+                                    <div class="row">
+                                        @for (int i = 0; i < Model.States.Count; i++)
+                                        {
+                                            @if (i % 2 == 0)
+                                            {
+                                                <div class="col-6">
+                                                    <input type="checkbox" disabled name="PhysicianLocations" @(Model.PhysicianChosenLocations.Contains(Model.States[i].Regionid) ? "checked" : "") class="ms-3" id="state_@i" value="@Model.States[i].Regionid">
+                                                    <label for="state_@i" class="mx-3">@Model.States[i].Name</label>
+                                                    <br />
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-6">
+                                                    <input type="checkbox" disabled name="PhysicianLocations" @(Model.PhysicianChosenLocations.Contains(Model.States[i].Regionid) ? "checked" : "") class="ms-3" id="state_@i" value="@Model.States[i].Regionid">
+                                                    <label for="state_@i" class="mx-3">@Model.States[i].Name</label>
+                                                    <br />
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr />
+            <div>
+                <h5>
+                    Mailing & Billing Details
+                </h5>
+                <div class="row">
+                    <form method="post" asp-action="SubmitPhysicianMailingBillingDetails" asp-controller="Admin">
+                        <input hidden asp-for="@Model.PhysicianId" />
+                        <div class="row">
+                            <div class="col-12 col-sm-6 form-floating temp mt-4">
+                                <input asp-for="@Model.Address1" type="text" disabled class="billingInput form-control inputs border" placeholder="name@example.com">
+                                <label for="floatingInput" class="input_labels ms-2">Address 1</label>
+                            </div>
+                            <div class="col-12 col-sm-6 form-floating temp mt-4">
+                                <input asp-for="@Model.Address2" type="text" disabled class="billingInput form-control inputs border" placeholder="name@example.com">
+                                <label for="floatingInput" class="input_labels ms-2">Address 2</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 form-floating temp mt-4">
+                                <input asp-for="@Model.City" type="text" disabled class="billingInput form-control inputs border" placeholder="name@example.com">
+                                <label for="floatingInput" class="input_labels ms-2">City</label>
+                            </div>
+                            <div class="col-12 col-sm-6 form-floating mt-4 temp">
+                                <input disabled asp-for="@Model.ResidentialRegion" type="text" class="billingInput form-control inputs border" placeholder="@Model.ResidentialRegion" />
+                                <label for="" class="input_labels ms-2">State</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 form-floating temp mt-4">
+                                <input asp-for="@Model.ZipCode" disabled type="number" class="billingInput form-control inputs border" placeholder="name@example.com">
+                                <label for="floatingInput" class="input_labels ms-2">Zip</label>
+                            </div>
+                            <div class="col-12 col-sm-6 temp mt-4 form-floating d-flex h-100">
+                                <input asp-for="@Model.BillingPhoneNo" disabled id="phone1" class="billingInput py-3 form-control inputs border" type="tel" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr />
+            <div>
+                <h5>
+                    Provider Profile
+                </h5>
+                <div class="row">
+                    <form method="post" enctype="multipart/form-data" id="ProviderProfileForm" asp-action="SubmitProviderProfile" asp-controller="Admin">
+                        <input hidden asp-for="@Model.PhysicianId" />
+                        <div class="row">
+                            <div class="col-12 col-sm-6 form-floating temp mt-4">
+                                <input asp-for="@Model.BusinessName" type="text" disabled id="BusinessName" class="ProfileInputs form-control border" placeholder="Business Name">
+                                <label for="BusinessName" class="input_labels ms-2">Business Name</label>
+                            </div>
+                            <div class="col-12 col-sm-6 form-floating temp mt-4">
+                                <input asp-for="@Model.BusinessWebsite" type="text" disabled id="BusinessWebsite" class="ProfileInputs form-control border" placeholder="Business Website">
+                                <label for="BusinessWebsite" class="input_labels ms-2">Business Website</label>
+                            </div>
+                        </div>
+                        <div class="row align-items-center d-flex">
+                            @if (Model.Signatureexists != null)
+                            {
+                                <div class="d-flex justify-content-center  my-3">
+                                    <img src="~/Content/Providers/@Model.PhysicianId/Signature.png" style="width:450px" class="border" alt="No Signature Found" />
+                                </div>
+                            }
+                        </div>
+                        <div id="signature-div" style="display:none;">
+                            <canvas id="signature-pad" width="450" height="150" style="border: 1px solid #ddd;"></canvas>
+                            <br />
+                            <div class="">
+                                <button type="reset" class="btn btn-danger" id="clear-signature">Clear</button>
+                                <button type="button" class="btn btn-success" id="save-signature">Save</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col mt-4 form-floating ">
+                                <textarea disabled class="ProfileInputs form-control" id="forfloatingtextarea"
+                                          placeholder="Enter Brief Details Of Symptoms(Optional)" style="height: 15vh;" cols="20"
+                                          rows="5"></textarea>
+                                <label for="forfloatingtextarea" class="ms-2">Admin Notes</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <hr />
+            <div>
+                <h5>
+                    On-boarding
+                </h5>
+                <div class="mb-3">
+                    <form method="post" id="OnboardingForm" enctype="multipart/form-data" asp-action="UploadOnboardingDocuments" asp-controller="Admin">
+                        <input hidden asp-for="@Model.PhysicianId" />
+                        @if (Model.ICAexists == true)
+                        {
+                            <div class="row align-items-center d-flex">
+                                <div class="col-4">
+                                    <label class="form-check-label" for="flexCheckDefault" style="font-size:18px">Independent Contract Agreement</label>
+                                </div>
+                                <div class="col-6 form-floating temp mt-3">
+                                    <div>
+                                        <label for="ica" class="input-group-text btn btn-info text-white d-none OnboardingUploadButton"> Upload</label>
+                                        <a href="/Content/Providers/@Model.PhysicianId/ICA.pdf" target="_blank" class="btn btn-info text-light OnboardingViewButton "> View </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.BCexists == true)
+                        {
+                            <div class="row align-items-center d-flex">
+                                <div class="col-4">
+                                    <label class="form-check-label" for="flexCheckDefault" style="font-size:18px">Background Check</label>
+                                </div>
+                                <div class="col-6 form-floating temp mt-3">
+                                    <div>
+                                        <a href="/Content/Providers/@Model.PhysicianId/BC.pdf" target="_blank" class="btn btn-info text-light OnboardingViewButton "> View </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.HIPAAexists == true)
+                        {
+
+                            <div class="row align-items-center d-flex">
+                                <div class="col-4">
+                                    <label class="form-check-label" for="flexCheckDefault" style="font-size:18px">HIPAA Compliance</label>
+                                </div>
+                                <div class="col-6 form-floating temp mt-3">
+                                    <div>
+                                        <a href="/Content/Providers/@Model.PhysicianId/HIPPA.pdf" target="_blank" class="btn btn-info text-light OnboardingViewButton "> View </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.NDCexists == true)
+                        {
+
+                            <div class="row align-items-center d-flex">
+                                <div class="col-4">
+                                    <label class="form-check-label" for="flexCheckDefault" style="font-size:18px">Non-disclosure Agreement</label>
+                                </div>
+                                <div class="col form-floating temp mt-3">
+                                    <div>
+                                        <a href="/Content/Providers/@Model.PhysicianId/NDA.pdf" target="_blank" class="btn btn-info text-light OnboardingViewButton "> View </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <hr />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const phoneInputField = document.getElementById("phy-phone");
+    var patientPhoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        preferredCountries: ["in"],
+        separateDialCode: true,
+        initialCountry: "in"
+    });
+
+    const phoneInputField1 = document.getElementById("phy-alt-phone");
+    var patientPhoneInput1 = window.intlTelInput(phoneInputField1, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+<script>
+        function ShowAccountInfoButtons(link) {
+        var SubmitButton = document.getElementById("AccountInfoSubmitButton");
+        var CancelButton = document.getElementById("AccountInfoCancelButton");
+
+        SubmitButton.classList.remove('d-none');
+        CancelButton.classList.remove('d-none');
+
+        var DisabledInputs = document.querySelectorAll('.AccountInfoInputs');
+        DisabledInputs.forEach(elements => {
+            elements.removeAttribute('disabled');
+        });
+
+        document.getElementById("AccountInfoResetPasswordButton").classList.add('d-none');
+        link.classList.add('d-none');
+
+    };
+
+    function SubmitAccountInfo(link) {
+        var SubmitButton = document.getElementById("AccountInfoSubmitButton");
+        var CancelButton = document.getElementById("AccountInfoCancelButton");
+
+        SubmitButton.classList.add('d-none');
+        CancelButton.classList.add('d-none');
+
+        var DisabledInputs = document.querySelectorAll('.AccountInfoInputs');
+        DisabledInputs.forEach(elements => {
+            elements.setAttribute('disabled');
+        });
+        document.getElementById("AccountInfoResetPasswordButton").classList.remove('d-none');
+        document.getElementById("AccountInfoEditButton").classList.remove('d-none');
+    };
+
+    function PhysicianInfoShowButtons(button) {
+        // Show the save and cancel buttons
+        document.getElementById("PhysicianInfoSaveButton").classList.remove("d-none");
+        document.getElementById("PhysicianInfoCancelButton").classList.remove("d-none");
+
+        var DisabledInputs = document.querySelectorAll('.PhysicianInfoInputs');
+        DisabledInputs.forEach(elements => {
+            elements.removeAttribute('disabled');
+        });
+
+        // Hide the edit button
+        button.classList.add("d-none");
+    };
+
+    function PhysicianInfoShowButtons(button) {
+        // Enable all input fields
+        var inputs = document.getElementsByClassName("PhysicianInfoInputs");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = false;
+        }
+
+        // Show the save and cancel buttons
+        document.getElementById("PhysicianInfoSaveButton").classList.remove("d-none");
+        document.getElementById("PhysicianInfoCancelButton").classList.remove("d-none");
+
+        // Hide the edit button
+        button.classList.add("d-none");
+    };
+
+    function CancelPhysicianInfo(button) {
+        // Disable all input fields
+        var inputs = document.getElementsByClassName("PhysicianInfoInputs");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = true;
+        }
+
+        // Hide the save and cancel buttons
+        document.getElementById("PhysicianInfoSaveButton").classList.add("d-none");
+        document.getElementById("PhysicianInfoCancelButton").classList.add("d-none");
+
+        // Show the edit button
+        document.getElementById("PhysicianInfoEditButton").classList.remove("d-none");
+    };
+
+    function BillingInfoEditButton() {
+        // Enable all input fields with class billingInput
+        var inputs = document.getElementsByClassName("billingInput");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = false;
+        }
+
+        // Show the submit and cancel buttons
+        document.getElementById("BillingSubmit").classList.remove("d-none");
+        document.getElementById("BillingCancel").classList.remove("d-none");
+
+        // Hide the edit button
+        document.getElementById("BillingEdit").classList.add("d-none");
+    }
+
+    function BillingInfoCancelButton() {
+        // Disable all input fields with class billingInput
+        var inputs = document.getElementsByClassName("billingInput");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = true;
+        }
+
+        // Hide the submit and cancel buttons
+        document.getElementById("BillingSubmit").classList.add("d-none");
+        document.getElementById("BillingCancel").classList.add("d-none");
+
+        // Show the edit button
+        document.getElementById("BillingEdit").classList.remove("d-none");
+    }
+
+    function ProfileEditButton() {
+        // Show submit and cancel buttons, hide edit button
+        document.getElementById('ProfileSubmit').classList.remove('d-none');
+        document.getElementById('ProfileCancel').classList.remove('d-none');
+        document.getElementById('ProfileEdit').classList.add('d-none');
+
+        // Enable all inputs with class 'ProfileInputs'
+        var inputs = document.getElementsByClassName('ProfileInputs');
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].removeAttribute('disabled');
+        }
+    }
+
+    function ProfileCancelButton() {
+        // Hide submit and cancel buttons, show edit button
+        document.getElementById('ProfileSubmit').classList.add('d-none');
+        document.getElementById('ProfileCancel').classList.add('d-none');
+        document.getElementById('ProfileEdit').classList.remove('d-none');
+
+        // Disable all inputs with class 'ProfileInputs'
+        var inputs = document.getElementsByClassName('ProfileInputs');
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].setAttribute('disabled', 'disabled');
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll(".OnboardingCheckbox");
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+                const parentRow = checkbox.closest(".row");
+                const uploadButton = parentRow.querySelector(".OnboardingUploadButton");
+                const viewButton = parentRow.querySelector(".OnboardingViewButton");
+                if (checkbox.checked) {
+                    uploadButton.classList.remove("d-none");
+                } else {
+                    uploadButton.classList.add("d-none");
+                }
+                uploadButton.disabled = !checkbox.checked;
+            });
+        });
+    });
+
+</script>
+
+
+
+<script>
+
+    function dataURLtoFile(dataurl, filename) {
+        var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[arr.length - 1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, { type: mime });
+    }
+
+    jQuery(document).ready(function ($) {
+
+        var canvas = document.getElementById("signature-pad");
+        var signaturePad = new SignaturePad(canvas);
+
+        $('#clear-signature').on('click', function () {
+            signaturePad.clear();
+        });
+
+        $('#save-signature').on('click', function () {
+            const signatureImage = signaturePad.toDataURL();
+            const fileName = "Digital_Signature.png";
+
+            $('#phy_sign_text_input_id').val(fileName);
+
+            let fileInputElement = document.getElementById('phy_sign_input_id');
+
+            let container = new DataTransfer();
+            let data = new Blob();
+            let file = dataURLtoFile(signatureImage, fileName);
+            container.items.add(file);
+            fileInputElement.files = container.files;
+
+            $('#signature-div').css("display", "none");
+
+        });
+
+        $('#create-signature-btn').click(function () {
+            $('#signature-div').css("display", "flex");
+        });
+
+    });
+
+
+</script>

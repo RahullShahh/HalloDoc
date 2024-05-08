@@ -1,0 +1,175 @@
+﻿@model ViewUploadsViewModel
+@{
+    Layout = "_ProviderDashboardLayout";
+    ViewData["Title"] = "Conclude Care";
+
+}
+<div class="container">
+    <div class="row">
+        <div class="col my-4 d-flex justify-content-between">
+            <h2>Conclude Care</h2>
+            <button type="button" class="btn btn-outline-info" onclick="history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                    <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
+                </svg>
+                Back
+            </button>
+        </div>
+    </div>
+    <div class="container mb-5 p-2 pb-5 request_form shadow-lg px-4">
+        <small>Patient Name</small>
+        <div class="d-flex align-items-center">
+            <h4 class="text-info pe-1">@Model.Patientname</h4>
+            <h6 class="">(@Model.ConfirmationNo)</h6>
+        </div>
+        <h5 class="my-3">Encounter Form</h5>
+        <form method="post" enctype="multipart/form-data" >
+            <div class="row">
+                <div class="mb-3">
+                    <input asp-for="RequestID" hidden />
+                    <input class="form-control" asp-for="File" accept=".pdf" type="file" id="file_input_id" style="opacity:0;height:0;">
+
+                    <div class="input-group mb-3">
+                        <input type="text" id='text_input_id' class="form-control" placeholder="Select File" style="caret-color: transparent" autocomplete="off">
+                        <div>
+                            <button for="text_input_id" type="submit" class="ms-1 btn-info btn text-white">Upload</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+        <table class="table">
+            <colgroup>
+                <col style="width: 80%;">
+                <col style="width: 20%;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Documents</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Requestwisefiles.Count == 0)
+                {
+                    <tr>
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center text-muted">No Data Available</div>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @for (int i = 0; i < Model.Requestwisefiles.Count; i++)
+                    {
+                        @if (Model.Requestwisefiles[i].Isdeleted != true)
+                        {
+                            <tr>
+                                <td>
+                                    <svg height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 309.267 309.267" xml:space="preserve"><g>
+                                    <path style="fill:#E2574C;" d="M38.658,0h164.23l87.049,86.711v203.227c0,10.679-8.659,19.329-19.329,19.329H38.658 c-10.67,0-19.329-8.65-19.329-19.329V19.329C19.329,8.65,27.989,0,38.658,0z" />
+                                    <path style="fill:#B53629;" d="M289.658,86.981h-67.372c-10.67,0-19.329-8.659-19.329-19.329V0.193L289.658,86.981z" />
+                                    <path style="fill:#FFFFFF;" d="M217.434,146.544c3.238,0,4.823-2.822,4.823-5.557c0-2.832-1.653-5.567-4.823-5.567h-18.44 c-3.605,0-5.615,2.986-5.615,6.282v45.317c0,4.04,2.3,6.282,5.412,6.282c3.093,0,5.403-2.242,5.403-6.282v-12.438h11.153 c3.46,0,5.19-2.832,5.19-5.644c0-2.754-1.73-5.49-5.19-5.49h-11.153v-16.903C204.194,146.544,217.434,146.544,217.434,146.544z M155.107,135.42h-13.492c-3.663,0-6.263,2.513-6.263,6.243v45.395c0,4.629,3.74,6.079,6.417,6.079h14.159 c16.758,0,27.824-11.027,27.824-28.047C183.743,147.095,173.325,135.42,155.107,135.42z M155.755,181.946h-8.225v-35.334h7.413 c11.221,0,16.101,7.529,16.101,17.918C171.044,174.253,166.25,181.946,155.755,181.946z M106.33,135.42H92.964 c-3.779,0-5.886,2.493-5.886,6.282v45.317c0,4.04,2.416,6.282,5.663,6.282s5.663-2.242,5.663-6.282v-13.231h8.379 c10.341,0,18.875-7.326,18.875-19.107C125.659,143.152,117.425,135.42,106.33,135.42z M106.108,163.158h-7.703v-17.097h7.703 c4.755,0,7.78,3.711,7.78,8.553C113.878,159.447,110.863,163.158,106.108,163.158z" /></g></svg>
+                                    @Model.Requestwisefiles[i].Filename.Split('$')[1]
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-info" href="/Content/@Model.Requestwisefiles[i].Filename" id="@i" download>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="currentcolor" class="bi bi-cloud-arrow-down" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M7.646 10.854a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 9.293V5.5a.5.5 0 0 0-1 0v3.793L6.354 8.146a.5.5 0 1 0-.708.708z" />
+                                            <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383m.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z" />
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        <hr />
+        <h5 class="my-3">Provider Notes</h5>
+        <form method="post" asp-action="ConcludeCare" asp-controller="Provider">
+            <input asp-for=@Model.RequestID hidden/>
+            <div class="mb-3">
+                <textarea class="form-control" id="ProviderNotesTextArea" rows="3" asp-for="ProviderNotes" placeholder="Enter notes"></textarea>
+            </div>
+            @if (Model.isFinalized)
+            {
+                <div class="text-end my-3">
+                    <button class="btn btn-info" type="submit" >Conclude Care</button>
+                </div>
+            }
+            else
+            {
+                <div class="text-end my-3">
+                    <button class="btn btn-info" onclick="DoNotConclude()" type="button">Conclude Care</button>
+                    <div class="d-none" id="validationForConclude">
+                        <small class="text-danger">
+                            Finalize the Encounter Form to conclude this case.
+                        </small>
+                    </div>
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function DoNotConclude() {
+        var validation=document.getElementById("validationForConclude");
+        validation.classList.remove("d-none");
+    }
+</script>
+
+<script>
+    // bind file-input-form click action to text-input-span
+    $('#text_input_span_id').click(function () {
+        $("#file_input_id").trigger('click');
+    })
+
+    // bind file-input-form click action to text-input-form
+    $('#text_input_id').click(function () {
+        $("#file_input_id").trigger('click');
+    })
+
+    // display file name in text-input-form
+    $("#file_input_id").change(function () {
+        $('#text_input_id').val(this.value.replace(/C:\\fakepath\\/i, ''))
+    })
+
+    $(document).ready(function () {
+        $('#SelectAll').on('click', function () {
+            if (this.checked) {
+                $('.checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $('.checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+
+        $('.checkbox').on('click', function () {
+            if ($('.checkbox:checked').length == $('.checkbox').length) {
+                $('#select_all').prop('checked', true);
+            }
+            else {
+                $('#select_all').prop('checked', false);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#DeleteAll").click(function () {
+            console.log("Deleteall clicked");
+            $(".del").each(function () {
+                console.log("hello")
+                $(this).trigger();
+            });
+        });
+    });
+</script>

@@ -1,0 +1,63 @@
+﻿@media (max-width:767px) {
+    .bg {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        /* background-color: red; */
+        background-size: cover;
+        background-position: center;
+        filter: blur(3px);
+        z-index: -100;
+        background-image: url("SRS\ Screen\ Shorts/11116016_415.jpg");
+        opacity: .3;
+    }
+}
+* {
+    font-family: "Inter"!important;
+}
+
+.submitScreenButton{
+    font-family:"Inter"
+}
+.btno1 {
+    background-color: #10bce9;
+    color: white;
+    font-size: 25px;
+    border: none;
+}
+
+#loginSubmitButton {
+    transition:width 2s;
+}
+
+    #loginSubmitButton:hover {
+        width: 350px;
+    }
+
+[data-bs-theme="dark"] .darkModeShadow {
+    box-shadow: 0px 3px 10px #000000 !important;
+}
+
+.btno2 {
+    background-color: #0d1556;
+    color: white;
+    font-size: 25px;
+    border: none;
+}
+
+.btno3 {
+    background-color: #20A7DB;
+    color: black;
+    font-size: 25px;
+    border: none;
+    font-weight: 600px;
+}
+
+    .btno3:hover {
+        background-color: lightskyblue;
+        color: black;
+    }
+
+.iti__country-list{
+    z-index:5;
+}

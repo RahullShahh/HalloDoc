@@ -1,0 +1,194 @@
+﻿@model PatientProfileViewModel
+@{
+    Layout = "PatientDashboardLayout";
+    ViewData["username"] = Model.FirstName + " " + Model.LastName;
+    ViewData["Title"] = "Patient Profile";
+
+}
+
+<!doctype html>
+<html lang="en" style="width:100%;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="~/css/PatientProfileCSS.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+</head>
+<body>
+
+    <div class="d-flex justify-content-between align-items-center mx-2" style=" ">
+        <h2 class=" mt-4">Patient Profile</h2>
+        <div>
+            <button class="btn btn-outline-info " onclick="history.back(-1)">
+                <img src="~/SRS Screen Shorts/go-back-2.svg" width="20px" />Back
+            </button>
+        </div>
+    </div>
+    <form method="post" asp-action="editprofile" asp-controller="Home">
+        <div class="shadow-lg mx-2" style="">
+            <h5>
+                General Information
+            </h5>
+            <div>
+                <div class="row">
+                    <div class="col-12 mt-4 col-md-6 form-floating ">
+                        <input type="text" asp-for="FirstName" class="t  form-control" id="fname" disabled>
+                        <label for="fname" class="ms-2">First Name</label>
+                    </div>
+                    <div class="col-12 mt-4 col-md-6 form-floating ">
+                        <input type="text" asp-for="LastName" class="t  form-control" id="lname" disabled>
+                        <label for="lname" class="ms-2">Last Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-4 col-md-6 form-floating ">
+                        <input type="date" asp-for="Date" class="t  form-control" id="Dates" disabled>
+                        <label for="Dates" class="ms-2">Date</label>
+                    </div>
+                </div>
+            </div>
+            <h5 class="mt-4">
+                Contact Information
+            </h5>
+            <div class="row">
+                <div class="col-12 mt-4 col-md-2 form-floating ">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" disabled>
+                            <option selected>Select</option>
+                            <option value="1">Email</option>
+                            <option value="2">Mobile</option>
+                        </select>
+                        <label for="floatingSelect">Type</label>
+                    </div>
+                </div>
+                <div class="col-12 mt-4 col-md-4 form-floating ">
+                    <div class="form-floating ">
+                        <input id="patient-phone" asp-for="PhoneNo" class="form-control" type="tel" name="phone1" disabled />
+                    </div>
+                </div>
+                <div class="col-12 mt-4 col-md-6 form-floating ">
+                    <input type="email" asp-for="email" class="t  form-control" id="email" disabled>
+                    <label for="email" class="ms-2">E-mail</label>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <h5>Patient Location</h5>
+            </div>
+            <div class="row ">
+                <div class="col-12 col-md-6 mt-4">
+                    <div class="form-floating">
+                        <input type="text" asp-for="street" class="t form-control" id="floatingEmail" disabled>
+                        <label for="floatingEmail">Street</label>
+                    </div>
+
+                </div>
+                <div class="col-12 col-md-6 mt-4">
+                    <div class="form-floating">
+                        <input type="text" asp-for="city" class="t  form-control" id="floatingCity" disabled>
+                        <label for="floatingCity">City</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-12 col-md-6 mt-4">
+                    <div class="form-floating">
+                        <input type="text" asp-for="state" class="t  form-control" id="floatingState" disabled>
+                        <label for="floatingState">State</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mt-4">
+                    <div class="form-floating">
+                        <input type="number" asp-for="zipcode" class="t  form-control" id="floatingZip" disabled>
+                        <label for="floatingZip">Zip Code</label>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="mt-4 justify-content-end d-flex">
+                <button id="editBtn" type="button" onclick="editDetails()" class="btn btn-info">
+                    Edit
+                </button>
+
+                <button id="saveBtn" type="submit" class=" btn btn-info" style="display:none">
+                    Save
+                </button>
+
+            </div>
+        </div>
+
+    </form>
+
+    <script>
+
+        function editDetails() {
+
+            var inputs = document.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].disabled = false;
+            }
+
+            var selects = document.getElementsByTagName("select");
+            for (var i = 0; i < selects.length; i++) {
+                selects[i].disabled = false;
+            }
+
+            var editBtn = document.getElementById("editBtn");
+            editBtn.style.display = "none";
+
+            var saveBtn = document.getElementById("saveBtn");
+            saveBtn.style.display = "block";
+
+        }
+
+        function saveDetails() {
+
+            var inputs = document.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].disabled = true;
+            }
+
+            var selects = document.getElementsByTagName("select");
+            for (var i = 0; i < selects.length; i++) {
+                selects[i].disabled = true;
+            }
+
+            var editBtn = document.getElementById("editBtn");
+            editBtn.style.display = "block";
+
+            var saveBtn = document.getElementById("saveBtn");
+            saveBtn.style.display = "none";
+
+        }
+
+    </script>
+
+    <script>
+        var profile = document.getElementById("profile-tab");
+        var dashboard = document.getElementById("dashboard-tab");
+
+        profile.classList.add("active");
+        dashboard.classList.remove("active");
+    </script>
+
+    <script>
+
+        var phoneInputField = document.querySelector("#patient-phone");
+        var phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
+</body>
+</html> 

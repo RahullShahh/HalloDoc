@@ -1,0 +1,65 @@
+﻿@model ProvidersOnCallViewModel
+<div class="row rounded justify-content-center">
+    <div class="col-10 rounded" style="box-shadow: 2px 2px 20px rgb(179, 177, 177);">
+        <div class="row justify-content-between">
+            <h6 class="h6 mt-2">MD's On Call</h6>
+        </div>
+        <div class="my-2 row">
+            @if (Model.OnDuty != null)
+            {
+                @foreach (var item in Model.OnDuty)
+                {
+                    <div class="col-md-4 col-sm-6 col-12 my-2">
+                        @if (item.Photo != null)
+                        {
+                            <img src="@item.Photo" style="height:60px;width:60px">
+                        }
+                        else
+                        {
+                            <img src="~/images/user.jpg" style="height:60px;width:60px">
+                        }
+                        @if (item.Lastname != null)
+                        {
+                            <span>@item.Firstname @item.Lastname</span>
+                        }
+                        else
+                        {
+                            <span>@item.Firstname</span>
+                        }
+                    </div>
+                }
+            }
+        </div>
+        <div class="row justify-content-between">
+            <h6 class="h6">MD's Off Duty</h6>
+        </div>
+        <div class="my-2 row">
+            @if (Model.OffDuty != null)
+            {
+                @foreach (var item in Model.OffDuty)
+                {
+                    <div class="col-md-4 col-sm-6 col-12 my-2">
+
+                        @*photos laavana baaki*@
+                        @if (item.Photo != null)
+                        {
+                            <img src="~/Content/Providers/@item.Physicianid/Photo.jpg" style="height:60px;width:60px">
+                        }
+                        else
+                        {
+                            <img src="~/images/user.jpg" style="height:60px;width:60px">
+                        }
+                        @if (item.Lastname != null)
+                        {
+                            <span>@item.Firstname @item.Lastname</span>
+                        }
+                        else
+                        {
+                            <span>@item.Firstname</span>
+                        }
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

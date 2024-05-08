@@ -1,0 +1,136 @@
+﻿@model PatientRequestForSomeone;
+@{
+    Layout = "PatientDashboardLayout";
+}
+<div class="container">
+    <div class="row">
+        <div class="col m-4 d-flex justify-content-between pt-4">
+            <h2>Submit Information</h2>
+            <a onclick="history.back()" class="btn btn-outline-info back_btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                    <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
+                </svg>
+                Back
+            </a>
+        </div>
+    </div>
+    <div class="container mb-5 pb-5 request_form shadow-lg px-4">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row">
+                <h4 class="mt-4">Patient Information</h4>
+            </div>
+            <div class="row">
+                <div class="mt-3 form-floating temp">
+                    <textarea asp-for="symptoms" type="text-area" class="form-control inputs" style="height: 125px;" placeholder="name@example.com"></textarea>
+                    <label for="floatingInput" class="input_labels text-wrap">
+                        Enter Brief Details of Symtoms
+                        (Optional)
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12 form-floating temp mt-3">
+                    <input asp-for="FirstName" type="text" required class="form-control inputs" placeholder="name@example.com">
+                    <label for="floatingInput" class="input_labels ms-2">First Name</label>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 form-floating temp mt-3">
+                    <input asp-for="LastName" type="text" class="form-control inputs" placeholder="name@example.com">
+                    <label for="floatingInput" class="input_labels ms-2">Last Name</label>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 form-floating temp mt-3 ">
+                    <input asp-for="DOB" type="date" class="form-control inputs" placeholder="name@example.com">
+                    <label for="floatingInput" class="input_labels ms-2">Date</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <h4 class="mt-4">Patient Contact Information</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12 mt-3 temp form-floating">
+                    <input asp-for="Email" type="email" class="form-control inputs" placeholder="name@example.com">
+                    <label for="floatingInput" class="input_labels ms-2">Email</label>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12 temp mt-3">
+                    <div class="form-floating d-flex h-100">
+                        <input asp-for="PhoneNumber" id="phone" class="py-3 form-control inputs" type="tel" />
+                        <label for="floatingInput" class="input_labels ms-2">Phone</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <h4 class="mt-4">Patient Location</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12 form-floating temp mt-3">
+                    <input asp-for="Street" type="text" class="form-control inputs" placeholder="name@example.com">
+                    <label for="floatingInput" class="input_labels ms-2">Street</label>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 form-floating temp mt-3">
+                    <input asp-for="City" type="text" class="form-control inputs" placeholder="name@example.com">
+                    <label for="floatingInput" class="input_labels ms-2">City</label>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12 form-floating mt-3 temp">
+                    <select asp-for="State" class="form-select inputs">
+                        <option value="0" selected disabled>Select State</option>
+                        @for (int i = 0; i < Model.regions.Count; i++)
+                        {
+                            <option value="@Model.regions[i].Regionid">@Model.regions[i].Name</option>
+                        }
+                    </select>
+                    <label for="" class="input_labels">State</label>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12 form-floating temp mt-3">
+                    <input asp-for="Zipcode" type="number" class="form-control inputs" placeholder="name@example.com">
+                    <label for="floatingInput" class="input_labels ms-2">Zip Code</label>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 form-floating temp mt-3">
+                    <input asp-for="Room" type="text" class="form-control inputs" placeholder="name@example.com">
+                    <label for="floatingInput" class="input_labels ms-2">Room # / Suite (Optional)</label>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <h4 class="mt-4">Relation</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12 mt-3 temp form-floating">
+                    <input asp-for="Relation" type="text" class="form-control inputs" placeholder="name@example.com">
+                    <label for="floatingInput" class="input_labels ms-2">Relation with Patient (Optional)</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <h4 class="mt-4">Upload Photo or Document</h4>
+            </div>
+
+            <div class="row">
+                <div class="mb-3">
+                    <input asp-for="File" class="form-control" type="file" id="file_input_id" style="opacity:0;height:0;">
+                    <div class="input-group mb-3">
+                        <input type="text" id='text_input_id' class="form-control" placeholder="Select File" style="caret-color: transparent" autocomplete="off">
+                        <span class="input-group-text" id="text_input_span_id " style="background-color: #10bce9;">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ffffff" class="bi bi-cloud-upload" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383" />
+                                    <path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708z" />
+                                </svg>
+                                <span class="ms-1 text-white">Upload</span>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 text-end ">
+                <button class="btn btn-info last_buttons_1 mx-2" type="submit">Submit</button>
+                <button class="btn btn-outline-info mx-2" type="reset">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

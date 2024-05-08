@@ -1,0 +1,186 @@
+﻿@model EncounterFormViewModel;
+@{
+    Layout = null;
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encounter Form Details</title>
+    <style>
+        * {
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .encounterForm {
+            background-color: #fff;
+            border: 2px solid #10bce9;
+            border-radius: 25px;
+            margin: 20px;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #10bce9;
+            font-family: poppins;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .details {
+            padding: 10px;
+        }
+
+        .data {
+            margin-bottom: 15px;
+            border: 2px solid;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            border: 1px solid #c7c7c7;
+        }
+
+            .data span {
+                font-weight: bold;
+                color: #555;
+            }
+
+        .followup {
+            color: #10bce9;
+        }
+    </style>
+</head>
+<body>
+    <div class="encounterForm h-100">
+        <h1>Encounter Form Details</h1>
+        <div class="details">
+            <div class="data">
+                <span>First Name: </span> @Model.FirstName
+            </div>
+
+            <div class="data">
+                <span>Last Name: </span> @Model.LastName
+            </div>
+
+            <div class="data">
+                <span>Location: </span> @Model.Location
+            </div>
+
+            <div class="data">
+                <span>Date of Birth: </span> @Model.DateOfBirth
+            </div>
+
+            <div class="data">
+                <span>Date of Request: </span> @Model.Date
+            </div>
+
+            <div class="data">
+                <span>Email: </span> @Model.Email
+            </div>
+
+            <div class="data">
+                <span>History of Present Illness or Injury: </span> @Model.IllnessHistory
+            </div>
+
+            <div class="data">
+                <span>Medical History: </span> @Model.MedicalHistory
+            </div>
+
+            <div class="data">
+                <span>Medications: </span> @Model.Medications
+            </div>
+
+            <div class="data">
+                <span>Allergies: </span> @Model.Allergies
+            </div>
+
+            <div class="data">
+                <span>Temp: </span> @Model.Temperature
+            </div>
+
+            <div class="data">
+                <span>HR: </span> @Model.HR
+            </div>
+
+            <div class="data">
+                <span>RR: </span> @Model.RR
+            </div>
+
+            <div class="data">
+                <span>Blood Pressure (Diastolic): </span> @Model.BPLow
+            </div>
+
+            <div class="data">
+                <span>Blood Pressure (Systolic): </span> @Model.BPHigh
+            </div>
+
+            <div class="data">
+                <span>O2: </span> @Model.O2
+            </div>
+
+            <div class="data">
+                <span>HEENT: </span> @Model.heent
+            </div>
+
+            <div class="data">
+                <span>Pain: </span> @Model.Pain
+            </div>
+
+            <div class="data">
+                <span>CV: </span> @Model.cv
+            </div>
+
+            <div class="data">
+                <span>Chest: </span> @Model.chest
+            </div>
+
+            <div class="data">
+                <span>Abdomen: </span> @Model.abd
+            </div>
+
+            <div class="data">
+                <span>Extremities: </span> @Model.extr
+            </div>
+
+            <div class="data">
+                <span>Skin: </span> @Model.skin
+            </div>
+
+            <div class="data">
+                <span>Neuro: </span> @Model.neuro
+            </div>
+
+            <div class="data">
+                <span>Other: </span> @Model.other
+            </div>
+
+            <div class="data">
+                <span>Diagnosis: </span> @Model.diagnosis
+            </div>
+
+            <div class="data">
+                <span>Treatment Plan: </span> @Model.treatmentPlan
+            </div>
+
+            <div class="data">
+                <span>Medications Dispensed: </span> @Model.MedicationsDispensed
+            </div>
+
+            <div class="data">
+                <span>Procedures: </span> @Model.procedures
+            </div>
+
+            <div class="data followup">
+                <span>Follow Up Frequency: </span> @Model.followUps
+            </div>
+        </div>
+    </div>
+</body>
+</html>

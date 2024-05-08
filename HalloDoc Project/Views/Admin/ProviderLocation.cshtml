@@ -1,0 +1,89 @@
+﻿@model ProviderLocationViewModel
+@{
+    Layout = "_AdminDashboardLayout";
+    ViewData["Title"] = "Provider Location";
+}
+
+<link rel="stylesheet" type="text/css" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps.css" />
+<script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js"></script>
+
+
+<div>
+    <div class="row justify-content-center ">
+        <div class="col-10">
+            <h4 class="my-3">Provider Location</h4>
+            <div class="shadow-lg p-4 my-3">
+                <div id="map" style="height:700px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    var popupOffsets = {
+        top: [0, 0],
+        bottom: [0, -70],
+        "bottom-right": [0, -70],
+        "bottom-left": [0, -70],
+        left: [25, -35],
+        right: [-25, -35],
+    }
+
+    var map = tt.map({
+        container: "map",
+        key: "JAeaeKBQDvdePcIjhUji0lGw59M11Laa",
+        center: [@Model.locationList.First().Longitude, @Model.locationList.First().Latitude],
+        zoom: 0,
+    });
+
+    @foreach (var row in Model.locationList)
+    {
+        @:console.log('hi');
+        @:var cmarker = new tt.Marker().setLngLat([@row.Longitude, @row.Latitude]).addTo(map);
+        @:var cpopup = new tt.Popup({ offset: popupOffsets }).setHTML("@row.PhysicianName");
+        @:cmarker.setPopup(cpopup).togglePopup();
+    }
+</script>
+@*
+<script>
+
+    var map = tt.map({
+        container: "map",
+        key: "JAeaeKBQDvdePcIjhUji0lGw59M11Laa",
+    })
+
+    var speedyPizzaCoordinates = [-121.91595, 37.36729]
+
+    var map = tt.map({
+        container: "map",
+        key: "JAeaeKBQDvdePcIjhUji0lGw59M11Laa",
+        center: speedyPizzaCoordinates,
+        zoom: 15,
+    })
+
+    var marker = new tt.Marker().setLngLat(speedyPizzaCoordinates).addTo(map)
+
+    var popupOffsets = {
+        top: [0, 0],
+        bottom: [0, -70],
+        "bottom-right": [0, -70],
+        "bottom-left": [0, -70],
+        left: [25, -35],
+        right: [-25, -35],
+    }
+
+    var popup = new tt.Popup({ offset: popupOffsets }).setHTML(
+        "<b>Speedy's pizza</b><br/>100 Century Center Ct 210, San Jose, CA 95112, USA"
+    )
+    marker.setPopup(popup).togglePopup()
+
+    var element = document.createElement("div")
+    element.id = "marker"
+
+    var marker = new tt.Marker({ element: element })
+        .setLngLat(speedyPizzaCoordinates)
+        .addTo(map)
+
+</script> *@

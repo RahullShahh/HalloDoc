@@ -1,0 +1,95 @@
+﻿@model SMSLogViewModel
+@{
+    Layout = "_AdminDashboardLayout";
+};
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div class="d-flex justify-content-between">
+            <div class="my-3 ">
+                <h3>Email Logs (Gmail)</h3>
+            </div>
+            <div class="my-3 ">
+                <button onclick="history.back()" class="btn btn-outline-info back_btn align-items-center d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                        <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
+                    </svg>
+                    Back
+                </button>
+            </div>
+        </div>
+        <div class="mb-5 pb-4 request_form shadow-lg px-4">
+            <form>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-12 form-floating mt-3 temp">
+                        <select id="SMSLogRole" class="form-select inputs">
+                            <option value="0" selected>All</option>
+                            @for (int i = 0; i < Model.roles.Count; i++)
+                            {
+                                <option class="pe-3" value="@Model.roles[i].Roleid">@Model.roles[i].Name</option>
+                            }
+                        </select>
+                        <label class="input_labels">Search By Role</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-12 form-floating mt-3 temp">
+                        <input id="SMSLogReceiverName" type="text" class="form-control inputs border" placeholder="Receiver Name">
+                        <label for="floatingInput" class="ms-2 input_labels">Receiver Name</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-12 form-floating mt-3 temp">
+                        <input id="SMSLogPhoneNo" type="email" class="form-control inputs border" placeholder="Email">
+                        <label for="floatingInput" class="ms-2 input_labels">Phone Number</label>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-12 form-floating mt-3 temp">
+                        <input id="SMSLogCreatedDate" type="date" class="form-control inputs border" placeholder="Created Date">
+                        <label for="floatingInput" class="ms-2 input_labels">Created Date</label>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-12 form-floating mt-3 temp">
+                        <input id="SMSLogSentDate" type="date" class="form-control inputs border" placeholder="Sent Date">
+                        <label for="floatingInput" class="ms-2 input_labels">Sent Date</label>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-12 text-end mt-4">
+                        <button class="btn btn-info px-3 text-light" id="smsLogSearch" type="button" onclick="submitSMSLogFilters()">Search</button>
+                        <button class="btn btn-outline-info " type="reset">Clear</button>
+                    </div>
+                </div>
+            </form>
+            <div class="mt-5 mb-4" id="loadSMSLogs"></div>
+        </div>
+    </div>
+</div>
+<script>
+    // $(document).ready(function () {
+    //     $.ajax({
+    //         url: "/Admin/SMSLogPartialTable",
+    //         type: 'POST',
+    //         data: {},
+    //         success: function (result) {
+    //             $('#loadSMSLogs').html(result);
+    //         },
+    //         error: function (error) {
+    //             console.log(error);
+    //             alert('email logs error')
+    //         },
+    //     });
+    // })
+    function submitSMSLogFilters() {
+        $.ajax({
+            url: "/Admin/SMSLogPartialTable",
+            type: 'POST',
+            data: { RoleId: $('#SMSLogRole').val(), ReceiverName: $("#SMSLogReceiverName").val(), PhoneNo: $("#SMSLogPhoneNo").val(), CreatedDate: $("#SMSLogCreatedDate").val(), SentDate: $("#SMSLogSentDate").val() },
+            success: function (result) {
+                $('#loadSMSLogs').html(result);
+            },
+            complete: function () {
+
+            },
+            error: function (error) {
+                console.log(error);
+                alert('sms logs error')
+            },
+        });
+    }
+    $("#smsLogSearch").click();
+</script>

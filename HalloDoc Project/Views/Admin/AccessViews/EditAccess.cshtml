@@ -1,0 +1,124 @@
+﻿@model EditAccessViewModel;
+@{
+    Layout = "_AdminDashboardLayout";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col m-4 d-flex justify-content-between pt-4">
+            <h3>Edit Role</h3>
+            <button onclick="history.back()" class="btn btn-outline-info back_btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                    <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
+                </svg>
+                Back
+            </button>
+        </div>
+    </div>
+    <div class="container mb-5 pb-4 request_form darkModeShadow shadow-lg px-4">
+
+        <div class="row">
+            <h3 class="mt-4">Details</h3>
+        </div>
+        <form>
+            <div class="row">
+                <input asp-for="@Model.id" id="roleId" hidden />
+                <div class="col-lg-6 col-12 form-floating mt-3 temp">
+                    <input asp-for="role" type="text" required id="changedRole" class="editRoleFeilds form-control inputs border" disabled placeholder="name@example.com">
+                    <label for="floatingInput" class="input_labels">Role Name</label>
+                </div>
+                <div class="col-lg-6 col-12 form-floating mt-3 temp">
+                    <select asp-for="type" disabled class="form-select inputs">
+                        <option value="0" disabled selected>--- Select Account Type ---</option>
+                        @for (int i = 0; i < Model.accountTypes.Count; i++)
+                        {
+                            <option value="@Model.accountTypes[i].Id">@Model.accountTypes[i].Name</option>
+                        }
+                    </select>
+                    <label for="" class="input_labels">Account Type</label>
+                </div>
+            </div>
+
+            <div class="mt-5 d-flex flex-wrap">
+                @for (int i = 0; i < Model.menu.Count; i++)
+                {
+                    if (Model.rolemenu.Contains(Model.menu[i].Menuid))
+                    {
+                        <div class="pe-4 pt-2 d-flex align-items-center">
+                            <input type="checkbox" disabled class="editRoleFeilds border check form-check-input pe-0" style="width:20px; height:20px" value="@Model.menu[i].Menuid" checked>
+                            <label class="ps-2 form-check-label" for="flexCheckDefault">@Model.menu[i].Name</label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="pe-4 pt-2 d-flex align-items-center">
+                            <input type="checkbox" disabled class="editRoleFeilds border check form-check-input pe-0" style="width:20px; height:20px" value="@Model.menu[i].Menuid">
+                            <label class="ps-2 form-check-label" for="flexCheckDefault">@Model.menu[i].Name</label>
+                        </div>
+                    }
+                }
+
+            </div>
+
+            <div class="mt-5 text-end">
+                <button class="btn btn-info mx-2 px-3" id="editRoleEditBtn" type="button">Edit</button>
+                <button class="btn btn-outline-info mx-2 d-none" id="editRoleSaveBtn" type="button">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+    $('#editRoleEditBtn').click(function () {
+
+        var x = document.getElementById("editRoleEditBtn");
+        var y = document.getElementById("editRoleSaveBtn");
+
+        x.classList.add("d-none");
+        y.classList.remove("d-none");
+
+        var w = document.getElementsByClassName("editRoleFeilds");
+        for (var i = 0; i < w.length; i++) {
+            w[i].disabled = false;
+        }
+    })
+
+    $('#editRoleSaveBtn').click(function () {
+
+        let selectedPages = [];
+        let checkboxes = document.querySelectorAll(".check");
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                selectedPages.push(checkbox.value);
+            }
+        });
+
+        $.ajax({
+            url: '/Admin/SaveEditRole',
+            type: 'POST',
+            data: { id: $('#roleId').val(), role: $('#changedRole').val(), newPages: selectedPages },
+            success: function (data) {
+                window.location.reload();
+            },
+            error: function (error) {
+                alert('Error');
+            }
+        });
+        var x = document.getElementById("editRoleEditBtn");
+        var y = document.getElementById("editRoleSaveBtn");
+
+        x.classList.remove("d-none");
+        y.classList.add("d-none");
+
+        var w = document.getElementsByClassName("editRoleFeilds");
+        for (var i = 0; i < w.length; i++) {
+            w[i].disabled = true;
+        }
+    })
+
+</script>

@@ -1,0 +1,154 @@
+﻿@model PatientDashboardViewModel
+@{
+    Layout = "PatientDashboardLayout";
+    ViewData["Title"] = "Patient Dashboard";
+    // ViewData["username"] = Model.Username;
+}
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/PatientDashboardCSS.css" />
+    
+</head>
+<body>
+    <div class="tab-content px-5" id="myTabContent">
+        <div class="tab-pane fade pt-2 active show justify-content-center" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <h2 class="mt-5">Medical History</h2>
+
+            <div class="border-2 shadow-lg mt-5">
+                <div class="d-flex  justify-content-end ">
+                    <a data-bs-toggle="modal" data-bs-target="#myModal" class="me-3 mt-3 btn btn-outline-info createNewRequest">
+                        Create New Request
+                    </a>
+                </div>
+                <div class="table-responsive">
+                    <table class="mt-3 table">
+                        <colgroup>
+                            <col span="1" style="width: 15%;">
+                            <col span="1" style="width: 70%;">
+                            <col span="1" style="width: 15%;">
+                        </colgroup>
+                        <tbody class="">
+                            <tr class="tr-info">
+                                <th scope="col">Created Date</th>
+                                <th scope="col">Current Status</th>
+                                <th scope="col">Documents</th>
+                            </tr>
+                            @for (int i = 0; i < Model.Requests.Count; i++)
+                            {
+                                <tr>
+                                    <td>@Model.Requests[i].Createddate.ToString("MMM dd, yyyy")</td>
+                                    <td>@Model.Requests[i].Status</td>
+                                    @if (Model.DocumentCount[i] > 0)
+                                    {
+                                        <td>
+                                            <a asp-controller="Home" asp-action="ViewDocuments" asp-route-requestid="@Model.Requests[i].Requestid" class="btn btn-outline-info">
+                                                (@Model.DocumentCount[i]) Documents
+                                            </a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+       
+
+    </div>
+
+    <script>
+        var profile = document.getElementById("profile-tab");
+        var dashboard = document.getElementById("dashboard-tab");
+
+        profile.classList.remove("active");
+        dashboard.classList.add("active");
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">Create New Request</h5>
+
+                <a data-bs-dismiss="modal" style="cursor:pointer">
+                    <svg height="20px" id="Layer_1" style="enable-background:new 0 0 512 512;" fill="white" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M443.6,387.1L312.4,255.4l131.5-130c5.4-5.4,5.4-14.2,0-19.6l-37.4-37.6c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4  L256,197.8L124.9,68.3c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4L68,105.9c-5.4,5.4-5.4,14.2,0,19.6l131.5,130L68.4,387.1  c-2.6,2.6-4.1,6.1-4.1,9.8c0,3.7,1.4,7.2,4.1,9.8l37.4,37.6c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1L256,313.1l130.7,131.1  c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1l37.4-37.6c2.6-2.6,4.1-6.1,4.1-9.8C447.7,393.2,446.2,389.7,443.6,387.1z" /></svg>
+                </a>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <span>Here, I want to create new request for ...</span>
+                    <div class="modal-flex d-flex justify-content-center my-3">
+                        <div class="btn create-request-active create-request-btn border border-1 border-info" onclick="toggle(this)"> Me </div>
+                        <a id="my_request_link"  asp-controller="Home" asp-action="CreateNewRequestForMe" hidden></a>
+                        <div class="btn ms-2 someone-else-btn create-request-btn border border-1 border-info" onclick="toggle(this)"> Some One Else</div>
+                        <a id="someone_else_link" asp-controller="Home" asp-action="CreateNewRequestForSomeone" hidden></a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal" onclick="redirect()">Continue</button>
+                    <button type="button" class="btn cancel-btn" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function toggle(element) {
+        if (element.classList.contains("someone-else-btn")) {
+            isMeRequest = false;
+        }
+        else {
+            isMeRequest = true;
+        }
+        if (!element.classList.contains("create-request-active")) {
+            $(".create-request-btn").removeClass("create-request-active");
+            element.classList.add("create-request-active");
+        }
+    }
+    function redirect() {
+        if (isMeRequest) {
+            document.getElementById("my_request_link").click();
+        }
+        else {
+            document.getElementById("someone_else_link").click();
+        }
+    }
+</script>
+<script>
+    // Select all elements with the class 'encounter-type-btn'
+    const encounterTypeBtns = document.querySelectorAll('.create-request-btn');
+
+    // Add a click event listener to each of the selected elements
+    encounterTypeBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            // Remove the 'btn-info' class from all elements with the class 'encounter-type-btn'
+            encounterTypeBtns.forEach((otherBtn) => {
+                otherBtn.classList.remove('btn-info');
+                otherBtn.classList.remove('text-light');
+            });
+
+            // Add the 'btn-info' class to the clicked element
+            btn.classList.add('btn-info');
+            btn.classList.add('text-light');
+        });
+    });
+</script>

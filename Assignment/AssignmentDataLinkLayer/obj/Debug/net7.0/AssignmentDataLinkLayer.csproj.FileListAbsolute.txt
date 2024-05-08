@@ -1,0 +1,15 @@
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\bin\Debug\net7.0\AssignmentDataLinkLayer.deps.json
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\bin\Debug\net7.0\AssignmentDataLinkLayer.dll
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\bin\Debug\net7.0\AssignmentDataLinkLayer.pdb
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\AssignmentDataLinkLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\AssignmentDataLinkLayer.AssemblyInfoInputs.cache
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\AssignmentDataLinkLayer.AssemblyInfo.cs
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\AssignmentDataLinkLayer.csproj.CoreCompileInputs.cache
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\AssignmentDataLinkLayer.sourcelink.json
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\AssignmentDataLinkLayer.dll
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\refint\AssignmentDataLinkLayer.dll
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\AssignmentDataLinkLayer.pdb
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\ref\AssignmentDataLinkLayer.dll
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\AssignmentDataLinkLayer.csproj.AssemblyReference.cache
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\bin\Debug\net7.0\AssignmentDataLinkLayer.runtimeconfig.json
+C:\Users\pca96\Desktop\HalloDoctorsss\AssignmentDataLinkLayer\obj\Debug\net7.0\AssignmentDataLinkLayer.genruntimeconfig.cache

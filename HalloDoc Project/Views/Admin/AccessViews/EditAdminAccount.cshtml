@@ -1,0 +1,257 @@
+﻿@model AdminProfileViewModel
+@{
+    Layout = "_AdminDashboardLayout";
+    ViewData["Title"] = "Admin Profile";
+
+}
+<div class="container">
+    <div class="row">
+        <div class="col m-4 d-flex justify-content-between pt-4">
+            <h3>My Profile</h3>
+            <a asp-controller="adminDash" asp-action="adminDashboard" class="btn btn-outline-info back_btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                    <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
+                </svg>
+                Back
+            </a>
+        </div>
+    </div>
+    <partial name="_ValidationScriptsPartial"></partial>
+    <div class="container mb-5 pb-5 request_form shadow-lg px-4">
+        <div class="row">
+            <h3 class="mt-4">Account Information</h3>
+        </div>
+        <form method="post" asp-controller="Admin" asp-action="EditPasswordPost">
+            <input asp-for="adminId" hidden />
+            <div class="row">
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <input asp-for="username" disabled type="text" required class="form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels ms-2">User Name</label>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <input asp-for="password" class="form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels ms-2">Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-12 temp mt-4">
+                        <div class="form-floating">
+                            <select asp-for="statusId" disabled class="adminInfoInput form-select inputs">
+                                <option value="0" disabled>Select Status</option>
+                                @for (int i = 0; i < Model.statuses.Count; i++)
+                                {
+                                    <option value="@Model.statuses[i].StatusId">@Model.statuses[i].Name</option>
+                                }
+                            </select>
+                            <label for="" class="input_labels ms-2">Status</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12 temp mt-4">
+                        <div class="form-floating">
+                            <select asp-for="roleId" disabled class="adminInfoInput form-select inputs">
+                                <option value="0" disabled>Select Role</option>
+                                <option value="1">Admin</option>
+                                <option value="2">Junior Admin</option>
+                                <option value="3">Senior Admin</option>
+                                <option value="4">Master Admin</option>
+                            </select>
+                            <label for="" class="input_labels ms-2">Role</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end mt-3">
+                    <button type="submit" class="btn btn-outline-info text-info mx-1" asp-action="PasswordPost" asp-controller="Admin">Reset Password</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="row mt-4">
+            <h4>Administrator Information</h4>
+        </div>
+        <form method="post" asp-controller="Admin" asp-action="EditAdminInfoPost">
+            <input asp-for="adminId" hidden />
+            <div class="row">
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <input asp-for="firstname" disabled type="text" class="adminInfoInput form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels ms-2">First Name</label>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <input asp-for="lastname" disabled type="text" class="adminInfoInput form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels ms-2">Last Name</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <input asp-for="email" disabled type="email" class="adminInfoInput form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels ms-2">Email</label>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <input asp-for="confirmEmail" disabled type="email" class="adminInfoInput form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels ms-2">Confirm Email</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating d-flex h-100">
+                        <input asp-for="phoneNo" id="phone" disabled class="adminInfoInput py-3 form-control inputs border" type="tel" />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-12 temp mt-4">
+                    <div class="form-floating d-flex align-items-center">
+                        <button disabled class="btn col-12 border dropdown-toggle adminInfoInput" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Select States
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="StatesMenu">
+                            <div class="row">
+                                @for (int i = 0; i < Model.States.Count; i++)
+                                {
+                                    @if (i % 2 == 0)
+                                    {
+                                        <div class="col-6">
+                                            <input type="checkbox" name="AdminLocations" @(Model.chosenLocations.Contains(Model.States[i].Regionid) ? "checked" : "") class="ms-3" id="state_@i" value="@Model.States[i].Regionid">
+                                            <label for="state_@i" class="mx-3">@Model.States[i].Name</label>
+                                            <br />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-6">
+                                            <input type="checkbox" name="AdminLocations" @(Model.chosenLocations.Contains(Model.States[i].Regionid) ? "checked" : "") class="ms-3" id="state_@i" value="@Model.States[i].Regionid">
+                                            <label for="state_@i" class="mx-3">@Model.States[i].Name</label>
+                                            <br />
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-3">
+                <button type="button" id="adminEdit" class="btn btn-info text-light mx-1 px-4" onclick="InfoEdit()">Edit</button>
+                <button type="submit" id="adminSubmit" asp-action="AdminInfoPost" asp-controller="Admin" class="btn text-light btn-info mx-1 d-none">Submit</button>
+                <button type="button" id="adminCancel" class="btn btn-outline-info text-info mx-1 d-none" onclick="AdminInfoCancel()">Cancel</button>
+            </div>
+        </form>
+
+        <div class="row mt-4">
+            <h4>Mailing & Billing Information</h4>
+        </div>
+        <form method="post" asp-controller="Admin" asp-action="EditBillingInfoPost">
+            <input asp-for="adminId" hidden />
+            <div class="row">
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <input asp-for="address1" disabled type="text" class="billingInput form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels ms-2">Address 1</label>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <input asp-for="address2" disabled type="text" class="billingInput form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels ms-2">Address 2</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <input asp-for="city" disabled type="text" class="billingInput form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels ms-2">City</label>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <select asp-for="regionId" disabled class="billingInput form-select inputs">
+                            <option value="0" disabled>Select State</option>
+                            @for (int i = 0; i < Model.States.Count; i++)
+                            {
+                                <option value="@Model.States[i].Regionid">@Model.States[i].Name</option>
+                            }
+                        </select>
+                        <label for="" class="input_labels ms-2">State</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating">
+                        <input asp-for="zipcode" disabled type="number" class="billingInput form-control inputs border" placeholder="name@example.com">
+                        <label for="floatingInput" class="input_labels ms-2">Zip</label>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12 temp mt-4">
+                    <div class="form-floating d-flex h-100">
+                        <input asp-for="billingPhone" disabled id="phone1" class="billingInput py-3 form-control inputs border" type="tel" />
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-3">
+                <button type="button" id="BillingEdit" class="btn text-light btn-info mx-1 px-4" onclick="billingEdit()">Edit</button>
+                <button type="submit" id="BillingSubmit" asp-action="BillingInfoPost" asp-controller="Admin" class=" text-light btn btn-info mx-1 d-none">Submit</button>
+                <button type="button" id="BillingCancel" class="btn btn-outline-info text-info mx-1 d-none" onclick="BillingInfoCancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function billingEdit() {
+        var x = document.getElementById("BillingEdit")
+        var y = document.getElementById("BillingSubmit")
+        var z = document.getElementById("BillingCancel")
+        var inputs = document.getElementsByClassName("billingInput")
+        x.classList.add("d-none");
+        y.classList.remove("d-none");
+        z.classList.remove("d-none");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = false
+        }
+    }
+    function InfoEdit() {
+        var x = document.getElementById("adminEdit")
+        var y = document.getElementById("adminSubmit")
+        var z = document.getElementById("adminCancel")
+        var inputs = document.getElementsByClassName("adminInfoInput")
+        x.classList.add("d-none");
+        y.classList.remove("d-none");
+        z.classList.remove("d-none");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = false
+        }
+    }
+    function AdminInfoCancel() {
+        var x = document.getElementById("adminEdit")
+        var y = document.getElementById("adminSubmit")
+        var z = document.getElementById("adminCancel")
+        var inputs = document.getElementsByClassName("adminInfoInput")
+        x.classList.remove("d-none");
+        y.classList.add("d-none");
+        z.classList.add("d-none");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = true
+        }
+    }
+    function BillingInfoCancel() {
+        var x = document.getElementById("BillingEdit")
+        var y = document.getElementById("BillingSubmit")
+        var z = document.getElementById("BillingCancel")
+        var inputs = document.getElementsByClassName("billingInput")
+        x.classList.remove("d-none");
+        y.classList.add("d-none");
+        z.classList.add("d-none");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = true
+        }
+    }
+</script>

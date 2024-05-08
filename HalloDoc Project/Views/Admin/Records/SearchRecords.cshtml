@@ -1,0 +1,168 @@
+﻿@model SearchRecordViewModel
+@{
+    Layout = "_AdminDashboardLayout";
+}
+<div class="">
+    <div>
+        <div class=" d-flex justify-content-between mt-3">
+            <h4>Search Records</h4>
+
+            <button class="btn btn-info align-middle" onclick="history.back(-1)">
+                <svg width="25px" height="25px" viewBox="0 0 20 20" fill="white">
+                    <path transform="scale(-1, 1) translate(-20,0)"
+                          d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306 7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254a.503.503 0 0 0-.042-.028.147.147 0 0 1 0-.252.499.499 0 0 0 .042-.028l3.984-2.933zM7.8 10.386c.068 0 .143.003.223.006.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96v-.667z" />
+                    <text x="10" y="18" style="font-size: 5px;fill: white">ALL</text>
+                </svg>
+                <span class="text-white">Export Data To Excel</span>
+            </button>
+        </div>
+        <div class="shadow dashboard-card  mt-4 pb-3 px-3">
+            <form id="search-record-filter-form">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 mt-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="search-record-request-status" required name="requestStatus">
+                                <option selected value="0"> All Status </option>
+                                 @foreach (var status in Model.RequestStatus)
+                                {
+                                    <option value="@status.Statusid">@status.Name</option>
+                                } 
+                            </select>
+                            <label for="patient-state">Select Request Status</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 mt-3">
+                        <div class="form-floating">
+                            <input name="patientName" type="text" class="form-control" placeholder="Patient Name"
+                                   id="search-record-patient-name" required>
+                            <label for="floatingTextarea2">Patient Name</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 mt-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="search-record-request-type" required name="requestType">
+                                <option selected value="0">All Request Types</option>
+
+                                @foreach (var type in Model.RequestType)
+                                {
+                                    <option value="@type.Requesttypeid">@type.Name</option>
+                                } 
+
+                            </select>
+                            <label for="patient-state">Select Request Type</label>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 mt-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" placeholder="Phone Number"
+                                   id="search-record-phone-number" required name="phoneNumber">
+                            <label for="floatingTextarea2">Phone Number</label>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row align-items-center">
+
+                    <div class="col-lg-3 mt-3">
+
+                        <div class="form-floating">
+
+                            <input class="form-control" placeholder="From Date Of Service" type="date"
+                                   id="search-record-from-date-service" name="fromDateOfService">
+                            <label for="floatingTextarea2">From Date Of Service</label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 mt-3">
+
+                        <div class="form-floating">
+
+                            <input class="form-control" placeholder="To Date Of Service" type="date"
+                                   id="search-record-to-date-service" name="toDateOfService">
+                            <label for="floatingTextarea2">To Date Of Service</label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 mt-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" placeholder="Patient Name"
+                                   id="search-record-provider-name" required name="providerName">
+                            <label for="floatingTextarea2">Provider Name</label>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 mt-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" placeholder="Patient Name"
+                                   id="search-record-patient-email" required name="email">
+                            <label for="floatingTextarea2">Email</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-end mt-3">
+
+                    <div class="">
+
+                        <button type="reset" class="btn btn-outline-info align-middle">
+                            <span class="text-info">Clear</span>
+                        </button>
+
+                    </div>
+
+                    <div class="ms-3">
+                        <button type="button" class="btn btn-info align-middle" id="search-record-search-btn" onclick="loadSearchRecordTable(1)">
+                            <span class="text-white">Search</span>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+            <div id="search-record-partial-table"></div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function loadSearchRecordTable(pageNo) {
+
+        $.ajax({
+            url: "/Admin/SelectRecordsPartialTable",
+            type: 'POST',
+            data: {
+                pageNo: pageNo,
+                requestStatus: $('#search-record-request-status').val(),
+                patientName: $('#search-record-patient-name').val(),
+                requestType: $('#search-record-request-type').val(),
+                phoneNumber: $('#search-record-phone-number').val(),
+                fromDateOfService: $('#search-record-from-date-service').val(),
+                toDateOfService: $('#search-record-to-date-service').val(),
+                providerName: $('#search-record-provider-name').val(),
+                patientEmail: $('#search-record-patient-email').val(),
+            },
+            success: function (result) {
+                $('#search-record-partial-table').html(result);
+            },
+            complete: function () {
+
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        });
+    }
+
+    $('#search-record-search-btn').click();
+</script>

@@ -1,0 +1,88 @@
+﻿.validation {
+    font-size: small;
+    color: red;
+    font-weight: 500;
+}
+
+* {
+    font-family: "Inter"!important;
+}
+
+.patient-upload {
+    border-radius: 5px;
+    border: 1px solid #d1d1d1;
+    display: flex;
+}
+
+.btn-online-info:hover {
+    color: white;
+}
+
+.file-upload {
+    /* display: block; */
+    margin: 0 auto;
+    /* / color: #fff; / */
+}
+
+[data-bs-theme="dark"] .darkModeShadow {
+    box-shadow: 0px 3px 10px #000000 !important;
+}
+
+#fileLoader {
+    position: absolute;
+    left: -9999px;
+}
+
+label[for="fileLoader"] {
+    padding: 0.5em;
+    background: #01bce9;
+    cursor: pointer;
+    /* / float:left; / */
+    color: #ffffff;
+    float: right;
+}
+
+#filename {
+    padding: 0.5em;
+    /* / width:93%; / */
+    /* / white-space: nowrap; / */
+    /* / overflow:hidden; / */
+    /* / background:#739BAE; / */
+    float: left;
+    /* / flex-grow: 1; / */
+}
+
+.PatientInputs:focus {
+    box-shadow: none !important;
+    border: 2px solid #10bce9 !important;
+}
+
+.PatientInputs:focus-within + label {
+    color: #10bce9 !important;
+}
+
+.iti {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+}
+
+.iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
+    padding-right: 6px;
+    padding-left: 52px;
+    margin-left: 0;
+    height: 59px;
+}
+
+.iti__country-list {
+    z-index: 5;
+}
+
+.btn-online-info:hover {
+    color: white;
+}
+
+.shadow-lg {
+    box-shadow: 0px 0px 10px white;
+}
