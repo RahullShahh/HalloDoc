@@ -43,10 +43,7 @@ namespace HalloDoc_Project.Controllers
             _createEditProviderRepo = createEditProviderRepo;
             _passwordHasher = passwordHasher;
         }
-        public IActionResult ProviderInvoicing()
-        {
-            return View();
-        }
+        
         public IActionResult ProviderDashboard()
         {
             try
@@ -1093,6 +1090,22 @@ namespace HalloDoc_Project.Controllers
             }
         }
         #endregion SCHEDULING
+
+        #region GOOD TO HAVE FEATURES
+        public IActionResult ProviderInvoicing()
+        {
+            return View();
+        }
+        public IActionResult ProviderTimesheetView(DateTime startdateiso)
+        {
+            DateOnly startDate = DateOnly.FromDateTime(startdateiso.ToLocalTime());
+            if(startDate.Day < 15)
+            {
+                
+            }
+            return View();
+        }
+        #endregion
     }
 
 }

@@ -20,12 +20,13 @@
             </div>
         </div>
         <div class="p-3 shadow-lg rounded-3">
-            <div class=" row ">
-                <div class="col-6">
-                    <input type="date" id="dateRangePicker"/>
+            <div class=" d-flex align-items-center justify-content-between">
+                <div id="timesheet-div" onclick="showDatePicker()" class="form-floating">
+                    <input id="timesheet-datepicker" class="form-control" onchange="changedDateRange(this)" type="text" />
+                    <label class="ps-2">Timesheet Date Range</label>
                 </div>
-                <div class="col-6 text-end">
-                    <button class="btn btn-outline-info mx-3">Finalize Timesheet</button>
+                <div>
+                    <button  id="finalizeTimeSheetButton" class="btn text-end btn-outline-info ">Finalize Timesheet</button>
                 </div>
             </div>
         </div>
@@ -34,6 +35,54 @@
         </div>
     </div>
 </div>
+@* <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+ *@
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js" integrity="sha256-sw0iNNXmOJbQhYFuC9OF2kOlD5KQKe1y5lfBn4C9Sjg=" crossorigin="anonymous"></script>
+
 <script>
-    
+    var dateValue = "";
+    var startDate = new Date();
+    var endDate = new Date();
+
+    function changedDateRange(dateInput) {
+
+        let pickerDate = $('#timesheet-datepicker').val();
+        let inputDate = new Date(pickerDate);
+
+        debugger;
+        let date = inputDate.getDate();
+        let month = inputDate.getMonth();
+        let year = inputDate.getFullYear();
+
+        if (date < 15) {
+            startDate = new Date(year, month, 1);
+            endDate = new Date(year, month, 14);
+        }
+        else {
+            startDate = new Date(year, month, 15);
+            endDate = new Date(year, month + 1, 0);
+        }
+
+        dateValue = startDate.getDate() + "/" + (startDate.getMonth() + 1) + "/" + startDate.getFullYear() + " - " + endDate.getDate() + "/" + (endDate.getMonth() + 1) + "/" + endDate.getFullYear();
+        console.log(dateValue);
+        $('#timesheet-datepicker').val(dateValue);
+        $('#finalizeTimeSheetButton').attr("asp-route-startDate", startDate.toISOString);
+
+    }
+
+    $(function () {
+        $('#timesheet-datepicker').datepicker();
+    });
+
+    function showDatePicker() {
+        $('#timesheet-datepicker').datepicker('show');
+    }
+
+    $("#finalizeTimeSheetButton").click(function () {
+        location.href = "/Provider/ProviderTimesheetView?startDateISO=" + startDate.toISOString();
+    });
+
 </script>
