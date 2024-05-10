@@ -4,13 +4,11 @@ using BAL.Interfaces.IProvider;
 using DAL.DataContext;
 using DAL.DataModels;
 using DAL.ViewModels;
+using DocumentFormat.OpenXml.Office2019.Drawing.Model3D;
+using DocumentFormat.OpenXml.Spreadsheet;
 using HalloDoc_Project.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders.Physical;
 using Rotativa.AspNetCore;
-using System.Collections;
 using static HalloDoc_Project.Extensions.Enumerations;
 
 
@@ -43,7 +41,7 @@ namespace HalloDoc_Project.Controllers
             _createEditProviderRepo = createEditProviderRepo;
             _passwordHasher = passwordHasher;
         }
-        
+
         public IActionResult ProviderDashboard()
         {
             try
@@ -1098,14 +1096,148 @@ namespace HalloDoc_Project.Controllers
         }
         public IActionResult ProviderTimesheetView(DateTime startdateiso)
         {
-            DateOnly startDate = DateOnly.FromDateTime(startdateiso.ToLocalTime());
-            if(startDate.Day < 15)
+            try
             {
-                
+                var id = HttpContext.Session.GetString("AspnetuserId");
+                var physician = _context.Physicians.FirstOrDefault(physician => physician.Aspnetuserid == id);
+                DateOnly startDate = DateOnly.FromDateTime(startdateiso.ToLocalTime());
+                DateOnly endDate = new DateOnly();
+                if (startDate.Day < 15)
+                {
+                    startDate = new DateOnly(startDate.Year, startDate.Month, 1);
+                    endDate = new DateOnly(startDate.Year, startDate.Month, 14);
+                }
+                else
+                {
+                    startDate = new DateOnly(startDate.Year, startDate.Month, 15);
+                    endDate = new DateOnly(startDate.Year, startDate.Month, 1).AddMonths(1).AddDays(-1);
+                }
+
+                Timesheet? getTimesheet = _context.Timesheets.FirstOrDefault(record => record.PhysicianId == physician.Physicianid && record.StartDate == startDate && record.EndDate == endDate);
+
+                if (getTimesheet == null)
+                {
+                    DateOnly loopDate = startDate;
+
+                    List<TimesheetDataViewModel> newTimesheet = new();
+                    while (loopDate <= endDate)
+                    {
+                        TimesheetDataViewModel record = new()
+                        {
+                            TimesheetDates = loopDate,
+                            TimesheetDetailId = 0
+                        };
+
+                        newTimesheet.Add(record);
+                        loopDate = loopDate.AddDays(1);
+                    }
+
+                    TimesheetViewModel timesheetModel = new()
+                    {
+                        StartDate = startDate,
+                        EndDate = endDate,
+                        TimesheetData = newTimesheet,
+                    };
+                    return View(timesheetModel);
+                }
+                else
+                {
+                    List<TimesheetDetail> timesheetDetailsOfPhysician = _context.TimesheetDetails.Where(timesheetDetail => timesheetDetail.TimesheetId == getTimesheet.TimesheetId).ToList();
+
+                    List<TimesheetDataViewModel> getExistingTimesheetDetails = new();
+                    for (int i = 0; i < timesheetDetailsOfPhysician.Count; i++)
+                    {
+                        TimesheetDataViewModel model = new()
+                        {
+                            TimesheetDates = timesheetDetailsOfPhysician[i].TimesheetDate,
+                            NoOfHouseCalls = timesheetDetailsOfPhysician[i].NumberOfHouseCall,
+                            NoOfPhoneConsults = timesheetDetailsOfPhysician[i].NumberOfPhoneCall,
+                            IsHoliday = timesheetDetailsOfPhysician[i].IsWeekend ?? false,
+                            TotalWorkingHours = timesheetDetailsOfPhysician[i].TotalHours,
+                            TimesheetDetailId = timesheetDetailsOfPhysician[i].TimesheetDetailId
+                        };
+                        getExistingTimesheetDetails.Add(model);
+                    }
+
+                    TimesheetViewModel timesheetModel = new()
+                    {
+                        TimesheetId = getTimesheet.TimesheetId,
+                        StartDate = startDate,
+                        EndDate = endDate,
+                        TimesheetData = getExistingTimesheetDetails,
+                    };
+
+                    return View(timesheetModel);
+                }
             }
-            return View();
+            catch
+            {
+                _notyf.Error("Exception in ProviderTimesheetView");
+                return RedirectToAction("ProviderInvoicing");
+            }
+        }
+        [HttpPost]
+        public IActionResult ProviderTimesheetView(TimesheetViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var physicianAspnetuserID = HttpContext.Session.GetString("AspnetuserId");
+                var Physician = _context.Physicians.FirstOrDefault(physician => physician.Aspnetuserid == physicianAspnetuserID);
+                if (model.TimesheetId == 0)
+                {
+                    Timesheet newTimesheet = new()
+                    {
+                        PhysicianId = Physician.Physicianid,
+                        StartDate = model.StartDate,
+                        EndDate = model.EndDate,
+                        CreatedBy = Physician.Aspnetuserid,
+                        CreatedDate = DateTime.Now
+                    };
+                    _context.Timesheets.Add(newTimesheet);
+                    _context.SaveChanges();
+
+                    for (int i = 0; i < model.TimesheetData.Count; i++)
+                    {
+                        TimesheetDetail timesheetdetails = new()
+                        {
+                            TimesheetId = newTimesheet.TimesheetId,
+                            TotalHours = model.TimesheetData[i].TotalWorkingHours,
+                            IsWeekend = model.TimesheetData[i].IsHoliday,
+                            NumberOfHouseCall = model.TimesheetData[i].NoOfHouseCalls,
+                            NumberOfPhoneCall = model.TimesheetData[i].NoOfPhoneConsults,
+                            CreatedBy = Physician.Aspnetuserid,
+                            CreatedDate = DateTime.Now,
+                            TimesheetDate = model.TimesheetData[i].TimesheetDates
+                        };
+                        _context.TimesheetDetails.Add(timesheetdetails);
+                    }
+                    _context.SaveChanges();
+                    
+                    return RedirectToAction("ProviderInvoicing");
+                }
+                else
+                {
+                    for (int i = 0; i < model.TimesheetData.Count; i++)
+                    {
+                        TimesheetDetail timesheetDetails = _context.TimesheetDetails.FirstOrDefault(timesheet => timesheet.TimesheetDetailId == model.TimesheetData[i].TimesheetDetailId);
+                        if (timesheetDetails != null)
+                        {
+                            timesheetDetails.TotalHours = model.TimesheetData[i].TotalWorkingHours;
+                            timesheetDetails.NumberOfHouseCall = model.TimesheetData[i].NoOfHouseCalls;
+                            timesheetDetails.NumberOfPhoneCall = model.TimesheetData[i].NoOfPhoneConsults;
+                            timesheetDetails.IsWeekend = model.TimesheetData[i].IsHoliday;
+                            timesheetDetails.ModifiedBy = Physician.Aspnetuserid;
+                            timesheetDetails.ModifiedDate = DateTime.Now;
+                            _context.TimesheetDetails.Update(timesheetDetails);
+                        }
+                    }
+                    _context.SaveChanges();
+                }
+            }
+            return RedirectToAction("ProviderInvoicing");
         }
         #endregion
-    }
 
+    }
 }
+

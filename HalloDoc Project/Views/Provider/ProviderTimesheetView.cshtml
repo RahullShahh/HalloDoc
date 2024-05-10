@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TimesheetViewModel
+@{
     Layout = "_ProviderDashboardLayout";
 }
 <div class="row justify-content-center">
@@ -12,29 +13,38 @@
             </button>
         </div>
         <div class="shadow-lg p-3">
-            <table class="table">
-                <thead class="table-head table-secondary">
-                    <tr>
-                        <th>Date</th>
-                        <th>On Call Hours</th>
-                        <th>Total Hours</th>
-                        <th>Weekend/Holiday</th>
-                        <th>No. of HouseCalls</th>
-                        <th>No. of Consults</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>DateHere</td>
-                        <td>0</td>
-                        <td><input class="form-control" type="text" /></td>
-                        <td class="text-center"><input class="form-check-input" type="checkbox" /> </td>
-                        <td><input class="form-control" type="text" /></td>
-                        <td><input class="form-control" type="text" /></td>
-                        <td></td>
-                    </tr>
-                    <tr>
+            <form method="post">
+                <input asp-for="EndDate" hidden/>
+                <input asp-for="StartDate" hidden/>
+                <table class="table table-hover">
+                    <thead class="table-head table-secondary">
+                        <tr>
+                            <th>Date</th>
+                            <th>On Call Hours</th>
+                            <th>Total Hours</th>
+                            <th>Weekend/Holiday</th>
+                            <th>No. of HouseCalls</th>
+                            <th>No. of Consults</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.TimesheetData.Count; i++)
+                        {
+                            <tr>
+                                <input asp-for="@Model.TimesheetId" hidden />
+                                <input asp-for="@Model.TimesheetData[i].TimesheetDates" hidden/>
+                                <td>@Model.TimesheetData[i].TimesheetDates</td>
+                                <td>0</td>
+                                <td><input class="form-control" asp-for="@Model.TimesheetData[i].TotalWorkingHours" type="text" /></td>
+                                <td class="text-center"><input class="form-check-input" asp-for="@Model.TimesheetData[i].IsHoliday" type="checkbox" /> </td>
+                                <td><input class="form-control" asp-for="@Model.TimesheetData[i].NoOfHouseCalls" type="text" /></td>
+                                <td><input class="form-control" asp-for="@Model.TimesheetData[i].NoOfPhoneConsults" type="text" /></td>
+                                <td></td>
+                            </tr>
+                        }
+                        @*
+                        <tr>
                         <td><b>Payrate</b></td>
                         <td></td>
                         <td><input class="form-control" disabled type="text" /></td>
@@ -42,8 +52,8 @@
                         <td><input class="form-control" disabled type="text" /></td>
                         <td><input class="form-control" disabled type="text" /></td>
                         <td></td>
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
                         <td><b>Invoice Total</b></td>
                         <td></td>
                         <td><input class="form-control" disabled type="text" /></td>
@@ -51,15 +61,17 @@
                         <td><input class="form-control" disabled type="text" /></td>
                         <td><input class="form-control" disabled type="text" /></td>
                         <td><input class="form-control" disabled type="text" /></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="text-end">
-                <button class="btn btn-info text-light mt-3">Submit</button>
-            </div>
+                        </tr>
+                        *@
+                    </tbody>
+                </table>
+                <div class="text-end">
+                    <button class="btn btn-info text-light my-3">Submit</button>
+                </div>
+            </form>
         </div>
         <div class="d-flex justify-content-end">
-            <button class="text-light btn btn-info mt-3">Add Receipts</button>
+            <button class="text-light btn btn-info my-3">Add Receipts</button>
         </div>
     </div>
 </div>
