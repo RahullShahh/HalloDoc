@@ -12,10 +12,10 @@
                 Back
             </button>
         </div>
-        <div class="shadow-lg p-3">
+        <div class="shadow-lg rounded-3 p-3">
             <form method="post">
-                <input asp-for="EndDate" hidden/>
-                <input asp-for="StartDate" hidden/>
+                <input asp-for="EndDate" hidden />
+                <input asp-for="StartDate" hidden />
                 <table class="table table-hover">
                     <thead class="table-head table-secondary">
                         <tr>
@@ -25,7 +25,6 @@
                             <th>Weekend/Holiday</th>
                             <th>No. of HouseCalls</th>
                             <th>No. of Consults</th>
-                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,36 +32,15 @@
                         {
                             <tr>
                                 <input asp-for="@Model.TimesheetId" hidden />
-                                <input asp-for="@Model.TimesheetData[i].TimesheetDates" hidden/>
+                                <input asp-for="@Model.TimesheetData[i].TimesheetDates" hidden />
                                 <td>@Model.TimesheetData[i].TimesheetDates</td>
                                 <td>0</td>
-                                <td><input class="form-control" asp-for="@Model.TimesheetData[i].TotalWorkingHours" type="text" /></td>
+                                <td><input class="form-control" asp-for="@Model.TimesheetData[i].TotalWorkingHours" type="number" min="0" /></td>
                                 <td class="text-center"><input class="form-check-input" asp-for="@Model.TimesheetData[i].IsHoliday" type="checkbox" /> </td>
-                                <td><input class="form-control" asp-for="@Model.TimesheetData[i].NoOfHouseCalls" type="text" /></td>
-                                <td><input class="form-control" asp-for="@Model.TimesheetData[i].NoOfPhoneConsults" type="text" /></td>
-                                <td></td>
+                                <td><input class="form-control" asp-for="@Model.TimesheetData[i].NoOfHouseCalls" type="number" min="0" /></td>
+                                <td><input class="form-control" asp-for="@Model.TimesheetData[i].NoOfPhoneConsults" type="number" min="0" /></td>
                             </tr>
                         }
-                        @*
-                        <tr>
-                        <td><b>Payrate</b></td>
-                        <td></td>
-                        <td><input class="form-control" disabled type="text" /></td>
-                        <td><input class="form-control" disabled type="text" /></td>
-                        <td><input class="form-control" disabled type="text" /></td>
-                        <td><input class="form-control" disabled type="text" /></td>
-                        <td></td>
-                        </tr>
-                        <tr>
-                        <td><b>Invoice Total</b></td>
-                        <td></td>
-                        <td><input class="form-control" disabled type="text" /></td>
-                        <td><input class="form-control" disabled type="text" /></td>
-                        <td><input class="form-control" disabled type="text" /></td>
-                        <td><input class="form-control" disabled type="text" /></td>
-                        <td><input class="form-control" disabled type="text" /></td>
-                        </tr>
-                        *@
                     </tbody>
                 </table>
                 <div class="text-end">
@@ -71,7 +49,75 @@
             </form>
         </div>
         <div class="d-flex justify-content-end">
-            <button class="text-light btn btn-info my-3">Add Receipts</button>
+            <button onclick="removeReceipts()" id="removeReceiptButton" class="text-light btn btn-danger my-3 d-none">Remove Receipts</button>
+            <button onclick="showAddReceipts()" id="addReceiptButton" class="text-light btn btn-info my-3">Add Receipts</button>
+            <a id="clickRemoveReceipt" href="#removeReceiptButton">          </a>
+            <input class="form-check-input" type="checkbox" id="isReceiptAdded" hidden />
+        </div>
+        <div id="addReceiptsDivision" class="d-none shadow-lg rounded-3 mb-3 p-3">
+            <table class="table table-hover ">
+                <colgroup>
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 30%;">
+                    <col span="1" style="width: 25%;">
+                </colgroup>
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Date</th>
+                        <th>Item</th>
+                        <th>Amount</th>
+                        <th>Bill</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.TimesheetData.Count; i++)
+                    {
+                        <form method="post" asp-action="ProviderAddReceipts" asp-controller="Provider" enctype="multipart/form-data">
+                            <input hidden name="TimesheetDetailId" value="@Model.AddReceiptsData[i].TimesheetDetailId" />
+                            <input hidden name="DateOfAddReceipts" value="@Model.AddReceiptsData[i].DateOfAddReceipts" />
+                        <tr>
+                            <td>@Model.TimesheetData[i].TimesheetDates</td>
+                            <td>
+                                <input type="text" class="form-control" asp-for="@Model.AddReceiptsData[i].Items" name="Items" />
+                            </td>
+                            <td><input type="number" min="0" class="form-control" asp-for="@Model.AddReceiptsData[i].Amount" name="Amount" /></td>
+                            <td><input type="file" accept=".pdf" class="form-control" asp-for="@Model.AddReceiptsData[i].BillAttachment" name="BillAttachment" /></td>
+                            <td><button class="btn btn-info text-light" type="submit">Submit</button></td>
+                        </tr>
+                        </form>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
+<script>
+
+    // Get the button and the anchor link
+    const addReceiptButton = document.getElementById('addReceiptButton');
+    const clickRemoveReceipt = document.getElementById('clickRemoveReceipt');
+
+    // Add a click event listener to the button
+    addReceiptButton.addEventListener('click', () => {
+        // Scroll to the anchor link
+        clickRemoveReceipt.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    function showAddReceipts() {
+        $('#addReceiptButton').addClass('d-none');
+        $('#removeReceiptButton').removeClass('d-none');
+        $('#addReceiptsDivision').removeClass('d-none');
+        $('#isReceiptAdded').prop("checked", true);
+        $('#clickRemoveReceipt').trigger('click');
+    }
+    function removeReceipts() {
+        $('#addReceiptButton').removeClass('d-none');
+        $('#removeReceiptButton').addClass('d-none');
+        $('#addReceiptsDivision').addClass('d-none');
+        $('#isReceiptAdded').prop("checked", false);
+    }
+</script>

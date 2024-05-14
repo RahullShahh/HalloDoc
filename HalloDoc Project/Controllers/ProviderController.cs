@@ -1098,8 +1098,11 @@ namespace HalloDoc_Project.Controllers
         {
             try
             {
+                //getting physician aspnetuserId from session
                 var id = HttpContext.Session.GetString("AspnetuserId");
                 var physician = _context.Physicians.FirstOrDefault(physician => physician.Aspnetuserid == id);
+
+                //setting up start and end date
                 DateOnly startDate = DateOnly.FromDateTime(startdateiso.ToLocalTime());
                 DateOnly endDate = new DateOnly();
                 if (startDate.Day < 15)
@@ -1113,8 +1116,10 @@ namespace HalloDoc_Project.Controllers
                     endDate = new DateOnly(startDate.Year, startDate.Month, 1).AddMonths(1).AddDays(-1);
                 }
 
+
                 Timesheet? getTimesheet = _context.Timesheets.FirstOrDefault(record => record.PhysicianId == physician.Physicianid && record.StartDate == startDate && record.EndDate == endDate);
 
+                //checks if timesheet exists or not
                 if (getTimesheet == null)
                 {
                     DateOnly loopDate = startDate;
@@ -1154,10 +1159,38 @@ namespace HalloDoc_Project.Controllers
                             NoOfPhoneConsults = timesheetDetailsOfPhysician[i].NumberOfPhoneCall,
                             IsHoliday = timesheetDetailsOfPhysician[i].IsWeekend ?? false,
                             TotalWorkingHours = timesheetDetailsOfPhysician[i].TotalHours,
-                            TimesheetDetailId = timesheetDetailsOfPhysician[i].TimesheetDetailId
+                            TimesheetDetailId = timesheetDetailsOfPhysician[i].TimesheetDetailId,
+
                         };
                         getExistingTimesheetDetails.Add(model);
+                    }
 
+                    List<AddReceiptsViewModel> addReceiptsData = new();
+                    for (int i = 0; i < timesheetDetailsOfPhysician.Count; i++)
+                    {
+                        TimesheetDetailReimbursement? timesheetReimbursements = _context.TimesheetDetailReimbursements.FirstOrDefault(timesheet => timesheet.TimesheetDetailId == timesheetDetailsOfPhysician[i].TimesheetDetailId);
+                        if (timesheetReimbursements != null)
+                        {
+                            AddReceiptsViewModel model = new()
+                            {
+                                TimesheetDetailId = timesheetDetailsOfPhysician[i].TimesheetDetailId,
+                                TimesheetReimbursementId = timesheetReimbursements.TimesheetDetailReimbursementId,
+                                Items = timesheetReimbursements.ItemName ?? "",
+                                BillAttachmentFileName = timesheetReimbursements.Bill ?? "",
+                                Amount = timesheetReimbursements.Amount,
+                                DateOfAddReceipts = timesheetDetailsOfPhysician[i].TimesheetDate
+                            };
+                            addReceiptsData.Add(model);
+                        }
+                        else
+                        {
+                            AddReceiptsViewModel model = new()
+                            {
+                                TimesheetDetailId = timesheetDetailsOfPhysician[i].TimesheetDetailId,
+                                DateOfAddReceipts = timesheetDetailsOfPhysician[i].TimesheetDate
+                            };
+                            addReceiptsData.Add(model);
+                        }
                     }
 
                     TimesheetViewModel timesheetModel = new()
@@ -1166,8 +1199,8 @@ namespace HalloDoc_Project.Controllers
                         StartDate = startDate,
                         EndDate = endDate,
                         TimesheetData = getExistingTimesheetDetails,
+                        AddReceiptsData = addReceiptsData,
                     };
-
                     return View(timesheetModel);
                 }
             }
@@ -1184,8 +1217,11 @@ namespace HalloDoc_Project.Controllers
             {
                 var physicianAspnetuserID = HttpContext.Session.GetString("AspnetuserId");
                 var Physician = _context.Physicians.FirstOrDefault(physician => physician.Aspnetuserid == physicianAspnetuserID);
+
+                //checks if timesheet already exists or not
                 if (model.TimesheetId == 0)
                 {
+                    //creating a new timesheet
                     Timesheet newTimesheet = new()
                     {
                         PhysicianId = Physician.Physicianid,
@@ -1213,11 +1249,12 @@ namespace HalloDoc_Project.Controllers
                         _context.TimesheetDetails.Add(timesheetdetails);
                     }
                     _context.SaveChanges();
-                    
+
                     return RedirectToAction("ProviderInvoicing");
                 }
                 else
                 {
+                    //updating existing timesheet
                     for (int i = 0; i < model.TimesheetData.Count; i++)
                     {
                         TimesheetDetail timesheetDetails = _context.TimesheetDetails.FirstOrDefault(timesheet => timesheet.TimesheetDetailId == model.TimesheetData[i].TimesheetDetailId);
@@ -1236,6 +1273,31 @@ namespace HalloDoc_Project.Controllers
                 }
             }
             return RedirectToAction("ProviderInvoicing");
+        }
+        public IActionResult ProviderAddReceipts(AddReceiptsViewModel model)
+        {
+            var id = HttpContext.Session.GetString("AspnetuserId");
+            var physician = _context.Physicians.FirstOrDefault(physician => physician.Aspnetuserid == id);
+
+            if (ModelState.IsValid)
+            {
+                if (model.TimesheetDetailId == 0)
+                {
+                    _notyf.Error("Kindly Submit the timesheet first");
+                    return View("ProviderInvoicing");
+                }
+                
+                    //TimesheetDetailReimbursement reimbursementDetials = new()
+                    //{
+                    //    TimesheetDetailId = model.TimesheetDetailId,
+                    //    ItemName = model.Items,
+                    //    Amount = model.Amount,
+                    //    Bill = model.BillAttachment.FileName,
+                    //    CreatedDate = DateTime.Now,
+                    //    CreatedBy = physician.Aspnetuserid
+                    //};
+            }
+            return View("ProviderInvoicing");
         }
         #endregion
 

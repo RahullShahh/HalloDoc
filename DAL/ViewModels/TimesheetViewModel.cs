@@ -8,10 +8,11 @@ namespace DAL.ViewModels
 {
     public class TimesheetViewModel
     {
-        public int TimesheetId {  get; set; }
-        public List<TimesheetDataViewModel> TimesheetData { get; set; }
+        public int TimesheetId { get; set; }
+        public List<TimesheetDataViewModel>? TimesheetData { get; set; }
+        public List<AddReceiptsViewModel>? AddReceiptsData { get; set; }
         public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set;}
+        public DateOnly EndDate { get; set; }
 
     }
 }
