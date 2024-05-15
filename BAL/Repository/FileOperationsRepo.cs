@@ -32,7 +32,6 @@ namespace BAL.Repository
         {
             string filePath = "Content/" + uniqueID + "$" + document.FileName;
             string fullPath = Path.Combine(path, filePath);
-
             using FileStream stream = new(fullPath, FileMode.Create);
             document.CopyTo(stream);
         }

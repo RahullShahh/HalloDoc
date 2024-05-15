@@ -8,7 +8,9 @@ using DocumentFormat.OpenXml.Office2019.Drawing.Model3D;
 using DocumentFormat.OpenXml.Spreadsheet;
 using HalloDoc_Project.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Framework;
 using Rotativa.AspNetCore;
+using System.Security.Policy;
 using static HalloDoc_Project.Extensions.Enumerations;
 
 
@@ -1137,11 +1139,28 @@ namespace HalloDoc_Project.Controllers
                         loopDate = loopDate.AddDays(1);
                     }
 
+
+                    List<AddReceiptsViewModel> addReceiptsData = new();
+                    for (int i = 0; i < newTimesheet.Count; i++)
+                    {
+
+                            AddReceiptsViewModel model = new()
+                            {
+                                TimesheetDetailId = newTimesheet[i].TimesheetDetailId,
+                                DateOfAddReceipts = newTimesheet[i].TimesheetDates
+                            };
+
+                            addReceiptsData.Add(model);
+                        
+                    }
+
+
                     TimesheetViewModel timesheetModel = new()
                     {
                         StartDate = startDate,
                         EndDate = endDate,
                         TimesheetData = newTimesheet,
+                        AddReceiptsData=addReceiptsData
                     };
                     return View(timesheetModel);
                 }
@@ -1178,17 +1197,19 @@ namespace HalloDoc_Project.Controllers
                                 Items = timesheetReimbursements.ItemName ?? "",
                                 BillAttachmentFileName = timesheetReimbursements.Bill ?? "",
                                 Amount = timesheetReimbursements.Amount,
-                                DateOfAddReceipts = timesheetDetailsOfPhysician[i].TimesheetDate
+                                DateOfAddReceipts = timesheetDetailsOfPhysician[i].TimesheetDate,                                
                             };
                             addReceiptsData.Add(model);
                         }
                         else
                         {
+
                             AddReceiptsViewModel model = new()
                             {
                                 TimesheetDetailId = timesheetDetailsOfPhysician[i].TimesheetDetailId,
                                 DateOfAddReceipts = timesheetDetailsOfPhysician[i].TimesheetDate
                             };
+
                             addReceiptsData.Add(model);
                         }
                     }
@@ -1208,6 +1229,33 @@ namespace HalloDoc_Project.Controllers
             {
                 _notyf.Error("Exception in ProviderTimesheetView");
                 return RedirectToAction("ProviderInvoicing");
+            }
+        }
+
+        public bool DeleteReimbursementRecord(int recordId)
+        {
+            try
+            {
+
+                TimesheetDetailReimbursement? reimbursement = _context.TimesheetDetailReimbursements.FirstOrDefault(record => record.TimesheetDetailReimbursementId == recordId);
+
+                if (reimbursement == null)
+                {
+                    _notyf.Error("Record not found");
+                    return false;
+                }
+
+                _context.TimesheetDetailReimbursements.Remove(reimbursement);
+                _context.SaveChanges();
+
+                _notyf.Success("Record deleted successfully");
+
+                return true;
+            }
+            catch
+            {
+                _notyf.Error("Reimbursement Record deleted successfully.");
+                return false;
             }
         }
         [HttpPost]
@@ -1274,31 +1322,111 @@ namespace HalloDoc_Project.Controllers
             }
             return RedirectToAction("ProviderInvoicing");
         }
+
+        [HttpPost]
         public IActionResult ProviderAddReceipts(AddReceiptsViewModel model)
         {
             var id = HttpContext.Session.GetString("AspnetuserId");
-            var physician = _context.Physicians.FirstOrDefault(physician => physician.Aspnetuserid == id);
+            Physician? physician = _context.Physicians.FirstOrDefault(physician => physician.Aspnetuserid == id);
+
+            if (physician == null)
+            {
+                _notyf.Error("Physician not found");
+                return RedirectToAction("ProviderInvoicing");
+            }
 
             if (ModelState.IsValid)
             {
                 if (model.TimesheetDetailId == 0)
                 {
                     _notyf.Error("Kindly Submit the timesheet first");
-                    return View("ProviderInvoicing");
+                    Console.WriteLine("hello");
+                    return RedirectToAction("ProviderInvoicing");
                 }
-                
-                    //TimesheetDetailReimbursement reimbursementDetials = new()
-                    //{
-                    //    TimesheetDetailId = model.TimesheetDetailId,
-                    //    ItemName = model.Items,
-                    //    Amount = model.Amount,
-                    //    Bill = model.BillAttachment.FileName,
-                    //    CreatedDate = DateTime.Now,
-                    //    CreatedBy = physician.Aspnetuserid
-                    //};
+
+                if (model.TimesheetReimbursementId != 0)
+                {
+
+                    TimesheetDetailReimbursement? timesheetReimbursement = _context.TimesheetDetailReimbursements.FirstOrDefault(timesheet => timesheet.TimesheetDetailReimbursementId == model.TimesheetReimbursementId);
+
+                    if (timesheetReimbursement == null)
+                    {
+                        _notyf.Error("Reimbursement record not found");
+                        return RedirectToAction("ProviderInvoicing");
+                    }
+
+                    timesheetReimbursement.ItemName = model.Items ?? "";
+                    timesheetReimbursement.Amount = model.Amount;
+                    timesheetReimbursement.ModifiedDate = DateTime.Now;
+                    timesheetReimbursement.ModifiedBy = physician.Aspnetuserid ?? "";
+                    _context.TimesheetDetailReimbursements.Update(timesheetReimbursement);
+                    _context.SaveChanges();
+
+                    _notyf.Success("Reimbursement Details updated successfully");
+
+                }
+                else
+                {
+
+                    if(model.BillAttachment==null)
+                    {
+                        _notyf.Error("Kindly Add a file");
+                        return RedirectToAction("ProviderInvoicing");
+                    }
+                    TimesheetDetailReimbursement? timesheetReimbursement = new()
+                    {
+                        TimesheetDetailId = model.TimesheetDetailId,
+                        ItemName = model.Items ?? "",
+                        Amount = model.Amount,
+                        Bill = model.BillAttachment.FileName,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = physician.Aspnetuserid ?? "",
+                    };
+                    _context.TimesheetDetailReimbursements.Add(timesheetReimbursement);
+                    _context.SaveChanges();
+
+                    var path = _environment.WebRootPath;
+                    string receiptPath = Path.Combine(path,"Content","TimesheetAttachments");
+                    InsertFileAfterRename(model.BillAttachment,receiptPath,timesheetReimbursement.TimesheetDetailReimbursementId.ToString() + Path.GetFileNameWithoutExtension(model.BillAttachment.FileName));
+
+                    _notyf.Success("Reimbursement Details added successfully");
+                }
             }
+
+
             return View("ProviderInvoicing");
         }
+
+        public void InsertFileAfterRename(IFormFile file, string path, string updateName)
+        {
+            try
+            {
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                string[] oldfiles = Directory.GetFiles(path, updateName + ".*");
+                foreach (string f in oldfiles)
+                {
+                    System.IO.File.Delete(f);
+                }
+
+                string extension = Path.GetExtension(file.FileName);
+
+                string fileName = updateName + extension;
+
+                string fullPath = Path.Combine(path, fileName);
+
+                using FileStream stream = new(fullPath, FileMode.Create);
+                file.CopyTo(stream);
+            }
+            catch
+            {
+                _notyf.Error("Exception in InsertFileAfterRename Method");
+            }
+        }
+
         #endregion
 
     }

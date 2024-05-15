@@ -73,21 +73,66 @@
                     </tr>
                 </thead>
                 <tbody>
+
+                    @if (Model.AddReceiptsData != null)
+                    {
+                        
                     @for (int i = 0; i < Model.TimesheetData.Count; i++)
                     {
                         <form method="post" asp-action="ProviderAddReceipts" asp-controller="Provider" enctype="multipart/form-data">
-                            <input hidden name="TimesheetDetailId" value="@Model.AddReceiptsData[i].TimesheetDetailId" />
-                            <input hidden name="DateOfAddReceipts" value="@Model.AddReceiptsData[i].DateOfAddReceipts" />
+                            <input hidden name="TimesheetDetailId" asp-for="@Model.AddReceiptsData[i].TimesheetDetailId" />
+                            <input hidden name="DateOfAddReceipts" asp-for="@Model.AddReceiptsData[i].DateOfAddReceipts" />
+                            <input hidden name="TimesheetReimbursementId" asp-for="@Model.AddReceiptsData[i].TimesheetReimbursementId" />
                         <tr>
                             <td>@Model.TimesheetData[i].TimesheetDates</td>
                             <td>
-                                <input type="text" class="form-control" asp-for="@Model.AddReceiptsData[i].Items" name="Items" />
+                                    @if (Model.AddReceiptsData[i].TimesheetReimbursementId == 0)
+                                    {
+                                    <input type="text" class="form-control" asp-for="@Model.AddReceiptsData[i].Items" name="Items" />
+                                     
+                                    }
+                                    else
+                                    {
+                                    <input type="text" id="disabledItemsInput" disabled class="form-control receipt-item-name-input" asp-for="@Model.AddReceiptsData[i].Items" name="Items" />
+                                    }
                             </td>
-                            <td><input type="number" min="0" class="form-control" asp-for="@Model.AddReceiptsData[i].Amount" name="Amount" /></td>
-                            <td><input type="file" accept=".pdf" class="form-control" asp-for="@Model.AddReceiptsData[i].BillAttachment" name="BillAttachment" /></td>
-                            <td><button class="btn btn-info text-light" type="submit">Submit</button></td>
+                            <td>
+                                    @if (Model.AddReceiptsData[i].TimesheetReimbursementId != 0)
+                                    {
+                                    <input type="number" id="disabledAmountInput" min="0" class="form-control receipt-item-amount-input" disabled asp-for="@Model.AddReceiptsData[i].Amount" name="Amount" />
+                                    }
+                                    else
+                                    {
+                                    <input type="number" min="0" class="form-control" asp-for="@Model.AddReceiptsData[i].Amount" name="Amount" />
+                                    }
+                            </td>
+                            <td>
+                                    @if (Model.AddReceiptsData[i].TimesheetReimbursementId == 0)
+                                    {
+                                    <input type="file" accept=".pdf" class="form-control" asp-for="@Model.AddReceiptsData[i].BillAttachment" name="BillAttachment" />
+                                    }
+                                    else
+                                    {
+                                        @Model.AddReceiptsData[i].BillAttachmentFileName
+                                    }
+                            </td>
+                            <td>
+                                    @if (Model.AddReceiptsData[i].TimesheetReimbursementId == 0)
+                                    {
+                                    <button class="btn btn-info text-light" type="submit">Submit</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-outline-info receipt-edit-btn" type="button">Edit</button>
+                                        <button class="btn btn-outline-info receipt-delete-btn" data-timesheetreimbursementid="@Model.AddReceiptsData[i].TimesheetReimbursementId" type="button">Delete</button>
+                                        <a href="~/Content/TimesheetAttachments/@Model.AddReceiptsData[i].TimesheetReimbursementId@Model.AddReceiptsData[i].BillAttachmentFileName" class="btn btn-outline-info receipt-view-btn" type="button">View</a>
+                                        <button class="btn btn-outline-info receipt-save-btn" type="submit" style="display:none">Save</button>
+                                        <button class="btn btn-outline-danger receipt-cancel-btn" type="button" style="display:none">Cancel</button>
+                                    }
+                            </td>
                         </tr>
                         </form>
+                    }
                     }
                 </tbody>
             </table>
@@ -120,4 +165,60 @@
         $('#addReceiptsDivision').addClass('d-none');
         $('#isReceiptAdded').prop("checked", false);
     }
+
+                function allowEdit(){
+                    $('#disabledItemsInput').prop("disabled",false);
+                    $('#disabledAmountInput').prop("disabled",false);
+                }
+
+                 $('.receipt-edit-btn').click(function () {
+                    $(this).hide();
+                    $(this).siblings('.receipt-delete-btn').hide();
+                    $(this).siblings('.receipt-view-btn').hide();
+
+                    $(this).siblings('.receipt-save-btn').show();
+                    $(this).siblings('.receipt-cancel-btn').show();
+
+                    $(this).closest('tr').find('.receipt-item-name-input').prop("disabled",false);
+
+                    $(this).closest('tr').find('.receipt-item-amount-input').prop("disabled",false);
+                });
+
+                $('.receipt-cancel-btn').click(function () {
+                    $(this).hide();
+                    $(this).siblings('.receipt-save-btn').hide();
+
+                    $(this).siblings('.receipt-delete-btn').show();
+                    $(this).siblings('.receipt-view-btn').show();
+                    $(this).siblings('.receipt-edit-btn').show();
+
+                        $(this).closest('tr').find('.receipt-item-name-input').prop("disabled",true);
+
+                        $(this).closest('tr').find('.receipt-item-amount-input').prop("disabled",true);
+
+                });
+
+
+            $('.receipt-delete-btn').click(function () {
+
+                    let recordIdVal = $(this).data('timesheetreimbursementid');
+
+                $.ajax({
+                    url: "/Provider/DeleteReimbursementRecord",
+                    data: { recordId: recordIdVal },
+                    type: 'POST',
+                    success: function (result) {
+                        if (result) {
+                            location.reload();
+                        }
+                    },
+                    error: function (error) {
+                        console.log('Error Updating Location')
+                        console.log(error);
+                    },
+                });
+
+            });
+
+
 </script>
