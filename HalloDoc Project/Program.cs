@@ -16,7 +16,8 @@ builder.Services.AddApplicationServices();
 
 builder.Services.AddNotyf(config =>
 {
-    config.DurationInSeconds = 2; config.IsDismissable = true;
+    config.DurationInSeconds = 2;
+    config.IsDismissable = true;
     config.HasRippleEffect = true;
     config.Position = NotyfPosition.TopRight;
 });
@@ -70,6 +71,7 @@ app.UseNotyf();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Guest}/{action=submit_request_page}/{id?}");
+    pattern: "{controller=Guest}/{action=submit_request_page}/{id?}"
+    );
 
 app.Run();

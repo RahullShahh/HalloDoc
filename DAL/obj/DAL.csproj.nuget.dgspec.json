@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pca96\\Desktop\\HalloDoctor-master\\DAL\\DAL.csproj": {}
+    "C:\\Users\\Rahul\\OneDrive\\Desktop\\HalloDoctor\\DAL\\DAL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pca96\\Desktop\\HalloDoctor-master\\DAL\\DAL.csproj": {
+    "C:\\Users\\Rahul\\OneDrive\\Desktop\\HalloDoctor\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pca96\\Desktop\\HalloDoctor-master\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\Users\\Rahul\\OneDrive\\Desktop\\HalloDoctor\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\Users\\pca96\\Desktop\\HalloDoctor-master\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\pca96\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pca96\\Desktop\\HalloDoctor-master\\DAL\\obj\\",
+        "projectPath": "C:\\Users\\Rahul\\OneDrive\\Desktop\\HalloDoctor\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\Rahul\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Rahul\\OneDrive\\Desktop\\HalloDoctor\\DAL\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\pca96\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Rahul\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -93,20 +90,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[7.0.15, 7.0.15]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[7.0.15, 7.0.15]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[7.0.15, 7.0.15]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"

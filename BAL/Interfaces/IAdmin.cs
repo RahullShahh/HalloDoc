@@ -16,7 +16,6 @@ namespace BAL.Interfaces
         public void AdminInfoPost(AdminProfileViewModel apvm, string[] adminLocations);
         public void BillingInfoPost(AdminProfileViewModel apvm);
         public void PasswordPost(AdminProfileViewModel apvm, string email);
-
         public void CreateAdminAccountPost(CreateAdminViewModel profile, string[] regions);
 
     }
